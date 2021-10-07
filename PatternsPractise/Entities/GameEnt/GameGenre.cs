@@ -9,6 +9,6 @@ namespace PatternsPractise.Entities
     public class GameGenre
     {
         public String genreName { get; set; }
-        public GameGenre(String genreName) { this.genreName = genreName; }
+        public GameGenre(String genreName) { this.genreName = genreName;}
     }
 }
