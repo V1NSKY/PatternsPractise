@@ -11,6 +11,7 @@ using MySql.Data.MySqlClient;
 using PatternsPractise.Connection;
 using PatternsPractise.Entities;
 using static PatternsPractise.Entities.Game;
+using static PatternsPractise.Entities.User;
 
 namespace PatternsPractise
 {
@@ -36,7 +37,7 @@ namespace PatternsPractise
                 connectionLabel.Text = "Подключение: "+ ex.Message;
             }
             */
-            Game game = new GameBuilder()
+            /*Game game = new GameBuilder()
                 .gameName("bf5")
                 .gameDeveloper("ea")
                 .gamePublisher("ea")
@@ -45,7 +46,17 @@ namespace PatternsPractise
                 .AddGenreBuilder(new GameGenre("shooter"))
                 .AddGenreBuilder(new GameGenre("horror"))
                 .Build();
-            connectionLabel.Text = game.ToString();
+            connectionLabel.Text = game.ToString();*/
+            User user = new UserBuilder(1)
+                .userName("Максим")
+                .userSurname("Кутвицкий")
+                .userMiddleName("Юрьевич")
+                .userLogin("user")
+                .userPassword("password")
+                .userPhone("0960039001")
+                .userDescription("додик")
+                .Build();
+            connectionLabel.Text = user.ToString();
         }
     }
 }
