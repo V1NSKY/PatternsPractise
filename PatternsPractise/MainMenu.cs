@@ -12,6 +12,7 @@ using PatternsPractise.Connection;
 using PatternsPractise.Entities;
 using static PatternsPractise.Entities.Game;
 using static PatternsPractise.Entities.User;
+using static PatternsPractise.Entities.SystemReq;
 
 namespace PatternsPractise
 {
@@ -37,7 +38,7 @@ namespace PatternsPractise
                 connectionLabel.Text = "Подключение: "+ ex.Message;
             }
             */
-            /*Game game = new GameBuilder()
+            Game game = new GameBuilder()
                 .gameName("bf5")
                 .gameDeveloper("ea")
                 .gamePublisher("ea")
@@ -45,9 +46,11 @@ namespace PatternsPractise
                 .gameDateOfRelease("20.10.2015")
                 .AddGenreBuilder(new GameGenre("shooter"))
                 .AddGenreBuilder(new GameGenre("horror"))
+                .AddSystemReqsBuilder(new ReqBuilder().sr_OS("Windows 10").processor("I7-9900K").sr_video("Nvidia GeForce GTX 3090").sr_RAM(16).sr_space(75).Build())
+                .AddSystemReqsBuilder(new ReqBuilder().sr_OS("Windows 11").processor("I5-9900K").sr_video("Nvidia GeForce GTX 3060").sr_RAM(16).sr_space(75).Build())
                 .Build();
-            connectionLabel.Text = game.ToString();*/
-            User user = new UserBuilder(1)
+            connectionLabel.Text = game.ToString();
+            /*User user = new UserBuilder(1)
                 .userName("Максим")
                 .userSurname("Кутвицкий")
                 .userMiddleName("Юрьевич")
@@ -56,7 +59,15 @@ namespace PatternsPractise
                 .userPhone("0960039001")
                 .userDescription("додик")
                 .Build();
-            connectionLabel.Text = user.ToString();
+            connectionLabel.Text = user.ToString();*/
+            /*SystemReq systemReq = new ReqBuilder()
+                .sr_OS("Windows 10")
+                .processor("I7-9900K")
+                .sr_video("Nvidia GeForce GTX 3090")
+                .sr_RAM(16)
+                .sr_space(75)
+                .Build();
+            connectionLabel.Text = systemReq.ToString();*/
         }
     }
 }

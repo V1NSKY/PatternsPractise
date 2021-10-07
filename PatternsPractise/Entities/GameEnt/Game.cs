@@ -9,7 +9,7 @@ namespace PatternsPractise.Entities
     public class Game
     {
         private List<GameGenre> gameGenres = new List<GameGenre>();
-        private List<SystemReq> systemReqs;
+        private List<SystemReq> systemReqs = new List<SystemReq>();
         private String gameDeveloper = "";
         private String gamePublisher = "";    
         private String gameName = "";
@@ -30,12 +30,12 @@ namespace PatternsPractise.Entities
             String obj = "";
             foreach (GameGenre genre in gameGenres)
             {
-                obj += genre.genreName + " ";
+                obj += genre.ToString() + " ";
             }
-            /*foreach (SystemReq req in systemReqs)
+            foreach (SystemReq req in systemReqs)
             {
-                obj += " Системные требования ";
-            }*/
+                obj += req.ToString() + " ";
+            }
             return obj + gameDeveloper + " " + gamePublisher + " " + gameName + " " + gamePrice.ToString() + " " + dateOfRelease + " " + gameDescription;
         }
         public class GameBuilder
