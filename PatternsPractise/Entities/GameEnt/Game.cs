@@ -8,21 +8,111 @@ namespace PatternsPractise.Entities
 {
     public class Game
     {
+        private int gameId;
         private List<GameGenre> gameGenres = new List<GameGenre>();
-        private List<SystemReq> systemReqs = new List<SystemReq>();
         private String gameDeveloper = "";
-        private String gamePublisher = "";    
+        private String gamePublisher = "";
         private String gameName = "";
-        private float gamePrice = 0;
-        private String dateOfRelease = "00.00.0000";
+        private double gamePrice = 0;
+        private String dateOfRelease = "0000.00.00";
         private String gameDescription = "";
+
+        public int GameId
+        {
+            get
+            {
+                return gameId;
+            }
+            private set
+            {
+
+            }
+        }
+        public List<GameGenre> GameGenre
+        {
+            get
+            {
+                return gameGenres;
+            }
+            set
+            {
+                gameGenres = value;
+            }
+        }
+        public String GameDeveloper
+        {
+            get
+            {
+                return gameDeveloper;
+            }
+            private set
+            {
+                gameDeveloper = value;
+            }
+        }
+        public String GamePublisher
+        {
+            get
+            {
+                return gamePublisher;
+            }
+            private set
+            {
+                gamePublisher = value;
+            }
+        }
+        public String GameName
+        {
+            get
+            {
+                return gameName;
+            }
+            private set
+            {
+                gameName = value;
+            }
+        }
+        public double GamePrice
+        {
+            get
+            {
+                return gamePrice;
+            }
+            private set
+            {
+                gamePrice = value;
+            }
+        }
+        public String DateOfRelease
+        {
+            get
+            {
+                return dateOfRelease;
+            }
+            private set
+            {
+                dateOfRelease = value;
+            }
+        }
+        public String GameDescription
+        {
+            get
+            {
+                return gameDescription;
+            }
+            private set
+            {
+                gameDescription = value;
+            }
+        }
+
         public void AddGenre(GameGenre gameGenre)
         {
             gameGenres.Add(gameGenre);
         }
-        public void AddSystemReq(SystemReq systemReq)
+        public List<GameGenre> GetGenres ()
         {
-            systemReqs.Add(systemReq);
+            return this.gameGenres;
         }
 
         public override string ToString()
@@ -31,10 +121,6 @@ namespace PatternsPractise.Entities
             foreach (GameGenre genre in gameGenres)
             {
                 obj += genre.ToString() + " ";
-            }
-            foreach (SystemReq req in systemReqs)
-            {
-                obj += req.ToString() + " ";
             }
             return obj + gameDeveloper + " " + gamePublisher + " " + gameName + " " + gamePrice.ToString() + " " + dateOfRelease + " " + gameDescription;
         }
@@ -45,14 +131,19 @@ namespace PatternsPractise.Entities
             {
                 game = new Game();
             }
+            public GameBuilder gameId(int gameId)
+            {
+                game.gameId = gameId;
+                return this;
+            }
+            public GameBuilder listGenre(List<GameGenre> listGameGenre)
+            {
+                game.gameGenres = listGameGenre;
+                return this;
+            }
             public GameBuilder AddGenreBuilder(GameGenre gameGenre)
             {
                 game.AddGenre(gameGenre);
-                return this;
-            }
-            public GameBuilder AddSystemReqsBuilder(SystemReq systemReq)
-            {
-                game.AddSystemReq(systemReq);
                 return this;
             }
             public GameBuilder gameDeveloper(String gameDeveloper)
@@ -70,7 +161,7 @@ namespace PatternsPractise.Entities
                 game.gameName = gameName;
                 return this;
             }
-            public GameBuilder gamePrice(float gamePrice)
+            public GameBuilder gamePrice(double gamePrice)
             {
                 game.gamePrice = gamePrice;
                 return this;

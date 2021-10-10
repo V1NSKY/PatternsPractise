@@ -11,13 +11,11 @@ namespace PatternsPractise.Connection
     {
         static private MySqlConnection connection;
         private SQLConnection() { }
-        public static MySqlConnection GetConnection(String server,String database,uint port,String username,String password)
+        public static MySqlConnection GetConnection(String connString)
         {
-            String connectionString = "Server=" + server + ";Database=" + database + ";port="
-                + port + ";User id=" + username + ";Password=" + password;
             if (connection == null)
             {
-                return connection = new MySqlConnection(connectionString);
+                return connection = new MySqlConnection(connString);
             }
             else
             {

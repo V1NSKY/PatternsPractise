@@ -8,6 +8,7 @@ namespace PatternsPractise.Entities
 {
     public class SystemReq
     {
+        private Game game;
         private String sr_OS = "";
         private String processor = "";
         private uint sr_RAM = 0;
@@ -24,6 +25,11 @@ namespace PatternsPractise.Entities
             public ReqBuilder()
             {
                 systemReq = new SystemReq();
+            }
+            public ReqBuilder game(Game game)
+            {
+                systemReq.game = game;
+                return this;
             }
             public ReqBuilder sr_OS(String sr_OS)
             {
