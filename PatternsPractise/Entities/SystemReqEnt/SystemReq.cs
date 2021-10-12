@@ -9,11 +9,100 @@ namespace PatternsPractise.Entities
     public class SystemReq
     {
         private Game game;
+        private int idSystemReq;
         private String sr_OS = "";
         private String processor = "";
         private uint sr_RAM = 0;
         private String sr_video = "";
         private uint sr_space = 0;
+
+        private SystemReq() { }
+        public int IdSystemReq
+        {
+            get
+            {
+                return this.idSystemReq;
+            }
+            private set
+            {
+                this.idSystemReq = value;
+            }
+        }
+        public int GameId
+        {
+            get
+            {
+                return this.game.GameId;
+            }
+        }
+        public Game Game
+        {
+            get
+            {
+                return this.game;
+            }
+            private set
+            {
+                this.game = value;
+            }
+        }
+
+        public String Sr_OS
+        {
+            get
+            {
+                return this.sr_OS;
+            }
+            private set
+            {
+                this.sr_OS = value;
+            }
+        }
+        public String Processor
+        {
+            get
+            {
+                return this.processor;
+            }
+            private set
+            {
+                this.processor = value;
+            }
+        }
+        public uint Sr_RAM
+        {
+            get
+            {
+                return this.sr_RAM;
+            }
+            private set
+            {
+                this.sr_RAM = value;
+            }
+        }
+        public String Sr_Video
+        {
+            get
+            {
+                return this.sr_video;
+            }
+            private set
+            {
+                this.sr_video = value;
+            }
+        }
+        public uint Sr_space
+        {
+            get
+            {
+                return this.sr_space;
+            }
+            private set
+            {
+                this.sr_space = value;
+            }
+        }
+        
 
         public override string ToString()
         {
@@ -25,6 +114,11 @@ namespace PatternsPractise.Entities
             public ReqBuilder()
             {
                 systemReq = new SystemReq();
+            }
+            public ReqBuilder idSystemReq(int idSystemReq)
+            {
+                systemReq.idSystemReq = idSystemReq;
+                return this;
             }
             public ReqBuilder game(Game game)
             {

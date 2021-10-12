@@ -9,10 +9,11 @@ namespace PatternsPractise.DAO
 {
     interface IDAOGame
     {
-        public String addGame(Game game);
-        public void deleteGame(int idGame);
-        public void updateGame(int idGame);
-        public void searchGameByName(String gameName);
+        public String AddGame(Game game);
+        public String DeleteGame(int idGame);
+        public String UpdateGame(Game game);
+        public List<Game> SearchGameByName(String gameName);
         public List<Game> GetAllGame();
+        public Game GetGameById(int idGame);
     }
 }

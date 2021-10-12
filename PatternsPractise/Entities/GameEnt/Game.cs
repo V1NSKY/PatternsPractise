@@ -15,8 +15,9 @@ namespace PatternsPractise.Entities
         private String gameName = "";
         private double gamePrice = 0;
         private String dateOfRelease = "0000.00.00";
-        private String gameDescription = "";
+        private String? gameDescription = "";
 
+        private Game() { }
         public int GameId
         {
             get
@@ -126,7 +127,7 @@ namespace PatternsPractise.Entities
         }
         public class GameBuilder
         {
-            Game game;
+            readonly Game game;
             public GameBuilder()
             {
                 game = new Game();

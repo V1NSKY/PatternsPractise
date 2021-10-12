@@ -9,33 +9,133 @@ namespace PatternsPractise.Entities
     class User
     {
         private UserRole userRole;
+        private int userId;
         private String userName = "";
         private String userSurname = "";
-        private String userMiddleName = "";
+        private String? userMiddleName = "";
         private String userLogin = "";
         private String userPassword = "";
-        private String userPhone = "";
-        private String userDescription = "";
+        private String? userPhone = "";
+        private String? userDescription = "";
 
         private User (int roleId)
         {
             switch (roleId)
             {
                 case 1:
-                    userRole = UserRole.user;
+                    userRole = UserRole.User;
                     break;
                 case 2:
-                    userRole = UserRole.admin;
+                    userRole = UserRole.Admin;
                     break;
                 default:
-                    userRole = UserRole.user;
+                    userRole = UserRole.User;
                     break;
+            }
+        }
+        public int UserId
+        {
+            get
+            {
+                return this.userId;
+            }
+            private set
+            {
+                this.userId = value;
+            }
+        }
+        public UserRole UserRole
+        {
+            get
+            {
+                return this.userRole;
+            }
+            private set
+            {
+                this.userRole = value;
+            }
+        }
+        public String UserName
+        {
+            get
+            {
+                return this.userName;
+            }
+            private set
+            {
+                this.userName = value;
+            }
+        }
+        public String UserSurname
+        {
+            get
+            {
+                return this.userSurname;
+            }
+            private set
+            {
+                this.userSurname = value;
+            }
+        }
+        public String UserMiddleName
+        {
+            get
+            {
+                return this.userMiddleName;
+            }
+            private set
+            {
+                this.userMiddleName = value;
+            }
+        }
+        public String UserLogin
+        {
+            get
+            {
+                return this.userLogin;
+            }
+            private set
+            {
+                this.userLogin = value;
+            }
+        }
+        public String UserPassword
+        {
+            get
+            {
+                return this.userPassword;
+            }
+            private set
+            {
+                this.userPassword = value;
+            }
+        }
+        public String UserPhone
+        {
+            get
+            {
+                return this.userPhone;
+            }
+            private set
+            {
+                this.userPhone = value;
+            }
+        }
+        public String UserDescription
+        {
+            get
+            {
+                return this.userDescription;
+            }
+            private set
+            {
+                this.userDescription = value;
             }
         }
 
         public override string ToString()
         {
-            return "Роль: " + userRole + " Имя: " + userName + " Фамилия: " + userSurname + " Отчёство: " + userMiddleName
+            return "Роль: " + ((int)userRole) + " Имя: " + userName + " Фамилия: " + userSurname + " Отчёство: " + userMiddleName
                 + " Логин: " + userLogin + " Пароль: " + userPassword + " Номер телефона: " + userPhone + " Описание:" + userDescription;
         }
 
@@ -45,6 +145,11 @@ namespace PatternsPractise.Entities
             public UserBuilder(int roleId)
             {
                 user = new User(roleId);
+            }
+            public UserBuilder userId(int userId)
+            {
+                user.userId = userId;
+                return this;
             }
             public UserBuilder userName(String userName)
             {

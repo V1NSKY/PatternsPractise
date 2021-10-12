@@ -87,13 +87,13 @@ CREATE TABLE IF NOT EXISTS `GameLibraryDB`.`UserGameLibrary` (
   CONSTRAINT `fk_Games_has_User_Games1`
     FOREIGN KEY (`idGame`)
     REFERENCES `GameLibraryDB`.`Game` (`idGame`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Games_has_User_User1`
     FOREIGN KEY (`idUser`)
     REFERENCES `GameLibraryDB`.`User` (`idUser`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -109,8 +109,8 @@ CREATE TABLE IF NOT EXISTS `GameLibraryDB`.`SpecificGenre` (
   CONSTRAINT `fk_Game_has_GameGenre_Game1`
     FOREIGN KEY (`idGame`)
     REFERENCES `GameLibraryDB`.`Game` (`idGame`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Game_has_GameGenre_GameGenre1`
     FOREIGN KEY (`idGameGenre`)
     REFERENCES `GameLibraryDB`.`GameGenre` (`idGameGenre`)
@@ -124,34 +124,19 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GameLibraryDB`.`SystemReq` (
   `idSystemReq` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `idGame` INT UNSIGNED NOT NULL,
   `sr_OS` VARCHAR(45) NOT NULL,
   `sr_processor` VARCHAR(45) NOT NULL,
   `sr_RAM` INT UNSIGNED NOT NULL,
   `sr_video` VARCHAR(45) NOT NULL,
   `sr_space` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`idSystemReq`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `GameLibraryDB`.`GameSR`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `GameLibraryDB`.`GameSR` (
-  `idGame` INT UNSIGNED NOT NULL,
-  `idSystemReq` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`idGame`, `idSystemReq`),
-  INDEX `fk_Game_has_SystemReq_SystemReq1_idx` (`idSystemReq` ASC) VISIBLE,
-  INDEX `fk_Game_has_SystemReq_Game1_idx` (`idGame` ASC) VISIBLE,
-  CONSTRAINT `fk_Game_has_SystemReq_Game1`
+  PRIMARY KEY (`idSystemReq`),
+  INDEX `fk_SystemReq_Game1_idx` (`idGame` ASC) VISIBLE,
+  CONSTRAINT `fk_SystemReq_Game1`
     FOREIGN KEY (`idGame`)
     REFERENCES `GameLibraryDB`.`Game` (`idGame`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Game_has_SystemReq_SystemReq1`
-    FOREIGN KEY (`idSystemReq`)
-    REFERENCES `GameLibraryDB`.`SystemReq` (`idSystemReq`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 

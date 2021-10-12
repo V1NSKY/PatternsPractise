@@ -8,7 +8,7 @@ namespace PatternsPractise.Entities
 {
     enum UserRole
     {
-        user,
-        admin
+        User = 1,
+        Admin = 2
     }
 }
