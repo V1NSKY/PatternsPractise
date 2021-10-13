@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PatternsPractise.Entities
 {
-    class User
+     public class User
     {
         private UserRole userRole;
         private int userId;

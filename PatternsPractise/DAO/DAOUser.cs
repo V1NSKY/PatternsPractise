@@ -21,45 +21,47 @@ namespace PatternsPractise.DAO
         readonly String SQLSelectUserById = "SELECT * FROM gamelibrarydb.user WHERE idUser = @idUser;";
         readonly String SQLSelectUserByName = "SELECT * FROM gamelibrarydb.user WHERE userName = @userName;";
         readonly String SQLUpdateUserById = "UPDATE gamelibrarydb.user SET idUserRole = @idUserRole, userName = @userName, userSurname = @userSurname, userMiddleName = @userMiddleName, userLogin = @userLogin, userPassword = @userPassword, userPhone = @userPhone, userDescription = @userDescription WHERE idUser = @idUser;";
-        public DAOUser(String SQlConnectionString) { this.SQLConnectionString = SQlConnectionString; }
+        readonly String SQLSelectUserIdByCred = "SELECT idUser FROM gamelibrarydb.user WHERE userLogin = @userLogin AND userPassword = @userPassword";
+        public DAOUser() { }
 
         //DAO AddUser
 
         public string AddUser(User user)
         {
-            MySqlConnection conn = SQLConnection.GetConnection(SQLConnectionString);
-            MySqlCommand cmd = new MySqlCommand
+            using (MySqlConnection conn = SQLConnection.GetConnection())
             {
-                Connection = conn,
-                CommandText = SQLSelectUserRoleById
-            };
-            cmd.Parameters.AddWithValue("@idUserRole", ((int)user.UserRole));
-            conn.Open();
-
-            using (MySqlDataReader userRoleReader = cmd.ExecuteReader())
-            {
-                if (!userRoleReader.HasRows)
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand
                 {
-                    conn.Close();
-                    return "Роль пользователя не найдена";
-                }
-            }
-            cmd.Parameters.Clear();
+                    Connection = conn,
+                    CommandText = SQLSelectUserRoleById
+                };
+                cmd.Parameters.AddWithValue("@idUserRole", ((int)user.UserRole));
 
-            cmd.CommandText = SQLInsertUser;
-            String returnString = "";
-            cmd.Parameters.AddWithValue("@idUserRole", ((int)user.UserRole));
-            cmd.Parameters.AddWithValue("@userName", user.UserName);
-            cmd.Parameters.AddWithValue("@userSurname", user.UserSurname);
-            cmd.Parameters.AddWithValue("@userMiddleName", user.UserMiddleName);
-            cmd.Parameters.AddWithValue("@userLogin", user.UserLogin);
-            cmd.Parameters.AddWithValue("@userPassword", user.UserPassword);
-            cmd.Parameters.AddWithValue("@userPhone", user.UserPhone);
-            cmd.Parameters.AddWithValue("@userDescription", user.UserDescription);
-            returnString +=" Добавлена " + cmd.ExecuteNonQuery() + " запись ";
-            cmd.Parameters.Clear();
-            conn.Close();
-            return returnString;
+                using (MySqlDataReader userRoleReader = cmd.ExecuteReader())
+                {
+                    if (!userRoleReader.HasRows)
+                    {
+                        return "Роль пользователя не найдена";
+                    }
+                }
+                cmd.Parameters.Clear();
+
+                cmd.CommandText = SQLInsertUser;
+                String returnString = "";
+                cmd.Parameters.AddWithValue("@idUserRole", ((int)user.UserRole));
+                cmd.Parameters.AddWithValue("@userName", user.UserName);
+                cmd.Parameters.AddWithValue("@userSurname", user.UserSurname);
+                cmd.Parameters.AddWithValue("@userMiddleName", user.UserMiddleName);
+                cmd.Parameters.AddWithValue("@userLogin", user.UserLogin);
+                cmd.Parameters.AddWithValue("@userPassword", user.UserPassword);
+                cmd.Parameters.AddWithValue("@userPhone", user.UserPhone);
+                cmd.Parameters.AddWithValue("@userDescription", user.UserDescription);
+                returnString += " Добавлена " + cmd.ExecuteNonQuery() + " запись ";
+                cmd.Parameters.Clear();
+                return returnString;
+            }
+            
         }
 
         //DAO DeleteUser
@@ -67,17 +69,20 @@ namespace PatternsPractise.DAO
         public string DeleteUser(int idUser)
         {
             String returnString = "";
-            MySqlConnection conn = SQLConnection.GetConnection(SQLConnectionString);
-            MySqlCommand cmd = new MySqlCommand
+
+            using (MySqlConnection conn = SQLConnection.GetConnection())
             {
-                Connection = conn,
-                CommandText = SQLDeleteUser
-            };
-            cmd.Parameters.AddWithValue("@idUser", idUser);
-            conn.Open();
-            returnString += " Удалена " + cmd.ExecuteNonQuery() + " запись ";
-            cmd.Parameters.Clear();
-            conn.Close();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand
+                {
+                    Connection = conn,
+                    CommandText = SQLDeleteUser
+                };
+                cmd.Parameters.AddWithValue("@idUser", idUser);
+                returnString += " Удалена " + cmd.ExecuteNonQuery() + " запись ";
+                cmd.Parameters.Clear();
+            }
+            
             return returnString;
         }
 
@@ -86,37 +91,37 @@ namespace PatternsPractise.DAO
         public List<User> GetAllUsers()
         {
             List<User> listUser = new List<User>();
-            MySqlConnection conn = SQLConnection.GetConnection(SQLConnectionString);
-            MySqlCommand cmd = new MySqlCommand
+                       
+            using (MySqlConnection conn = SQLConnection.GetConnection())
             {
-                Connection = conn,
-                CommandText = SQLSelectAllUsers
-            };
-            conn.Open();
-
-            using(MySqlDataReader selectAllUsersReader = cmd.ExecuteReader())
-            {
-                if (selectAllUsersReader.HasRows)
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand
                 {
-                    while (selectAllUsersReader.Read())
+                    Connection = conn,
+                    CommandText = SQLSelectAllUsers
+                };
+                using (MySqlDataReader selectAllUsersReader = cmd.ExecuteReader())
+                {
+                    if (selectAllUsersReader.HasRows)
                     {
-                        User user = new UserBuilder(Convert.ToInt32(selectAllUsersReader.GetValue(1)))
-                            .userId(Convert.ToInt32(selectAllUsersReader.GetValue(0)))
-                            .userName(selectAllUsersReader.GetString(2))
-                            .userSurname(selectAllUsersReader.GetString(3))
-                            .userMiddleName(selectAllUsersReader.GetString(4))
-                            .userLogin(selectAllUsersReader.GetString(5))
-                            .userPassword(selectAllUsersReader.GetString(6))
-                            .userPhone(selectAllUsersReader.GetString(7))
-                            .userDescription(selectAllUsersReader.GetString(8))
-                            .Build();
-                        listUser.Add(user);
+                        while (selectAllUsersReader.Read())
+                        {
+                            User user = new UserBuilder(Convert.ToInt32(selectAllUsersReader.GetValue(1)))
+                                .userId(Convert.ToInt32(selectAllUsersReader.GetValue(0)))
+                                .userName(selectAllUsersReader.GetString(2))
+                                .userSurname(selectAllUsersReader.GetString(3))
+                                .userMiddleName(selectAllUsersReader.GetString(4))
+                                .userLogin(selectAllUsersReader.GetString(5))
+                                .userPassword(selectAllUsersReader.GetString(6))
+                                .userPhone(selectAllUsersReader.GetString(7))
+                                .userDescription(selectAllUsersReader.GetString(8))
+                                .Build();
+                            listUser.Add(user);
+                        }
                     }
                 }
             }
-
-            cmd.Parameters.Clear();
-            conn.Close();
+            
             return listUser;
         }
 
@@ -124,78 +129,114 @@ namespace PatternsPractise.DAO
 
         public User GetUserById(int idUser)
         {
-            User user = new UserBuilder(1).Build();
-            MySqlConnection conn = SQLConnection.GetConnection(SQLConnectionString);
-            MySqlCommand cmd = new MySqlCommand
-            {
-                Connection = conn,
-                CommandText = SQLSelectUserById
-            };
-            cmd.Parameters.AddWithValue("@idUser", idUser);
-            conn.Open();
+            User user = new UserBuilder(1).Build();           
 
-            using (MySqlDataReader selectUserByIdReader = cmd.ExecuteReader())
+            using(MySqlConnection conn = SQLConnection.GetConnection())
             {
-                if (selectUserByIdReader.HasRows)
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand
                 {
-                    while (selectUserByIdReader.Read())
+                    Connection = conn,
+                    CommandText = SQLSelectUserById
+                };
+                cmd.Parameters.AddWithValue("@idUser", idUser);
+
+                using (MySqlDataReader selectUserByIdReader = cmd.ExecuteReader())
+                {
+                    if (selectUserByIdReader.HasRows)
                     {
-                        user = new UserBuilder(Convert.ToInt32(selectUserByIdReader.GetValue(1)))
-                            .userId(Convert.ToInt32(selectUserByIdReader.GetValue(0)))
-                            .userName(selectUserByIdReader.GetString(2))
-                            .userSurname(selectUserByIdReader.GetString(3))
-                            .userMiddleName(selectUserByIdReader.GetString(4))
-                            .userLogin(selectUserByIdReader.GetString(5))
-                            .userPassword(selectUserByIdReader.GetString(6))
-                            .userPhone(selectUserByIdReader.GetString(7))
-                            .userDescription(selectUserByIdReader.GetString(8))
-                            .Build();
+                        while (selectUserByIdReader.Read())
+                        {
+                            user = new UserBuilder(Convert.ToInt32(selectUserByIdReader.GetValue(1)))
+                                .userId(Convert.ToInt32(selectUserByIdReader.GetValue(0)))
+                                .userName(selectUserByIdReader.GetString(2))
+                                .userSurname(selectUserByIdReader.GetString(3))
+                                .userMiddleName(selectUserByIdReader.GetString(4))
+                                .userLogin(selectUserByIdReader.GetString(5))
+                                .userPassword(selectUserByIdReader.GetString(6))
+                                .userPhone(selectUserByIdReader.GetString(7))
+                                .userDescription(selectUserByIdReader.GetString(8))
+                                .Build();
+                        }
+                    }
+                    else
+                    {
+                        return null;
                     }
                 }
             }
 
-            cmd.Parameters.Clear();
-            conn.Close();
             return user;
         }
 
+        public int GetUserIdByCred(string login, string password)
+        {
+            using (MySqlConnection conn = SQLConnection.GetConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand
+                {
+                    Connection = conn,
+                    CommandText = SQLSelectUserIdByCred
+                };
+                cmd.Parameters.AddWithValue("@userLogin", login);
+                cmd.Parameters.AddWithValue("@userPassword", password);
+
+                using (MySqlDataReader getUserReader = cmd.ExecuteReader())
+                {
+                    if (getUserReader.HasRows)
+                    {
+                        getUserReader.Read();
+                        int userId = Convert.ToInt32(getUserReader.GetValue(0));
+                        cmd.Parameters.Clear();
+                        return userId;
+                    }
+                    else
+                    {
+                        cmd.Parameters.Clear();
+                        return 0;
+                    }
+                }
+            }   
+        }
+       
         //DAO SearchUsersByName
 
         public List<User> SearchUsersByName(String userName)
         {
             List<User> listUsers = new List<User>();
-            MySqlConnection conn = SQLConnection.GetConnection(SQLConnectionString);
-            MySqlCommand cmd = new MySqlCommand
-            {
-                Connection = conn,
-                CommandText = SQLSelectUserByName
-            };
-            cmd.Parameters.AddWithValue("@userName", userName);
-            conn.Open();
 
-            using (MySqlDataReader selectUserByNameReader = cmd.ExecuteReader())
+            using (MySqlConnection conn = SQLConnection.GetConnection())
             {
-                if (selectUserByNameReader.HasRows)
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand
                 {
-                    while (selectUserByNameReader.Read())
+                    Connection = conn,
+                    CommandText = SQLSelectUserByName
+                };
+                cmd.Parameters.AddWithValue("@userName", userName);
+                using (MySqlDataReader selectUserByNameReader = cmd.ExecuteReader())
+                {
+                    if (selectUserByNameReader.HasRows)
                     {
-                        User user = new UserBuilder(Convert.ToInt32(selectUserByNameReader.GetValue(1)))
-                            .userId(Convert.ToInt32(selectUserByNameReader.GetValue(0)))
-                            .userName(selectUserByNameReader.GetString(2))
-                            .userSurname(selectUserByNameReader.GetString(3))
-                            .userMiddleName(selectUserByNameReader.GetString(4))
-                            .userLogin(selectUserByNameReader.GetString(5))
-                            .userPassword(selectUserByNameReader.GetString(6))
-                            .userPhone(selectUserByNameReader.GetString(7))
-                            .userDescription(selectUserByNameReader.GetString(8))
-                            .Build();
-                        listUsers.Add(user);
+                        while (selectUserByNameReader.Read())
+                        {
+                            User user = new UserBuilder(Convert.ToInt32(selectUserByNameReader.GetValue(1)))
+                                .userId(Convert.ToInt32(selectUserByNameReader.GetValue(0)))
+                                .userName(selectUserByNameReader.GetString(2))
+                                .userSurname(selectUserByNameReader.GetString(3))
+                                .userMiddleName(selectUserByNameReader.GetString(4))
+                                .userLogin(selectUserByNameReader.GetString(5))
+                                .userPassword(selectUserByNameReader.GetString(6))
+                                .userPhone(selectUserByNameReader.GetString(7))
+                                .userDescription(selectUserByNameReader.GetString(8))
+                                .Build();
+                            listUsers.Add(user);
+                        }
                     }
                 }
             }
-
-            cmd.Parameters.Clear();
-            conn.Close();
+            
             return listUsers;
         }
 
@@ -203,29 +244,27 @@ namespace PatternsPractise.DAO
 
         public string UpdateUser(User user)
         {
-            MySqlConnection conn = SQLConnection.GetConnection(SQLConnectionString);
-            MySqlCommand cmd = new MySqlCommand
+            using (MySqlConnection conn = SQLConnection.GetConnection())
             {
-                Connection = conn,
-                CommandText = SQLUpdateUserById
-            };
-            conn.Open();
-
-            String returnString = "";
-            cmd.Parameters.AddWithValue("@idUser", user.UserId);
-            cmd.Parameters.AddWithValue("@idUserRole", ((int)user.UserRole));
-            cmd.Parameters.AddWithValue("@userName", user.UserName);
-            cmd.Parameters.AddWithValue("@userSurname", user.UserSurname);
-            cmd.Parameters.AddWithValue("@userMiddleName", user.UserMiddleName);
-            cmd.Parameters.AddWithValue("@userLogin", user.UserLogin);
-            cmd.Parameters.AddWithValue("@userPassword", user.UserPassword);
-            cmd.Parameters.AddWithValue("@userPhone", user.UserPhone);
-            cmd.Parameters.AddWithValue("@userDescription", user.UserDescription);
-            returnString += " Изменена " + cmd.ExecuteNonQuery() + " запись ";
-
-            cmd.Parameters.Clear();
-            conn.Close();
-            return returnString;
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand
+                {
+                    Connection = conn,
+                    CommandText = SQLUpdateUserById
+                };
+                String returnString = "";
+                cmd.Parameters.AddWithValue("@idUser", user.UserId);
+                cmd.Parameters.AddWithValue("@idUserRole", ((int)user.UserRole));
+                cmd.Parameters.AddWithValue("@userName", user.UserName);
+                cmd.Parameters.AddWithValue("@userSurname", user.UserSurname);
+                cmd.Parameters.AddWithValue("@userMiddleName", user.UserMiddleName);
+                cmd.Parameters.AddWithValue("@userLogin", user.UserLogin);
+                cmd.Parameters.AddWithValue("@userPassword", user.UserPassword);
+                cmd.Parameters.AddWithValue("@userPhone", user.UserPhone);
+                cmd.Parameters.AddWithValue("@userDescription", user.UserDescription);
+                returnString += " Изменена " + cmd.ExecuteNonQuery() + " запись ";
+                return returnString;
+            }
         }
     }
 }

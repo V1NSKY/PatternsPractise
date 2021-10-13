@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PatternsPractise.Entities
 {
-    enum UserRole
+    public enum UserRole
     {
         User = 1,
         Admin = 2

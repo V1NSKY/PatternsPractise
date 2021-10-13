@@ -29,9 +29,11 @@ namespace PatternsPractise
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.button1 = new System.Windows.Forms.Button();
+            this.registerButton = new System.Windows.Forms.Button();
             this.gameGridView = new System.Windows.Forms.DataGridView();
             this.gameId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gameName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,23 +42,35 @@ namespace PatternsPractise
             this.gamePrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gameDateOfRelease = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gameDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button2 = new System.Windows.Forms.Button();
+            this.loginInButton = new System.Windows.Forms.Button();
+            this.logOutButton = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.passwordTextBox = new System.Windows.Forms.TextBox();
+            this.loginTextBox = new System.Windows.Forms.TextBox();
+            this.passwordLabel = new System.Windows.Forms.Label();
+            this.loginLabel = new System.Windows.Forms.Label();
+            this.userLabel = new System.Windows.Forms.Label();
+            this.userNameLabel = new System.Windows.Forms.Label();
+            this.userRoleLabel = new System.Windows.Forms.Label();
+            this.notUserLabel = new System.Windows.Forms.Label();
+            this.roleLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gameGridView)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // registerButton
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(165)))), ((int)(((byte)(0)))));
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(713, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 27);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = false;
+            this.registerButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.registerButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            this.registerButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.registerButton.FlatAppearance.BorderSize = 0;
+            this.registerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.registerButton.ForeColor = System.Drawing.Color.White;
+            this.registerButton.Location = new System.Drawing.Point(740, 12);
+            this.registerButton.Name = "registerButton";
+            this.registerButton.Size = new System.Drawing.Size(132, 50);
+            this.registerButton.TabIndex = 0;
+            this.registerButton.Text = "Зарегистрироваться";
+            this.registerButton.UseVisualStyleBackColor = false;
             // 
             // gameGridView
             // 
@@ -68,13 +82,16 @@ namespace PatternsPractise
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gameGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gameGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
+            this.gameGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.gameGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(57)))), ((int)(((byte)(75)))));
+            this.gameGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gameGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(57)))), ((int)(((byte)(75)))));
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(165)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3, 6, 3, 6);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(57)))), ((int)(((byte)(75)))));
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.gameGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
@@ -88,32 +105,35 @@ namespace PatternsPractise
             this.gameDateOfRelease,
             this.gameDescription});
             this.gameGridView.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(165)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gameGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(57)))), ((int)(((byte)(75)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(3, 6, 3, 6);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gameGridView.DefaultCellStyle = dataGridViewCellStyle4;
             this.gameGridView.EnableHeadersVisualStyles = false;
             this.gameGridView.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(71)))), ((int)(((byte)(86)))));
-            this.gameGridView.Location = new System.Drawing.Point(93, 57);
+            this.gameGridView.Location = new System.Drawing.Point(126, 68);
             this.gameGridView.MultiSelect = false;
             this.gameGridView.Name = "gameGridView";
             this.gameGridView.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.gameGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(165)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gameGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(165)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gameGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.gameGridView.RowHeadersVisible = false;
             this.gameGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.gameGridView.RowTemplate.Height = 25;
-            this.gameGridView.Size = new System.Drawing.Size(695, 381);
+            this.gameGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gameGridView.Size = new System.Drawing.Size(746, 431);
             this.gameGridView.TabIndex = 1;
             // 
             // gameId
@@ -121,6 +141,7 @@ namespace PatternsPractise
             this.gameId.DataPropertyName = "GameId";
             this.gameId.HeaderText = "Код";
             this.gameId.Name = "gameId";
+            this.gameId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.gameId.Visible = false;
             // 
             // gameName
@@ -128,72 +149,226 @@ namespace PatternsPractise
             this.gameName.DataPropertyName = "GameName";
             this.gameName.HeaderText = "Название";
             this.gameName.Name = "gameName";
+            this.gameName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // gameDeveloper
             // 
             this.gameDeveloper.DataPropertyName = "GameDeveloper";
             this.gameDeveloper.HeaderText = "Разработчик";
             this.gameDeveloper.Name = "gameDeveloper";
+            this.gameDeveloper.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // gamePublisher
             // 
             this.gamePublisher.DataPropertyName = "GamePublisher";
             this.gamePublisher.HeaderText = "Издатель";
             this.gamePublisher.Name = "gamePublisher";
+            this.gamePublisher.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // gamePrice
             // 
             this.gamePrice.DataPropertyName = "GamePrice";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gamePrice.DefaultCellStyle = dataGridViewCellStyle2;
             this.gamePrice.HeaderText = "Цена";
             this.gamePrice.Name = "gamePrice";
+            this.gamePrice.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // gameDateOfRelease
             // 
             this.gameDateOfRelease.DataPropertyName = "DateOfRelease";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gameDateOfRelease.DefaultCellStyle = dataGridViewCellStyle3;
             this.gameDateOfRelease.HeaderText = "Дата выхода";
             this.gameDateOfRelease.Name = "gameDateOfRelease";
+            this.gameDateOfRelease.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // gameDescription
             // 
             this.gameDescription.DataPropertyName = "GameDescription";
             this.gameDescription.HeaderText = "Описание";
             this.gameDescription.Name = "gameDescription";
+            this.gameDescription.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gameDescription.Visible = false;
             // 
-            // button2
+            // loginInButton
             // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(165)))), ((int)(((byte)(0)))));
-            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(12, 57);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 27);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = false;
+            this.loginInButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.loginInButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            this.loginInButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.loginInButton.FlatAppearance.BorderSize = 0;
+            this.loginInButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.loginInButton.ForeColor = System.Drawing.Color.White;
+            this.loginInButton.Location = new System.Drawing.Point(634, 12);
+            this.loginInButton.Name = "loginInButton";
+            this.loginInButton.Size = new System.Drawing.Size(100, 50);
+            this.loginInButton.TabIndex = 2;
+            this.loginInButton.Text = "Войти";
+            this.loginInButton.UseVisualStyleBackColor = false;
+            this.loginInButton.Click += new System.EventHandler(this.loginInButton_Click);
+            // 
+            // logOutButton
+            // 
+            this.logOutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.logOutButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            this.logOutButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.logOutButton.FlatAppearance.BorderSize = 0;
+            this.logOutButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.logOutButton.ForeColor = System.Drawing.Color.White;
+            this.logOutButton.Location = new System.Drawing.Point(634, 12);
+            this.logOutButton.Name = "logOutButton";
+            this.logOutButton.Size = new System.Drawing.Size(100, 50);
+            this.logOutButton.TabIndex = 3;
+            this.logOutButton.Text = "Выйти";
+            this.logOutButton.UseVisualStyleBackColor = false;
+            this.logOutButton.Visible = false;
+            this.logOutButton.Click += new System.EventHandler(this.logOutButton_Click);
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            this.button4.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button4.FlatAppearance.BorderSize = 0;
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.ForeColor = System.Drawing.Color.White;
+            this.button4.Location = new System.Drawing.Point(12, 68);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(100, 50);
+            this.button4.TabIndex = 4;
+            this.button4.Text = "button4";
+            this.button4.UseVisualStyleBackColor = false;
+            // 
+            // passwordTextBox
+            // 
+            this.passwordTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.passwordTextBox.Location = new System.Drawing.Point(528, 27);
+            this.passwordTextBox.Name = "passwordTextBox";
+            this.passwordTextBox.Size = new System.Drawing.Size(100, 23);
+            this.passwordTextBox.TabIndex = 5;
+            // 
+            // loginTextBox
+            // 
+            this.loginTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.loginTextBox.Location = new System.Drawing.Point(365, 27);
+            this.loginTextBox.Name = "loginTextBox";
+            this.loginTextBox.Size = new System.Drawing.Size(100, 23);
+            this.loginTextBox.TabIndex = 6;
+            // 
+            // passwordLabel
+            // 
+            this.passwordLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.passwordLabel.AutoSize = true;
+            this.passwordLabel.ForeColor = System.Drawing.Color.White;
+            this.passwordLabel.Location = new System.Drawing.Point(470, 30);
+            this.passwordLabel.Name = "passwordLabel";
+            this.passwordLabel.Size = new System.Drawing.Size(52, 15);
+            this.passwordLabel.TabIndex = 7;
+            this.passwordLabel.Text = "Пароль:";
+            // 
+            // loginLabel
+            // 
+            this.loginLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.loginLabel.AutoSize = true;
+            this.loginLabel.ForeColor = System.Drawing.Color.White;
+            this.loginLabel.Location = new System.Drawing.Point(307, 30);
+            this.loginLabel.Name = "loginLabel";
+            this.loginLabel.Size = new System.Drawing.Size(44, 15);
+            this.loginLabel.TabIndex = 8;
+            this.loginLabel.Text = "Логин:";
+            // 
+            // userLabel
+            // 
+            this.userLabel.AutoSize = true;
+            this.userLabel.ForeColor = System.Drawing.Color.White;
+            this.userLabel.Location = new System.Drawing.Point(15, 12);
+            this.userLabel.Name = "userLabel";
+            this.userLabel.Size = new System.Drawing.Size(87, 15);
+            this.userLabel.TabIndex = 9;
+            this.userLabel.Text = "Пользователь:";
+            this.userLabel.Visible = false;
+            // 
+            // userNameLabel
+            // 
+            this.userNameLabel.AutoSize = true;
+            this.userNameLabel.ForeColor = System.Drawing.Color.White;
+            this.userNameLabel.Location = new System.Drawing.Point(108, 12);
+            this.userNameLabel.Name = "userNameLabel";
+            this.userNameLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.userNameLabel.Size = new System.Drawing.Size(31, 15);
+            this.userNameLabel.TabIndex = 10;
+            this.userNameLabel.Text = "Имя";
+            this.userNameLabel.Visible = false;
+            // 
+            // userRoleLabel
+            // 
+            this.userRoleLabel.AutoSize = true;
+            this.userRoleLabel.ForeColor = System.Drawing.Color.White;
+            this.userRoleLabel.Location = new System.Drawing.Point(108, 35);
+            this.userRoleLabel.Name = "userRoleLabel";
+            this.userRoleLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.userRoleLabel.Size = new System.Drawing.Size(34, 15);
+            this.userRoleLabel.TabIndex = 12;
+            this.userRoleLabel.Text = "Роль";
+            this.userRoleLabel.Visible = false;
+            // 
+            // notUserLabel
+            // 
+            this.notUserLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.notUserLabel.AutoSize = true;
+            this.notUserLabel.ForeColor = System.Drawing.Color.White;
+            this.notUserLabel.Location = new System.Drawing.Point(416, 9);
+            this.notUserLabel.Name = "notUserLabel";
+            this.notUserLabel.Size = new System.Drawing.Size(166, 15);
+            this.notUserLabel.TabIndex = 13;
+            this.notUserLabel.Text = "Логин либо пароль неверны";
+            this.notUserLabel.Visible = false;
+            // 
+            // roleLabel
+            // 
+            this.roleLabel.AutoSize = true;
+            this.roleLabel.ForeColor = System.Drawing.Color.White;
+            this.roleLabel.Location = new System.Drawing.Point(15, 35);
+            this.roleLabel.Name = "roleLabel";
+            this.roleLabel.Size = new System.Drawing.Size(37, 15);
+            this.roleLabel.TabIndex = 14;
+            this.roleLabel.Text = "Роль:";
+            this.roleLabel.Visible = false;
             // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button2);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
+            this.ClientSize = new System.Drawing.Size(884, 511);
+            this.Controls.Add(this.roleLabel);
+            this.Controls.Add(this.notUserLabel);
+            this.Controls.Add(this.userRoleLabel);
+            this.Controls.Add(this.userNameLabel);
+            this.Controls.Add(this.userLabel);
+            this.Controls.Add(this.loginLabel);
+            this.Controls.Add(this.passwordLabel);
+            this.Controls.Add(this.loginTextBox);
+            this.Controls.Add(this.passwordTextBox);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.logOutButton);
+            this.Controls.Add(this.loginInButton);
             this.Controls.Add(this.gameGridView);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.registerButton);
+            this.MinimumSize = new System.Drawing.Size(900, 550);
             this.Name = "MainMenu";
-            this.Text = "Main menu";
+            this.ShowIcon = false;
+            this.Text = "Main Menu";
             this.Load += new System.EventHandler(this.MainMenu_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gameGridView)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button registerButton;
         private System.Windows.Forms.DataGridView gameGridView;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DataGridViewTextBoxColumn gameId;
         private System.Windows.Forms.DataGridViewTextBoxColumn gameName;
         private System.Windows.Forms.DataGridViewTextBoxColumn gameDeveloper;
@@ -201,6 +376,18 @@ namespace PatternsPractise
         private System.Windows.Forms.DataGridViewTextBoxColumn gamePrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn gameDateOfRelease;
         private System.Windows.Forms.DataGridViewTextBoxColumn gameDescription;
+        private System.Windows.Forms.Button loginInButton;
+        private System.Windows.Forms.Button logOutButton;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.TextBox passwordTextBox;
+        private System.Windows.Forms.TextBox loginTextBox;
+        private System.Windows.Forms.Label passwordLabel;
+        private System.Windows.Forms.Label loginLabel;
+        private System.Windows.Forms.Label userLabel;
+        private System.Windows.Forms.Label userNameLabel;
+        private System.Windows.Forms.Label userRoleLabel;
+        private System.Windows.Forms.Label notUserLabel;
+        private System.Windows.Forms.Label roleLabel;
     }
 }
 

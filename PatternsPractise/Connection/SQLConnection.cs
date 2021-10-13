@@ -10,12 +10,13 @@ namespace PatternsPractise.Connection
     public class SQLConnection
     {
         static private MySqlConnection connection;
+        static public String connectionString = "server=localhost;uid=root;pwd=root;database=gamelibrarydb";
         private SQLConnection() { }
-        public static MySqlConnection GetConnection(String connString)
+        public static MySqlConnection GetConnection()
         {
             if (connection == null)
             {
-                return connection = new MySqlConnection(connString);
+                return connection = new MySqlConnection(connectionString);
             }
             else
             {
