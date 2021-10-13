@@ -19,6 +19,13 @@ namespace PatternsPractise
 {
     public partial class MainMenu : Form
     {
+        public void ChangeCellStyle(DataGridViewCellStyle style, Color backColor, Color foreColor, Color selectionColor)
+        {
+            style.BackColor = backColor;
+            style.ForeColor = foreColor;
+            style.SelectionBackColor = selectionColor;
+
+        }
         public MainMenu()
         {
             InitializeComponent();
@@ -28,18 +35,12 @@ namespace PatternsPractise
         {
             String constr = "server=localhost;uid=root;pwd=root;database=gamelibrarydb";
             MySqlConnection connection = SQLConnection.GetConnection(constr);
-            
-            try
-            {
-                connection.Open();
-                connectionLabel.Text = "Подключение: подключено; База данных: "+connection.Database;
-                connection.Close();
-            }
-            catch(Exception ex)
-            {
-                connectionLabel.Text = "Подключение: "+ ex.Message;
-            }
 
+            DAOGame daoGame = new DAOGame(constr);
+
+            List<Game> listGames = daoGame.GetAllGame();
+            gameGridView.DataSource = listGames;
+            
         }
     }
 }
