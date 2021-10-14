@@ -120,11 +120,22 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `GameLibraryDB`.`SystemReqType`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `GameLibraryDB`.`SystemReqType` (
+  `idSystemReqType` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `systemReqTypeName` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idSystemReqType`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `GameLibraryDB`.`SystemReq`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GameLibraryDB`.`SystemReq` (
   `idSystemReq` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `idGame` INT UNSIGNED NOT NULL,
+  `idSystemReqType` INT UNSIGNED NOT NULL,
   `sr_OS` VARCHAR(45) NOT NULL,
   `sr_processor` VARCHAR(45) NOT NULL,
   `sr_RAM` INT UNSIGNED NOT NULL,
@@ -132,14 +143,53 @@ CREATE TABLE IF NOT EXISTS `GameLibraryDB`.`SystemReq` (
   `sr_space` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`idSystemReq`),
   INDEX `fk_SystemReq_Game1_idx` (`idGame` ASC) VISIBLE,
+  INDEX `fk_SystemReq_SystemReqType1_idx` (`idSystemReqType` ASC) VISIBLE,
   CONSTRAINT `fk_SystemReq_Game1`
     FOREIGN KEY (`idGame`)
     REFERENCES `GameLibraryDB`.`Game` (`idGame`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_SystemReq_SystemReqType1`
+    FOREIGN KEY (`idSystemReqType`)
+    REFERENCES `GameLibraryDB`.`SystemReqType` (`idSystemReqType`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `GameLibraryDB`.`UserRole`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `GameLibraryDB`;
+INSERT INTO `GameLibraryDB`.`UserRole` (`idUserRole`, `userRoleName`) VALUES (1, 'User');
+INSERT INTO `GameLibraryDB`.`UserRole` (`idUserRole`, `userRoleName`) VALUES (2, 'Admin');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `GameLibraryDB`.`GameGenre`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `GameLibraryDB`;
+INSERT INTO `GameLibraryDB`.`GameGenre` (`idGameGenre`, `genreName`) VALUES (1, 'Шутер');
+INSERT INTO `GameLibraryDB`.`GameGenre` (`idGameGenre`, `genreName`) VALUES (2, 'Хоррор');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `GameLibraryDB`.`SystemReqType`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `GameLibraryDB`;
+INSERT INTO `GameLibraryDB`.`SystemReqType` (`idSystemReqType`, `systemReqTypeName`) VALUES (1, 'Минимальные');
+INSERT INTO `GameLibraryDB`.`SystemReqType` (`idSystemReqType`, `systemReqTypeName`) VALUES (2, 'Рекомендуемые');
+
+COMMIT;
+

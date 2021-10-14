@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using PatternsPractise.Connection;
+using PatternsPractise.DAO.DAOGame.FactoryDAOGame;
 using PatternsPractise.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,20 +11,21 @@ using System.Threading.Tasks;
 using static PatternsPractise.Entities.Game;
 using static PatternsPractise.Entities.SystemReq;
 
-namespace PatternsPractise.DAO
+namespace PatternsPractise.DAO.DAOSystemReq
 {
     class DAOSystemReq : IDAOSystemReq
     {
-        readonly String SQLInsertSystemReq = "INSERT INTO gamelibrarydb.systemreq (idGame,sr_OS,sr_processor,sr_RAM,sr_video,sr_space) VALUE (@idGame, @sr_OS, @sr_processor, @sr_RAM, @sr_video, @sr_space);";
+        readonly String SQLInsertSystemReq = "INSERT INTO gamelibrarydb.systemreq (idGame, idSystemReqType ,sr_OS,sr_processor,sr_RAM,sr_video,sr_space) VALUE (@idGame, @idSystemReqType,@sr_OS, @sr_processor, @sr_RAM, @sr_video, @sr_space);";
         readonly String SQLDeleteSystemReq = "DELETE FROM gamelibrarydb.systemreq WHERE idSystemReq = @idSystemReq;";
         readonly String SQLSelectAllSystemReq = "SELECT * FROM gamelibrarydb.systemreq;";
         readonly String SQLSelectSystemReqByGameId = "SELECT * FROM gamelibrarydb.systemreq WHERE idGame = @idGame;";
         readonly String SQLSelectSystemReqById = "SELECT * FROM gamelibrarydb.systemreq WHERE idSystemReq = @idSystemReq;";
-        readonly String SQLUpdateSystemReq = "UPDATE gamelibrarydb.systemreq SET idGame = @idGame, sr_OS = @sr_OS, sr_processor = @sr_processor, sr_RAM = @sr_RAM, sr_video = @sr_video, sr_space = @sr_space WHERE idSystemReq = @idSystemReq;";
+        readonly String SQLUpdateSystemReq = "UPDATE gamelibrarydb.systemreq SET idGame = @idGame, idSystemReqType = @idSystemReqType, sr_OS = @sr_OS, sr_processor = @sr_processor, sr_RAM = @sr_RAM, sr_video = @sr_video, sr_space = @sr_space WHERE idSystemReq = @idSystemReq;";
         public DAOSystemReq() { }
         public string AddSystemReq(SystemReq systemReq)
         {
-            DAOGame daoGame = new DAOGame();
+            CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
+            IDAOGame daoGame = creatorDAOGame.FactoryMetod();
             String returnString = "";
 
             Game game = daoGame.GetGameById(systemReq.Game.GameId);
@@ -42,6 +44,7 @@ namespace PatternsPractise.DAO
 
                 conn.Open();
                 cmd.Parameters.AddWithValue("@idGame", systemReq.Game.GameId);
+                cmd.Parameters.AddWithValue("@idSystemReqType", systemReq.IdSystemReqType);
                 cmd.Parameters.AddWithValue("@sr_OS", systemReq.Sr_OS);
                 cmd.Parameters.AddWithValue("@sr_processor", systemReq.Processor);
                 cmd.Parameters.AddWithValue("@sr_RAM", systemReq.Sr_RAM);
@@ -89,12 +92,13 @@ namespace PatternsPractise.DAO
                         {
                             SystemReq systemReq = new ReqBuilder()
                                 .idSystemReq(Convert.ToInt32(selectAllSystemReqReader.GetValue(0)))
+                                .idSystemReqType(Convert.ToInt32(selectAllSystemReqReader.GetValue(2)))
                                 .game(new GameBuilder().gameId(Convert.ToInt32(selectAllSystemReqReader.GetValue(1))).Build())
-                                .sr_OS(selectAllSystemReqReader.GetString(2))
-                                .processor(selectAllSystemReqReader.GetString(3))
-                                .sr_RAM(Convert.ToUInt32(selectAllSystemReqReader.GetValue(4)))
-                                .sr_video(selectAllSystemReqReader.GetString(5))
-                                .sr_space(Convert.ToUInt32(selectAllSystemReqReader.GetValue(6)))
+                                .sr_OS(selectAllSystemReqReader.GetString(3))
+                                .processor(selectAllSystemReqReader.GetString(4))
+                                .sr_RAM(Convert.ToUInt32(selectAllSystemReqReader.GetValue(5)))
+                                .sr_video(selectAllSystemReqReader.GetString(6))
+                                .sr_space(Convert.ToUInt32(selectAllSystemReqReader.GetValue(7)))
                                 .Build();
                             listSystemReqs.Add(systemReq);
                         }
@@ -127,12 +131,13 @@ namespace PatternsPractise.DAO
                         {
                             SystemReq systemReq = new ReqBuilder()
                                 .idSystemReq(Convert.ToInt32(selectSystemReqByGameIdReader.GetValue(0)))
+                                .idSystemReqType(Convert.ToInt32(selectSystemReqByGameIdReader.GetValue(2)))
                                 .game(new GameBuilder().gameId(Convert.ToInt32(selectSystemReqByGameIdReader.GetValue(1))).Build())
-                                .sr_OS(selectSystemReqByGameIdReader.GetString(2))
-                                .processor(selectSystemReqByGameIdReader.GetString(3))
-                                .sr_RAM(Convert.ToUInt32(selectSystemReqByGameIdReader.GetValue(4)))
-                                .sr_video(selectSystemReqByGameIdReader.GetString(5))
-                                .sr_space(Convert.ToUInt32(selectSystemReqByGameIdReader.GetValue(6)))
+                                .sr_OS(selectSystemReqByGameIdReader.GetString(3))
+                                .processor(selectSystemReqByGameIdReader.GetString(4))
+                                .sr_RAM(Convert.ToUInt32(selectSystemReqByGameIdReader.GetValue(5)))
+                                .sr_video(selectSystemReqByGameIdReader.GetString(6))
+                                .sr_space(Convert.ToUInt32(selectSystemReqByGameIdReader.GetValue(7)))
                                 .Build();
                             listSystemReqs.Add(systemReq);
                         }
@@ -166,11 +171,12 @@ namespace PatternsPractise.DAO
                             systemReq = new ReqBuilder()
                                 .idSystemReq(Convert.ToInt32(selectSystemReqByIdReader.GetValue(0)))
                                 .game(new GameBuilder().gameId(Convert.ToInt32(selectSystemReqByIdReader.GetValue(1))).Build())
-                                .sr_OS(selectSystemReqByIdReader.GetString(2))
-                                .processor(selectSystemReqByIdReader.GetString(3))
-                                .sr_RAM(Convert.ToUInt32(selectSystemReqByIdReader.GetValue(4)))
-                                .sr_video(selectSystemReqByIdReader.GetString(5))
-                                .sr_space(Convert.ToUInt32(selectSystemReqByIdReader.GetValue(6)))
+                                .idSystemReqType(Convert.ToInt32(selectSystemReqByIdReader.GetValue(2)))
+                                .sr_OS(selectSystemReqByIdReader.GetString(3))
+                                .processor(selectSystemReqByIdReader.GetString(4))
+                                .sr_RAM(Convert.ToUInt32(selectSystemReqByIdReader.GetValue(5)))
+                                .sr_video(selectSystemReqByIdReader.GetString(6))
+                                .sr_space(Convert.ToUInt32(selectSystemReqByIdReader.GetValue(7)))
                                 .Build();
                         }
                     }
@@ -192,6 +198,7 @@ namespace PatternsPractise.DAO
                 conn.Open();
 
                 cmd.Parameters.AddWithValue("@idSystemReq", systemReq.IdSystemReq);
+                cmd.Parameters.AddWithValue("@idSystemReqType", systemReq.IdSystemReqType);
                 cmd.Parameters.AddWithValue("@idGame", systemReq.Game.GameId);
                 cmd.Parameters.AddWithValue("@sr_OS", systemReq.Sr_OS);
                 cmd.Parameters.AddWithValue("@sr_processor", systemReq.Processor);

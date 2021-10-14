@@ -16,5 +16,6 @@ namespace PatternsPractise.DAO
         public String UpdateUser(User user);
         public User GetUserById(int idUser);
         public int GetUserIdByCred(String login, String password);
+        public int GetUserIdByLogin(String login);
     }
 }

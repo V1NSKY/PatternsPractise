@@ -10,6 +10,7 @@ namespace PatternsPractise.Entities
     {
         private Game game;
         private int idSystemReq;
+        private int idSystemReqType;
         private String sr_OS = "";
         private String processor = "";
         private uint sr_RAM = 0;
@@ -17,6 +18,17 @@ namespace PatternsPractise.Entities
         private uint sr_space = 0;
 
         private SystemReq() { }
+        public int IdSystemReqType
+        {
+            get
+            {
+                return this.idSystemReqType;
+            }
+            private set
+            {
+                this.idSystemReqType = value;
+            }
+        }
         public int IdSystemReq
         {
             get
@@ -114,6 +126,11 @@ namespace PatternsPractise.Entities
             public ReqBuilder()
             {
                 systemReq = new SystemReq();
+            }
+            public ReqBuilder idSystemReqType(int idSystemReqType)
+            {
+                systemReq.idSystemReqType = idSystemReqType;
+                return this;
             }
             public ReqBuilder idSystemReq(int idSystemReq)
             {

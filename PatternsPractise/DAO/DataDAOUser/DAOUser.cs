@@ -22,6 +22,7 @@ namespace PatternsPractise.DAO
         readonly String SQLSelectUserByName = "SELECT * FROM gamelibrarydb.user WHERE userName = @userName;";
         readonly String SQLUpdateUserById = "UPDATE gamelibrarydb.user SET idUserRole = @idUserRole, userName = @userName, userSurname = @userSurname, userMiddleName = @userMiddleName, userLogin = @userLogin, userPassword = @userPassword, userPhone = @userPhone, userDescription = @userDescription WHERE idUser = @idUser;";
         readonly String SQLSelectUserIdByCred = "SELECT idUser FROM gamelibrarydb.user WHERE userLogin = @userLogin AND userPassword = @userPassword";
+        readonly String SQLSelectUserIdByLogin = "SELECT idUser FROM gamelibrarydb.user WHERE userLogin = @userLogin";
         public DAOUser() { }
 
         //DAO AddUser
@@ -199,7 +200,37 @@ namespace PatternsPractise.DAO
                 }
             }   
         }
-       
+
+        public int GetUserIdByLogin(string login)
+        {
+            using (MySqlConnection conn = SQLConnection.GetConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand
+                {
+                    Connection = conn,
+                    CommandText = SQLSelectUserIdByLogin
+                };
+                cmd.Parameters.AddWithValue("@userLogin", login);
+
+                using (MySqlDataReader getUserReader = cmd.ExecuteReader())
+                {
+                    if (getUserReader.HasRows)
+                    {
+                        getUserReader.Read();
+                        int userId = Convert.ToInt32(getUserReader.GetValue(0));
+                        cmd.Parameters.Clear();
+                        return userId;
+                    }
+                    else
+                    {
+                        cmd.Parameters.Clear();
+                        return 0;
+                    }
+                }
+            }
+        }
+
         //DAO SearchUsersByName
 
         public List<User> SearchUsersByName(String userName)

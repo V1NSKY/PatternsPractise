@@ -9,7 +9,7 @@ using static PatternsPractise.Entities.Game;
 using MySql.Data.MySqlClient;
 using System.Data.Common;
 
-namespace PatternsPractise.DAO
+namespace PatternsPractise.DAO.DAOGame
 {
     class DAOGame : IDAOGame
     {
