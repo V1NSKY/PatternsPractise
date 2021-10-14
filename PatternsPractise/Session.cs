@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PatternsPractise
 {
@@ -12,6 +13,7 @@ namespace PatternsPractise
     {
         public static User user { private set; get; }
         public static int selectedGameid { set; get; }
+        public static Form mainMenu { set; get; }
         public static User SetUser(User newUser)
         {
             if(user == null)

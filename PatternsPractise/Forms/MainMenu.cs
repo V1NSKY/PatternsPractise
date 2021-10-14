@@ -18,6 +18,8 @@ using PatternsPractise.DAO.FactoryDAOUser;
 using PatternsPractise.DAO;
 using PatternsPractise.Forms;
 using PatternsPractise.DAO.DAOGame.FactoryDAOGame;
+using PatternsPractise.DAO.DAOLibrary.FactoryDAOLibrary;
+using static PatternsPractise.Entities.UserGameLibrary;
 
 namespace PatternsPractise
 {
@@ -38,6 +40,7 @@ namespace PatternsPractise
         private void MainMenu_Load(object sender, EventArgs e)
         {
             GetAllGames();
+            Session.mainMenu = this;
         }
 
         private void loginInButton_Click(object sender, EventArgs e)
@@ -72,6 +75,8 @@ namespace PatternsPractise
                 loginInButton.Visible = false;
                 logOutButton.Visible = true;
                 registerButton.Visible = false;
+                libraryButton.Visible = true;
+                addButton.Visible = true;
             }
         }
 
@@ -90,6 +95,9 @@ namespace PatternsPractise
             addGameButton.Visible = false;
             addUserButton.Visible = false;
             changeGameButton.Visible = false;
+            libraryButton.Visible = false;
+            addButton.Visible = false;
+            isAddedLabel.Visible = false;
         }
 
         private void registerButton_Click(object sender, EventArgs e)
@@ -114,6 +122,7 @@ namespace PatternsPractise
 
         private void gameGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            isAddedLabel.Visible = false;
             DataGridViewSelectedCellCollection cells = gameGridView.SelectedCells;
             Session.selectedGameid = Convert.ToInt32(cells[0].Value);
             /*Game game = new GameBuilder()
@@ -137,6 +146,33 @@ namespace PatternsPractise
         {
             GameInfoForm gameInfoForm = new GameInfoForm();
             gameInfoForm.Show();
+        }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            if(Session.user != null)
+            {
+                CreatorDAOUser creatorDAOUser = new CreatorSQLDAOUser();
+                IDAOUser daoUser = creatorDAOUser.FactoryMetod();
+                CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
+                IDAOGame daoGame = creatorDAOGame.FactoryMetod();
+                CreatorDAOLibrary creatorDAOLibrary = new CreatorSQLDAOLibrary();
+                IDAOLibrary daoLibrary = creatorDAOLibrary.FactoryMetod();
+
+                isAddedLabel.Text = daoLibrary.AddLibrary(new LibraryBuilder()
+                                    .game(daoGame.GetGameById(Session.selectedGameid))
+                                    .user(daoUser.GetUserById(Session.user.UserId))
+                                    .Build());
+
+                isAddedLabel.Visible = true;
+            }  
+        }
+
+        private void libraryButton_Click(object sender, EventArgs e)
+        {
+            GameLibrary gameLibrary = new GameLibrary();
+            gameLibrary.Show();
+            this.Hide();
         }
     }
 }

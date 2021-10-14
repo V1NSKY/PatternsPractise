@@ -58,6 +58,8 @@ namespace PatternsPractise
             this.changeGameButton = new System.Windows.Forms.Button();
             this.addUserButton = new System.Windows.Forms.Button();
             this.gameInfoButton = new System.Windows.Forms.Button();
+            this.libraryButton = new System.Windows.Forms.Button();
+            this.isAddedLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gameGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -244,6 +246,8 @@ namespace PatternsPractise
             this.addButton.TabIndex = 4;
             this.addButton.Text = "Добавить";
             this.addButton.UseVisualStyleBackColor = false;
+            this.addButton.Visible = false;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
             // passwordTextBox
             // 
@@ -406,12 +410,41 @@ namespace PatternsPractise
             this.gameInfoButton.UseVisualStyleBackColor = false;
             this.gameInfoButton.Click += new System.EventHandler(this.gameInfoButton_Click);
             // 
+            // libraryButton
+            // 
+            this.libraryButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            this.libraryButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.libraryButton.FlatAppearance.BorderSize = 0;
+            this.libraryButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.libraryButton.ForeColor = System.Drawing.Color.White;
+            this.libraryButton.Location = new System.Drawing.Point(316, 12);
+            this.libraryButton.Name = "libraryButton";
+            this.libraryButton.Size = new System.Drawing.Size(100, 50);
+            this.libraryButton.TabIndex = 21;
+            this.libraryButton.Text = "Библиотека";
+            this.libraryButton.UseVisualStyleBackColor = false;
+            this.libraryButton.Visible = false;
+            this.libraryButton.Click += new System.EventHandler(this.libraryButton_Click);
+            // 
+            // isAddedLabel
+            // 
+            this.isAddedLabel.AutoSize = true;
+            this.isAddedLabel.ForeColor = System.Drawing.Color.Green;
+            this.isAddedLabel.Location = new System.Drawing.Point(439, 50);
+            this.isAddedLabel.Name = "isAddedLabel";
+            this.isAddedLabel.Size = new System.Drawing.Size(172, 15);
+            this.isAddedLabel.TabIndex = 22;
+            this.isAddedLabel.Text = "Игра добавлена в библиотеку";
+            this.isAddedLabel.Visible = false;
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(884, 511);
+            this.Controls.Add(this.isAddedLabel);
+            this.Controls.Add(this.libraryButton);
             this.Controls.Add(this.gameInfoButton);
             this.Controls.Add(this.addUserButton);
             this.Controls.Add(this.changeGameButton);
@@ -468,6 +501,8 @@ namespace PatternsPractise
         private System.Windows.Forms.Button changeGameButton;
         private System.Windows.Forms.Button addUserButton;
         private System.Windows.Forms.Button gameInfoButton;
+        private System.Windows.Forms.Button libraryButton;
+        private System.Windows.Forms.Label isAddedLabel;
     }
 }
 

@@ -27,13 +27,27 @@ namespace PatternsPractise.Entities
                 this.user = value;
             }
         }
+        public int GameId
+        {
+            get
+            {
+                return this.game.GameId;
+            }
+        }
+        public String GameName
+        {
+            get
+            {
+                return this.game.GameName;
+            }
+        }
         public Game Game
         {
             get
             {
                 return this.game;
             }
-            private set
+            set
             {
                 this.game = value;
             }

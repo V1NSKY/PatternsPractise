@@ -11,7 +11,7 @@ namespace PatternsPractise.DAO
     {
         public String AddLibrary(UserGameLibrary userGameLibrary);
         public String DeleteLibrary(int idUser);
-        public String DeleteLibraryGame(int idGame);
+        public int DeleteLibraryGame(int idGame);
         public List<UserGameLibrary> GetAllUserLibrary(int idUser);
 
     }

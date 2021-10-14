@@ -14,12 +14,26 @@ namespace PatternsPractise.DAO.DAOLibrary
 {
     class DAOLibrary : IDAOLibrary
     {
-        readonly String SQLInsertUserGameLibrary = "INSERT INTO gamelibrarydb.usergamelibrary (idGame,idUser,dateAdded,hoursPlayed,dateLastPlayed) VALUES (@idGame,@idUser,curdate(),@hoursPlayed,@dateLastPlayed);";
-        readonly String SQLDeleteUserLibrary = "DELETE gamelibrarydb.usergamelibrary WHERE idUser = @idUser;";
-        readonly String SQLDeleteUserLibraryGame = "DELETE gamelibrarydb.usergamelibrary WHERE idGame = @idGame;";
+        readonly String SQLInsertUserGameLibrary = "INSERT INTO gamelibrarydb.usergamelibrary (idGame,idUser,dateAdded,hoursPlayed,dateLastPlayed) VALUES (@idGame,@idUser,curdate(),@hoursPlayed,curdate());";
+        readonly String SQLDeleteUserLibrary = "DELETE FROM gamelibrarydb.usergamelibrary WHERE idUser = @idUser;";
+        readonly String SQLDeleteUserLibraryGame = "DELETE FROM gamelibrarydb.usergamelibrary WHERE idGame = @idGame;";
         readonly String SQLSelectAllUserLibraryGame = "SELECT * FROM gamelibrarydb.usergamelibrary WHERE idUser = @idUser";
         public string AddLibrary(UserGameLibrary userGameLibrary)
         {
+            List<UserGameLibrary> library = GetAllUserLibrary(userGameLibrary.User.UserId);
+
+            if(library != null)
+            {
+                foreach (UserGameLibrary gameLibrary in library)
+                {
+                    if (userGameLibrary.Game.GameId == gameLibrary.Game.GameId)
+                    {
+                        return "Игра уже есть в библиотеке";
+                    }
+                }
+            }
+           
+
             using(MySqlConnection conn = SQLConnection.GetConnection())
             {
                 MySqlCommand cmd = new MySqlCommand
@@ -32,8 +46,8 @@ namespace PatternsPractise.DAO.DAOLibrary
                 cmd.Parameters.AddWithValue("@idGame", userGameLibrary.Game.GameId);
                 cmd.Parameters.AddWithValue("@idUser", userGameLibrary.User.UserId);
                 cmd.Parameters.AddWithValue("@hoursPlayed", userGameLibrary.HoursPlayed);
-                cmd.Parameters.AddWithValue("@dateLastPlayed", userGameLibrary.DateLastPlayed);
-                return cmd.ExecuteNonQuery().ToString();
+                cmd.ExecuteNonQuery();
+                return "Игра добавлена в библиотеку";
             }
         }
 
@@ -53,7 +67,7 @@ namespace PatternsPractise.DAO.DAOLibrary
             }
         }
 
-        public string DeleteLibraryGame(int idGame)
+        public int DeleteLibraryGame(int idGame)
         {
             using (MySqlConnection conn = SQLConnection.GetConnection())
             {
@@ -65,7 +79,7 @@ namespace PatternsPractise.DAO.DAOLibrary
 
                 conn.Open();
                 cmd.Parameters.AddWithValue("@idGame", idGame);
-                return cmd.ExecuteNonQuery().ToString();
+                return cmd.ExecuteNonQuery();
             }
         }
 
