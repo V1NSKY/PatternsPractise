@@ -65,6 +65,8 @@ namespace PatternsPractise.Forms
             this.priceLabel = new System.Windows.Forms.Label();
             this.dateOfReleaseLabel = new System.Windows.Forms.Label();
             this.descriptionLabel = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.ganreLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -378,7 +380,7 @@ namespace PatternsPractise.Forms
             // 
             this.label18.AutoSize = true;
             this.label18.ForeColor = System.Drawing.Color.White;
-            this.label18.Location = new System.Drawing.Point(12, 110);
+            this.label18.Location = new System.Drawing.Point(12, 149);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(65, 15);
             this.label18.TabIndex = 24;
@@ -439,7 +441,7 @@ namespace PatternsPractise.Forms
             // 
             this.descriptionLabel.AutoSize = true;
             this.descriptionLabel.ForeColor = System.Drawing.Color.White;
-            this.descriptionLabel.Location = new System.Drawing.Point(12, 136);
+            this.descriptionLabel.Location = new System.Drawing.Point(12, 175);
             this.descriptionLabel.MaximumSize = new System.Drawing.Size(336, 154);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(65, 15);
@@ -447,12 +449,33 @@ namespace PatternsPractise.Forms
             this.descriptionLabel.Text = "Описание:";
             this.descriptionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.ForeColor = System.Drawing.Color.White;
+            this.label15.Location = new System.Drawing.Point(15, 106);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(53, 15);
+            this.label15.TabIndex = 31;
+            this.label15.Text = "Жанры: ";
+            // 
+            // ganreLabel
+            // 
+            this.ganreLabel.AutoSize = true;
+            this.ganreLabel.ForeColor = System.Drawing.Color.White;
+            this.ganreLabel.Location = new System.Drawing.Point(67, 106);
+            this.ganreLabel.Name = "ganreLabel";
+            this.ganreLabel.Size = new System.Drawing.Size(0, 15);
+            this.ganreLabel.TabIndex = 32;
+            // 
             // GameInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(359, 690);
+            this.Controls.Add(this.ganreLabel);
+            this.Controls.Add(this.label15);
             this.Controls.Add(this.descriptionLabel);
             this.Controls.Add(this.priceLabel);
             this.Controls.Add(this.dateOfReleaseLabel);
@@ -522,5 +545,7 @@ namespace PatternsPractise.Forms
         private System.Windows.Forms.Label priceLabel;
         private System.Windows.Forms.Label dateOfReleaseLabel;
         private System.Windows.Forms.Label descriptionLabel;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label ganreLabel;
     }
 }

@@ -114,6 +114,7 @@ namespace PatternsPractise
 
         private void SearchByNameButton_Click(object sender, EventArgs e)
         {
+            clearButton.Visible = true;
             CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
             IDAOGame daoGame = creatorDAOGame.FactoryMetod();
             List<Game> listGames = daoGame.SearchGameByName(searchTextBox.Text.ToString());
@@ -173,6 +174,18 @@ namespace PatternsPractise
             GameLibrary gameLibrary = new GameLibrary();
             gameLibrary.Show();
             this.Hide();
+        }
+
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            GetAllGames();
+            clearButton.Visible = false;
+            searchTextBox.Text = "";
+        }
+
+        private void addGameButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

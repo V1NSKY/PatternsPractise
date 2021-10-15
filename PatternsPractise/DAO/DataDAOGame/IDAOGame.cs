@@ -15,5 +15,6 @@ namespace PatternsPractise.DAO
         public List<Game> SearchGameByName(String gameName);
         public List<Game> GetAllGame();
         public Game GetGameById(int idGame);
+        public List<GameGenre> GetGameGenres(int idGame);
     }
 }

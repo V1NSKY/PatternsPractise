@@ -31,6 +31,23 @@ namespace PatternsPractise.Forms
 
             Game game = daoGame.GetGameById(Session.selectedGameid);
 
+            List<GameGenre> gameGenres = daoGame.GetGameGenres(Session.selectedGameid);
+
+            for(int i = 0; i < gameGenres.Count; i++)
+            {
+                game.AddGenre(gameGenres[i]);
+                if(i == gameGenres.Count - 1)
+                {
+                    ganreLabel.Text += gameGenres[i].genreName + ".";
+                }
+                else
+                {
+                    ganreLabel.Text += gameGenres[i].genreName + ", ";
+                }
+                
+            }
+            
+
             nameLabel.Text = game.GameName.ToUpper().ToString();
             developerLabel.Text = game.GameDeveloper.ToString();
             publisherLabel.Text = game.GamePublisher.ToString();
