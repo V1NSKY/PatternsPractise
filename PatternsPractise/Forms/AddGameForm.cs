@@ -51,7 +51,7 @@ namespace PatternsPractise.Forms
                 .processor(minProcTextBox.Text)
                 .sr_video(minVideoTextBox.Text)
                 .sr_RAM(Convert.ToUInt32(minRAMTextBox.Text))
-                .sr_space(Convert.ToUInt32(minRAMTextBox.Text))
+                .sr_space(Convert.ToUInt32(minSpaceTextBox.Text))
                 .Build();
             SystemReq maxSystemReq = new ReqBuilder()
                 .idSystemReqType(2)
@@ -60,7 +60,7 @@ namespace PatternsPractise.Forms
                 .processor(maxProcTextBox.Text)
                 .sr_video(maxVideoTextBox.Text)
                 .sr_RAM(Convert.ToUInt32(maxRAMTextBox.Text))
-                .sr_space(Convert.ToUInt32(maxRAMTextBox.Text))
+                .sr_space(Convert.ToUInt32(maxSpaceTextBox.Text))
                 .Build();
             
             daoSystemReq.AddSystemReq(minSystemReq);
@@ -93,6 +93,7 @@ namespace PatternsPractise.Forms
             {
                 addedGenresLabel.Text += genre.genreName + " ";
                 listGenres.Add(genre);
+                addGenreTextBox.Text = "";
             }
             else
             {
@@ -110,6 +111,7 @@ namespace PatternsPractise.Forms
                     genre = new GameGenre(addGenreTextBox.Text.ToString());
                     addedGenresLabel.Text += genre.genreName + " ";
                     listGenres.Add(genre);
+                    addGenreTextBox.Text = "";
                 }
                 else if (result == DialogResult.No)
                 {

@@ -85,7 +85,7 @@ namespace PatternsPractise.Forms
             this.panel1.Controls.Add(this.label3);
             this.panel1.Location = new System.Drawing.Point(13, 526);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(336, 154);
+            this.panel1.Size = new System.Drawing.Size(481, 154);
             this.panel1.TabIndex = 0;
             // 
             // minProcLabel
@@ -212,7 +212,7 @@ namespace PatternsPractise.Forms
             this.panel2.Controls.Add(this.label11);
             this.panel2.Location = new System.Drawing.Point(13, 351);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(336, 154);
+            this.panel2.Size = new System.Drawing.Size(481, 154);
             this.panel2.TabIndex = 1;
             // 
             // recProcLabel
@@ -360,7 +360,7 @@ namespace PatternsPractise.Forms
             // 
             this.label16.AutoSize = true;
             this.label16.ForeColor = System.Drawing.Color.White;
-            this.label16.Location = new System.Drawing.Point(195, 66);
+            this.label16.Location = new System.Drawing.Point(322, 66);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(38, 15);
             this.label16.TabIndex = 21;
@@ -370,7 +370,7 @@ namespace PatternsPractise.Forms
             // 
             this.label17.AutoSize = true;
             this.label17.ForeColor = System.Drawing.Color.White;
-            this.label17.Location = new System.Drawing.Point(195, 86);
+            this.label17.Location = new System.Drawing.Point(322, 86);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(78, 15);
             this.label17.TabIndex = 20;
@@ -391,7 +391,7 @@ namespace PatternsPractise.Forms
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label19.ForeColor = System.Drawing.Color.White;
-            this.label19.Location = new System.Drawing.Point(67, 296);
+            this.label19.Location = new System.Drawing.Point(130, 300);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(227, 28);
             this.label19.TabIndex = 25;
@@ -421,7 +421,7 @@ namespace PatternsPractise.Forms
             // 
             this.priceLabel.AutoSize = true;
             this.priceLabel.ForeColor = System.Drawing.Color.White;
-            this.priceLabel.Location = new System.Drawing.Point(279, 66);
+            this.priceLabel.Location = new System.Drawing.Point(406, 66);
             this.priceLabel.Name = "priceLabel";
             this.priceLabel.Size = new System.Drawing.Size(38, 15);
             this.priceLabel.TabIndex = 29;
@@ -431,7 +431,7 @@ namespace PatternsPractise.Forms
             // 
             this.dateOfReleaseLabel.AutoSize = true;
             this.dateOfReleaseLabel.ForeColor = System.Drawing.Color.White;
-            this.dateOfReleaseLabel.Location = new System.Drawing.Point(279, 86);
+            this.dateOfReleaseLabel.Location = new System.Drawing.Point(406, 86);
             this.dateOfReleaseLabel.Name = "dateOfReleaseLabel";
             this.dateOfReleaseLabel.Size = new System.Drawing.Size(78, 15);
             this.dateOfReleaseLabel.TabIndex = 28;
@@ -442,7 +442,7 @@ namespace PatternsPractise.Forms
             this.descriptionLabel.AutoSize = true;
             this.descriptionLabel.ForeColor = System.Drawing.Color.White;
             this.descriptionLabel.Location = new System.Drawing.Point(12, 175);
-            this.descriptionLabel.MaximumSize = new System.Drawing.Size(336, 154);
+            this.descriptionLabel.MaximumSize = new System.Drawing.Size(522, 154);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(65, 15);
             this.descriptionLabel.TabIndex = 30;
@@ -473,7 +473,7 @@ namespace PatternsPractise.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
-            this.ClientSize = new System.Drawing.Size(359, 690);
+            this.ClientSize = new System.Drawing.Size(506, 690);
             this.Controls.Add(this.ganreLabel);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.descriptionLabel);
@@ -492,8 +492,8 @@ namespace PatternsPractise.Forms
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.panel1);
-            this.MaximumSize = new System.Drawing.Size(375, 729);
-            this.MinimumSize = new System.Drawing.Size(375, 729);
+            this.MaximumSize = new System.Drawing.Size(522, 729);
+            this.MinimumSize = new System.Drawing.Size(522, 729);
             this.Name = "GameInfoForm";
             this.ShowIcon = false;
             this.Text = "Информация";

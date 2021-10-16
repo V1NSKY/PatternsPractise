@@ -62,6 +62,7 @@ namespace PatternsPractise
             this.isAddedLabel = new System.Windows.Forms.Label();
             this.clearButton = new System.Windows.Forms.Button();
             this.deleteGameButton = new System.Windows.Forms.Button();
+            this.updateGridButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gameGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -242,7 +243,7 @@ namespace PatternsPractise
             this.addButton.FlatAppearance.BorderSize = 0;
             this.addButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addButton.ForeColor = System.Drawing.Color.White;
-            this.addButton.Location = new System.Drawing.Point(15, 124);
+            this.addButton.Location = new System.Drawing.Point(15, 153);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(100, 50);
             this.addButton.TabIndex = 4;
@@ -335,7 +336,7 @@ namespace PatternsPractise
             this.addGameButton.FlatAppearance.BorderSize = 0;
             this.addGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addGameButton.ForeColor = System.Drawing.Color.White;
-            this.addGameButton.Location = new System.Drawing.Point(15, 267);
+            this.addGameButton.Location = new System.Drawing.Point(15, 296);
             this.addGameButton.Name = "addGameButton";
             this.addGameButton.Size = new System.Drawing.Size(100, 50);
             this.addGameButton.TabIndex = 15;
@@ -346,7 +347,7 @@ namespace PatternsPractise
             // 
             // searchTextBox
             // 
-            this.searchTextBox.Location = new System.Drawing.Point(15, 180);
+            this.searchTextBox.Location = new System.Drawing.Point(15, 209);
             this.searchTextBox.Name = "searchTextBox";
             this.searchTextBox.PlaceholderText = "Название игры";
             this.searchTextBox.Size = new System.Drawing.Size(100, 23);
@@ -359,7 +360,7 @@ namespace PatternsPractise
             this.SearchByNameButton.FlatAppearance.BorderSize = 0;
             this.SearchByNameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SearchByNameButton.ForeColor = System.Drawing.Color.White;
-            this.SearchByNameButton.Location = new System.Drawing.Point(15, 209);
+            this.SearchByNameButton.Location = new System.Drawing.Point(15, 238);
             this.SearchByNameButton.Name = "SearchByNameButton";
             this.SearchByNameButton.Size = new System.Drawing.Size(100, 23);
             this.SearchByNameButton.TabIndex = 17;
@@ -374,13 +375,14 @@ namespace PatternsPractise
             this.changeGameButton.FlatAppearance.BorderSize = 0;
             this.changeGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.changeGameButton.ForeColor = System.Drawing.Color.White;
-            this.changeGameButton.Location = new System.Drawing.Point(15, 352);
+            this.changeGameButton.Location = new System.Drawing.Point(15, 381);
             this.changeGameButton.Name = "changeGameButton";
             this.changeGameButton.Size = new System.Drawing.Size(100, 23);
             this.changeGameButton.TabIndex = 18;
             this.changeGameButton.Text = "Изменить игру";
             this.changeGameButton.UseVisualStyleBackColor = false;
             this.changeGameButton.Visible = false;
+            this.changeGameButton.Click += new System.EventHandler(this.changeGameButton_Click);
             // 
             // addUserButton
             // 
@@ -389,7 +391,7 @@ namespace PatternsPractise
             this.addUserButton.FlatAppearance.BorderSize = 0;
             this.addUserButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addUserButton.ForeColor = System.Drawing.Color.White;
-            this.addUserButton.Location = new System.Drawing.Point(15, 381);
+            this.addUserButton.Location = new System.Drawing.Point(15, 410);
             this.addUserButton.Name = "addUserButton";
             this.addUserButton.Size = new System.Drawing.Size(100, 50);
             this.addUserButton.TabIndex = 19;
@@ -405,7 +407,7 @@ namespace PatternsPractise
             this.gameInfoButton.FlatAppearance.BorderSize = 0;
             this.gameInfoButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gameInfoButton.ForeColor = System.Drawing.Color.White;
-            this.gameInfoButton.Location = new System.Drawing.Point(15, 68);
+            this.gameInfoButton.Location = new System.Drawing.Point(15, 97);
             this.gameInfoButton.Name = "gameInfoButton";
             this.gameInfoButton.Size = new System.Drawing.Size(100, 50);
             this.gameInfoButton.TabIndex = 20;
@@ -447,7 +449,7 @@ namespace PatternsPractise
             this.clearButton.FlatAppearance.BorderSize = 0;
             this.clearButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.clearButton.ForeColor = System.Drawing.Color.White;
-            this.clearButton.Location = new System.Drawing.Point(15, 238);
+            this.clearButton.Location = new System.Drawing.Point(15, 267);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(100, 23);
             this.clearButton.TabIndex = 23;
@@ -463,7 +465,7 @@ namespace PatternsPractise
             this.deleteGameButton.FlatAppearance.BorderSize = 0;
             this.deleteGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.deleteGameButton.ForeColor = System.Drawing.Color.White;
-            this.deleteGameButton.Location = new System.Drawing.Point(15, 323);
+            this.deleteGameButton.Location = new System.Drawing.Point(15, 352);
             this.deleteGameButton.Name = "deleteGameButton";
             this.deleteGameButton.Size = new System.Drawing.Size(100, 23);
             this.deleteGameButton.TabIndex = 24;
@@ -472,12 +474,28 @@ namespace PatternsPractise
             this.deleteGameButton.Visible = false;
             this.deleteGameButton.Click += new System.EventHandler(this.deleteGameButton_Click);
             // 
+            // updateGridButton
+            // 
+            this.updateGridButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            this.updateGridButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.updateGridButton.FlatAppearance.BorderSize = 0;
+            this.updateGridButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.updateGridButton.ForeColor = System.Drawing.Color.White;
+            this.updateGridButton.Location = new System.Drawing.Point(15, 68);
+            this.updateGridButton.Name = "updateGridButton";
+            this.updateGridButton.Size = new System.Drawing.Size(100, 23);
+            this.updateGridButton.TabIndex = 25;
+            this.updateGridButton.Text = "Обновить";
+            this.updateGridButton.UseVisualStyleBackColor = false;
+            this.updateGridButton.Click += new System.EventHandler(this.updateButton_Click);
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(884, 511);
+            this.Controls.Add(this.updateGridButton);
             this.Controls.Add(this.deleteGameButton);
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.isAddedLabel);
@@ -542,6 +560,7 @@ namespace PatternsPractise
         private System.Windows.Forms.Label isAddedLabel;
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.Button deleteGameButton;
+        private System.Windows.Forms.Button updateGridButton;
     }
 }
 

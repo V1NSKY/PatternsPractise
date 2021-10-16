@@ -198,5 +198,16 @@ namespace PatternsPractise
             daoGame.DeleteGame(Session.selectedGameid);
             GetAllGames();
         }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            GetAllGames();
+        }
+
+        private void changeGameButton_Click(object sender, EventArgs e)
+        {
+            ChangeGameForm changeGameForm = new ChangeGameForm();
+            changeGameForm.Show();
+        }
     }
 }

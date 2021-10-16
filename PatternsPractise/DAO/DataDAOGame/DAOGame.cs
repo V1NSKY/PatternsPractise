@@ -55,7 +55,6 @@ namespace PatternsPractise.DAO.DAOGame
                         if (!checkGenreReader.HasRows)
                         {
                             return "Жанр " + genre.genreName + " не найден";
-                            conn.Close();
                         }
                         else
                         {
