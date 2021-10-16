@@ -13,7 +13,8 @@ namespace PatternsPractise.DAO.DAOGame
 {
     class DAOGame : IDAOGame
     {
-        readonly String  SQLInsertGame = "INSERT INTO gamelibrarydb.game(gameDeveloper,gamePublisher,gameName,gamePrice,gameDateOfRelease,gameDescription) VALUES(@gameDeveloper, @gamePublisher, @gameName, @gamePrice, @gameDateOfRelease, @gameDescription);";
+        readonly String SQLInsertGame = "INSERT INTO gamelibrarydb.game(gameDeveloper,gamePublisher,gameName,gamePrice,gameDateOfRelease,gameDescription) VALUES(@gameDeveloper, @gamePublisher, @gameName, @gamePrice, @gameDateOfRelease, @gameDescription);";
+        readonly String SQLInsertGameGenreByName = "INSERT INTO gamelibrarydb.gamegenre(genreName) VALUES(@genreName);";
         readonly String SQLSelectGenreByName = "SELECT idGameGenre FROM gamelibrarydb.gamegenre WHERE genreName = @genreName;";
         readonly String SQLInsertSpecificGenre = "INSERT INTO gamelibrarydb.specificgenre VALUES (@idGame,@idGameGenre);";
         readonly String SQLSelectNewIdGame = "SELECT idGame FROM gamelibrarydb.game WHERE idGame=(SELECT max(idGame) FROM gamelibrarydb.game);";
@@ -24,6 +25,7 @@ namespace PatternsPractise.DAO.DAOGame
         readonly String SQLDeleteGameById = "DELETE FROM gamelibrarydb.game WHERE idGame = @idGame;";
         readonly String SQLSelectGameById = "SELECT * FROM gamelibrarydb.game WHERE idGame = @idGame;";
         readonly String SQLUpdateGame = "UPDATE gamelibrarydb.game SET gameDeveloper = @gameDeveloper, gamePublisher = @gamePublisher, gameName = @gameName, gamePrice = @gamePrice, gameDateOfRelease = @gameDateOfRelease, gameDescription = @gameDescription WHERE idGame = @idGame;";
+        readonly String SQLGetGenreByName = "SELECT * FROM gamelibrarydb.gamegenre WHERE genreName = @genreName;";
         public DAOGame() { }
 
         //DAO AddGame
@@ -52,7 +54,7 @@ namespace PatternsPractise.DAO.DAOGame
                     {
                         if (!checkGenreReader.HasRows)
                         {
-                            return "Жанр" + genre.genreName + "не найден";
+                            return "Жанр " + genre.genreName + " не найден";
                             conn.Close();
                         }
                         else
@@ -349,6 +351,85 @@ namespace PatternsPractise.DAO.DAOGame
             }
             
             return game;
+        }
+
+        public GameGenre GetGameGenreByName(string genreName)
+        {
+            using (MySqlConnection conn = SQLConnection.GetConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand
+                {
+                    Connection = conn,
+                    CommandText = SQLGetGenreByName
+                };
+                cmd.Parameters.AddWithValue("@genreName", genreName);
+                using (MySqlDataReader selectGenreByNameReader = cmd.ExecuteReader())
+                {
+                    if (selectGenreByNameReader.HasRows)
+                    {
+                        selectGenreByNameReader.Read();
+                        return new GameGenre(selectGenreByNameReader.GetString(1));
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+        }
+
+        public string AddGenreByName(string genreName)
+        {
+            using (MySqlConnection conn = SQLConnection.GetConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand
+                {
+                    Connection = conn,
+                    CommandText = SQLInsertGameGenreByName
+                };
+                cmd.Parameters.AddWithValue("@genreName", genreName);
+                return cmd.ExecuteNonQuery().ToString();
+            }
+        }
+
+        public Game GetGameByName(string gameName)
+        {
+            using (MySqlConnection conn = SQLConnection.GetConnection())
+            {
+                Game game = new GameBuilder().Build();
+                MySqlCommand cmd = new MySqlCommand
+                {
+                    Connection = conn,
+                    CommandText = SQLSelectGameByName
+                };
+                cmd.Parameters.AddWithValue("@gameName", gameName);
+                conn.Open();
+                using (MySqlDataReader selectGameByNameReader = cmd.ExecuteReader())
+                {
+                    if (selectGameByNameReader.HasRows)
+                    {
+                        while (selectGameByNameReader.Read())
+                        {
+                            game = new GameBuilder()
+                                .gameId(Convert.ToInt32(selectGameByNameReader.GetValue(0)))
+                                .gameDeveloper(selectGameByNameReader.GetString(1))
+                                .gamePublisher(selectGameByNameReader.GetString(2))
+                                .gameName(selectGameByNameReader.GetString(3))
+                                .gamePrice(Convert.ToDouble(selectGameByNameReader.GetString(4)))
+                                .gameDateOfRelease(Convert.ToDateTime(selectGameByNameReader.GetString(5)).ToString("yyyy.MM.dd"))
+                                .gameDescription(selectGameByNameReader.GetString(6))
+                                .Build();  
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                return game;
+            }
         }
     }
 }

@@ -61,6 +61,7 @@ namespace PatternsPractise
             this.libraryButton = new System.Windows.Forms.Button();
             this.isAddedLabel = new System.Windows.Forms.Label();
             this.clearButton = new System.Windows.Forms.Button();
+            this.deleteGameButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gameGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -373,9 +374,9 @@ namespace PatternsPractise
             this.changeGameButton.FlatAppearance.BorderSize = 0;
             this.changeGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.changeGameButton.ForeColor = System.Drawing.Color.White;
-            this.changeGameButton.Location = new System.Drawing.Point(15, 323);
+            this.changeGameButton.Location = new System.Drawing.Point(15, 352);
             this.changeGameButton.Name = "changeGameButton";
-            this.changeGameButton.Size = new System.Drawing.Size(100, 50);
+            this.changeGameButton.Size = new System.Drawing.Size(100, 23);
             this.changeGameButton.TabIndex = 18;
             this.changeGameButton.Text = "Изменить игру";
             this.changeGameButton.UseVisualStyleBackColor = false;
@@ -388,7 +389,7 @@ namespace PatternsPractise
             this.addUserButton.FlatAppearance.BorderSize = 0;
             this.addUserButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addUserButton.ForeColor = System.Drawing.Color.White;
-            this.addUserButton.Location = new System.Drawing.Point(15, 379);
+            this.addUserButton.Location = new System.Drawing.Point(15, 381);
             this.addUserButton.Name = "addUserButton";
             this.addUserButton.Size = new System.Drawing.Size(100, 50);
             this.addUserButton.TabIndex = 19;
@@ -455,12 +456,29 @@ namespace PatternsPractise
             this.clearButton.Visible = false;
             this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
+            // deleteGameButton
+            // 
+            this.deleteGameButton.BackColor = System.Drawing.Color.Green;
+            this.deleteGameButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.deleteGameButton.FlatAppearance.BorderSize = 0;
+            this.deleteGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.deleteGameButton.ForeColor = System.Drawing.Color.White;
+            this.deleteGameButton.Location = new System.Drawing.Point(15, 323);
+            this.deleteGameButton.Name = "deleteGameButton";
+            this.deleteGameButton.Size = new System.Drawing.Size(100, 23);
+            this.deleteGameButton.TabIndex = 24;
+            this.deleteGameButton.Text = "Удалить игру";
+            this.deleteGameButton.UseVisualStyleBackColor = false;
+            this.deleteGameButton.Visible = false;
+            this.deleteGameButton.Click += new System.EventHandler(this.deleteGameButton_Click);
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(884, 511);
+            this.Controls.Add(this.deleteGameButton);
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.isAddedLabel);
             this.Controls.Add(this.libraryButton);
@@ -523,6 +541,7 @@ namespace PatternsPractise
         private System.Windows.Forms.Button libraryButton;
         private System.Windows.Forms.Label isAddedLabel;
         private System.Windows.Forms.Button clearButton;
+        private System.Windows.Forms.Button deleteGameButton;
     }
 }
 

@@ -62,6 +62,7 @@ namespace PatternsPractise
                     addGameButton.Visible = true;
                     addUserButton.Visible = true;
                     changeGameButton.Visible = true;
+                    deleteGameButton.Visible = true;
                 }
                 notUserLabel.Visible = false;
                 loginTextBox.Text = "";
@@ -98,6 +99,7 @@ namespace PatternsPractise
             libraryButton.Visible = false;
             addButton.Visible = false;
             isAddedLabel.Visible = false;
+            deleteGameButton.Visible = false;
         }
 
         private void registerButton_Click(object sender, EventArgs e)
@@ -185,7 +187,16 @@ namespace PatternsPractise
 
         private void addGameButton_Click(object sender, EventArgs e)
         {
+            AddGameForm addGameForm = new AddGameForm();
+            addGameForm.Show();
+        }
 
+        private void deleteGameButton_Click(object sender, EventArgs e)
+        {
+            CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
+            IDAOGame daoGame = creatorDAOGame.FactoryMetod();
+            daoGame.DeleteGame(Session.selectedGameid);
+            GetAllGames();
         }
     }
 }
