@@ -63,6 +63,7 @@ namespace PatternsPractise
             this.clearButton = new System.Windows.Forms.Button();
             this.deleteGameButton = new System.Windows.Forms.Button();
             this.updateGridButton = new System.Windows.Forms.Button();
+            this.changeUserButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gameGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -120,7 +121,7 @@ namespace PatternsPractise
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(3, 6, 3, 6);
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(57)))), ((int)(((byte)(75)))));
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gameGridView.DefaultCellStyle = dataGridViewCellStyle4;
@@ -143,7 +144,7 @@ namespace PatternsPractise
             this.gameGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.gameGridView.RowTemplate.Height = 25;
             this.gameGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gameGridView.Size = new System.Drawing.Size(746, 431);
+            this.gameGridView.Size = new System.Drawing.Size(746, 448);
             this.gameGridView.TabIndex = 1;
             this.gameGridView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gameGridView_CellContentDoubleClick);
             this.gameGridView.SelectionChanged += new System.EventHandler(this.gameGridView_SelectionChanged);
@@ -336,7 +337,7 @@ namespace PatternsPractise
             this.addGameButton.FlatAppearance.BorderSize = 0;
             this.addGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addGameButton.ForeColor = System.Drawing.Color.White;
-            this.addGameButton.Location = new System.Drawing.Point(15, 296);
+            this.addGameButton.Location = new System.Drawing.Point(15, 352);
             this.addGameButton.Name = "addGameButton";
             this.addGameButton.Size = new System.Drawing.Size(100, 50);
             this.addGameButton.TabIndex = 15;
@@ -375,7 +376,7 @@ namespace PatternsPractise
             this.changeGameButton.FlatAppearance.BorderSize = 0;
             this.changeGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.changeGameButton.ForeColor = System.Drawing.Color.White;
-            this.changeGameButton.Location = new System.Drawing.Point(15, 381);
+            this.changeGameButton.Location = new System.Drawing.Point(15, 437);
             this.changeGameButton.Name = "changeGameButton";
             this.changeGameButton.Size = new System.Drawing.Size(100, 23);
             this.changeGameButton.TabIndex = 18;
@@ -391,7 +392,7 @@ namespace PatternsPractise
             this.addUserButton.FlatAppearance.BorderSize = 0;
             this.addUserButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addUserButton.ForeColor = System.Drawing.Color.White;
-            this.addUserButton.Location = new System.Drawing.Point(15, 410);
+            this.addUserButton.Location = new System.Drawing.Point(15, 466);
             this.addUserButton.Name = "addUserButton";
             this.addUserButton.Size = new System.Drawing.Size(100, 50);
             this.addUserButton.TabIndex = 19;
@@ -465,7 +466,7 @@ namespace PatternsPractise
             this.deleteGameButton.FlatAppearance.BorderSize = 0;
             this.deleteGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.deleteGameButton.ForeColor = System.Drawing.Color.White;
-            this.deleteGameButton.Location = new System.Drawing.Point(15, 352);
+            this.deleteGameButton.Location = new System.Drawing.Point(15, 408);
             this.deleteGameButton.Name = "deleteGameButton";
             this.deleteGameButton.Size = new System.Drawing.Size(100, 23);
             this.deleteGameButton.TabIndex = 24;
@@ -489,12 +490,29 @@ namespace PatternsPractise
             this.updateGridButton.UseVisualStyleBackColor = false;
             this.updateGridButton.Click += new System.EventHandler(this.updateButton_Click);
             // 
+            // changeUserButton
+            // 
+            this.changeUserButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            this.changeUserButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.changeUserButton.FlatAppearance.BorderSize = 0;
+            this.changeUserButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.changeUserButton.ForeColor = System.Drawing.Color.White;
+            this.changeUserButton.Location = new System.Drawing.Point(15, 296);
+            this.changeUserButton.Name = "changeUserButton";
+            this.changeUserButton.Size = new System.Drawing.Size(100, 50);
+            this.changeUserButton.TabIndex = 26;
+            this.changeUserButton.Text = "Изменить пользователя";
+            this.changeUserButton.UseVisualStyleBackColor = false;
+            this.changeUserButton.Visible = false;
+            this.changeUserButton.Click += new System.EventHandler(this.changeUserButton_Click);
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
-            this.ClientSize = new System.Drawing.Size(884, 511);
+            this.ClientSize = new System.Drawing.Size(884, 528);
+            this.Controls.Add(this.changeUserButton);
             this.Controls.Add(this.updateGridButton);
             this.Controls.Add(this.deleteGameButton);
             this.Controls.Add(this.clearButton);
@@ -518,7 +536,7 @@ namespace PatternsPractise
             this.Controls.Add(this.loginInButton);
             this.Controls.Add(this.gameGridView);
             this.Controls.Add(this.registerButton);
-            this.MinimumSize = new System.Drawing.Size(900, 550);
+            this.MinimumSize = new System.Drawing.Size(900, 567);
             this.Name = "MainMenu";
             this.ShowIcon = false;
             this.Text = "Main Menu";
@@ -561,6 +579,7 @@ namespace PatternsPractise
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.Button deleteGameButton;
         private System.Windows.Forms.Button updateGridButton;
+        private System.Windows.Forms.Button changeUserButton;
     }
 }
 

@@ -14,7 +14,11 @@ namespace PatternsPractise
         public static User user { private set; get; }
         public static int selectedGameid { set; get; }
         public static Form mainMenu { set; get; }
-        public static User SetUser(User newUser)
+        public static void SetUser(User newUser)
+        {
+            user = newUser;
+        }
+        public static User GetUser(User newUser)
         {
             if(user == null)
             {

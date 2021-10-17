@@ -33,9 +33,6 @@ namespace PatternsPractise.Forms
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gameGridView = new System.Windows.Forms.DataGridView();
-            this.backButton = new System.Windows.Forms.Button();
-            this.deleteGameButton = new System.Windows.Forms.Button();
-            this.isDeletedLabel = new System.Windows.Forms.Label();
             this.gameId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gameName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,6 +40,9 @@ namespace PatternsPractise.Forms
             this.dateLastPlayed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.user = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.game = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.backButton = new System.Windows.Forms.Button();
+            this.deleteGameButton = new System.Windows.Forms.Button();
+            this.isDeletedLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gameGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -109,49 +109,8 @@ namespace PatternsPractise.Forms
             this.gameGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gameGridView.Size = new System.Drawing.Size(860, 426);
             this.gameGridView.TabIndex = 2;
-            // 
-            // backButton
-            // 
-            this.backButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.backButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
-            this.backButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.backButton.FlatAppearance.BorderSize = 0;
-            this.backButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.backButton.ForeColor = System.Drawing.Color.White;
-            this.backButton.Location = new System.Drawing.Point(772, 17);
-            this.backButton.Name = "backButton";
-            this.backButton.Size = new System.Drawing.Size(100, 50);
-            this.backButton.TabIndex = 4;
-            this.backButton.Text = "Назад";
-            this.backButton.UseVisualStyleBackColor = false;
-            this.backButton.Click += new System.EventHandler(this.backButton_Click);
-            // 
-            // deleteGameButton
-            // 
-            this.deleteGameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.deleteGameButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
-            this.deleteGameButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.deleteGameButton.FlatAppearance.BorderSize = 0;
-            this.deleteGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.deleteGameButton.ForeColor = System.Drawing.Color.White;
-            this.deleteGameButton.Location = new System.Drawing.Point(666, 17);
-            this.deleteGameButton.Name = "deleteGameButton";
-            this.deleteGameButton.Size = new System.Drawing.Size(100, 50);
-            this.deleteGameButton.TabIndex = 5;
-            this.deleteGameButton.Text = "Удалить";
-            this.deleteGameButton.UseVisualStyleBackColor = false;
-            this.deleteGameButton.Click += new System.EventHandler(this.deleteGameButton_Click);
-            // 
-            // isDeletedLabel
-            // 
-            this.isDeletedLabel.AutoSize = true;
-            this.isDeletedLabel.ForeColor = System.Drawing.Color.Green;
-            this.isDeletedLabel.Location = new System.Drawing.Point(12, 52);
-            this.isDeletedLabel.Name = "isDeletedLabel";
-            this.isDeletedLabel.Size = new System.Drawing.Size(172, 15);
-            this.isDeletedLabel.TabIndex = 23;
-            this.isDeletedLabel.Text = "Игра добавлена в библиотеку";
-            this.isDeletedLabel.Visible = false;
+            this.gameGridView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gameGridView_CellContentDoubleClick);
+            this.gameGridView.SelectionChanged += new System.EventHandler(this.gameGridView_SelectionChanged);
             // 
             // gameId
             // 
@@ -202,6 +161,49 @@ namespace PatternsPractise.Forms
             this.game.HeaderText = "game";
             this.game.Name = "game";
             this.game.Visible = false;
+            // 
+            // backButton
+            // 
+            this.backButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.backButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            this.backButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.backButton.FlatAppearance.BorderSize = 0;
+            this.backButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.backButton.ForeColor = System.Drawing.Color.White;
+            this.backButton.Location = new System.Drawing.Point(772, 17);
+            this.backButton.Name = "backButton";
+            this.backButton.Size = new System.Drawing.Size(100, 50);
+            this.backButton.TabIndex = 4;
+            this.backButton.Text = "Назад";
+            this.backButton.UseVisualStyleBackColor = false;
+            this.backButton.Click += new System.EventHandler(this.backButton_Click);
+            // 
+            // deleteGameButton
+            // 
+            this.deleteGameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.deleteGameButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            this.deleteGameButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.deleteGameButton.FlatAppearance.BorderSize = 0;
+            this.deleteGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.deleteGameButton.ForeColor = System.Drawing.Color.White;
+            this.deleteGameButton.Location = new System.Drawing.Point(666, 17);
+            this.deleteGameButton.Name = "deleteGameButton";
+            this.deleteGameButton.Size = new System.Drawing.Size(100, 50);
+            this.deleteGameButton.TabIndex = 5;
+            this.deleteGameButton.Text = "Удалить";
+            this.deleteGameButton.UseVisualStyleBackColor = false;
+            this.deleteGameButton.Click += new System.EventHandler(this.deleteGameButton_Click);
+            // 
+            // isDeletedLabel
+            // 
+            this.isDeletedLabel.AutoSize = true;
+            this.isDeletedLabel.ForeColor = System.Drawing.Color.Green;
+            this.isDeletedLabel.Location = new System.Drawing.Point(12, 52);
+            this.isDeletedLabel.Name = "isDeletedLabel";
+            this.isDeletedLabel.Size = new System.Drawing.Size(172, 15);
+            this.isDeletedLabel.TabIndex = 23;
+            this.isDeletedLabel.Text = "Игра добавлена в библиотеку";
+            this.isDeletedLabel.Visible = false;
             // 
             // GameLibrary
             // 

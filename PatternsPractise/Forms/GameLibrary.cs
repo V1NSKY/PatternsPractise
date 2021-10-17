@@ -67,5 +67,15 @@ namespace PatternsPractise.Forms
             }
             
         }
+
+        private void gameGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            gameGridView.DefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 76, 41);
+        }
+
+        private void gameGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            gameGridView.DefaultCellStyle.SelectionBackColor = Color.FromArgb(44, 57, 75);
+        }
     }
 }

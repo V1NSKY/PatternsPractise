@@ -32,6 +32,14 @@ namespace PatternsPractise
             List<Game> listGames = daoGame.GetAllGame();
             gameGridView.DataSource = listGames;
         }
+        private void UpdateUser()
+        {
+            if (Session.user != null)
+            {
+                userNameLabel.Text = Session.user.UserName + " " + Session.user.UserSurname;
+                userRoleLabel.Text = Session.user.UserRole.ToString();
+            }
+        }
         public MainMenu()
         {
             InitializeComponent();
@@ -78,6 +86,7 @@ namespace PatternsPractise
                 registerButton.Visible = false;
                 libraryButton.Visible = true;
                 addButton.Visible = true;
+                changeUserButton.Visible = true;
             }
         }
 
@@ -100,6 +109,7 @@ namespace PatternsPractise
             addButton.Visible = false;
             isAddedLabel.Visible = false;
             deleteGameButton.Visible = false;
+            changeUserButton.Visible = false;
         }
 
         private void registerButton_Click(object sender, EventArgs e)
@@ -125,24 +135,15 @@ namespace PatternsPractise
 
         private void gameGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            gameGridView.DefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 76, 41);
             isAddedLabel.Visible = false;
             DataGridViewSelectedCellCollection cells = gameGridView.SelectedCells;
             Session.selectedGameid = Convert.ToInt32(cells[0].Value);
-            /*Game game = new GameBuilder()
-                .gameId(Convert.ToInt32(cells[0].Value))
-                .gameDeveloper(cells[1].Value.ToString())
-                .gamePublisher(cells[2].Value.ToString())
-                .gameName(cells[3].Value.ToString())
-                .gamePrice(Convert.ToDouble(cells[4].Value))
-                .gameDateOfRelease(cells[5].Value.ToString())
-                .gameDescription(cells[6].Value.ToString())
-                .Build();*/
-
         }
 
         private void gameGridView_SelectionChanged(object sender, EventArgs e)
         {
-            
+            gameGridView.DefaultCellStyle.SelectionBackColor = Color.FromArgb(44, 57, 75);
         }
 
         private void gameInfoButton_Click(object sender, EventArgs e)
@@ -202,12 +203,19 @@ namespace PatternsPractise
         private void updateButton_Click(object sender, EventArgs e)
         {
             GetAllGames();
+            UpdateUser();
         }
 
         private void changeGameButton_Click(object sender, EventArgs e)
         {
             ChangeGameForm changeGameForm = new ChangeGameForm();
             changeGameForm.Show();
+        }
+
+        private void changeUserButton_Click(object sender, EventArgs e)
+        {
+            ChangeUserForm changeUserForm = new ChangeUserForm();
+            changeUserForm.Show();
         }
     }
 }
