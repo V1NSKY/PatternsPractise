@@ -17,9 +17,21 @@ namespace PatternsPractise.Forms
 {
     public partial class GameInfoForm : Form
     {
-        public GameInfoForm()
+        static private GameInfoForm gameInfoForm;
+        private GameInfoForm()
         {
             InitializeComponent();
+        }
+        public static GameInfoForm GetGameInfoForm()
+        {
+            if(gameInfoForm == null || gameInfoForm.IsDisposed)
+            {
+                return gameInfoForm = new GameInfoForm();
+            }
+            else
+            {
+                return gameInfoForm;
+            }
         }
 
         private void GameInfoForm_Load(object sender, EventArgs e)

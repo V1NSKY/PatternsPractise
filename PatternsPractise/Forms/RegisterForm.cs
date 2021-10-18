@@ -16,11 +16,22 @@ namespace PatternsPractise.Forms
 {
     public partial class RegisterForm : Form
     {
-        public RegisterForm()
+        static private RegisterForm registerForm;
+        private RegisterForm()
         {
             InitializeComponent();
         }
-
+        public static RegisterForm GetRegisterForm()
+        {
+            if (registerForm == null || registerForm.IsDisposed)
+            {
+                return registerForm = new RegisterForm();
+            }
+            else
+            {
+                return registerForm;
+            }
+        }
         private void registerButton_Click(object sender, EventArgs e)
         {
             CreatorDAOUser creatorDAOUser = new CreatorSQLDAOUser();

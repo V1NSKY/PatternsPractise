@@ -232,7 +232,7 @@ namespace PatternsPractise.Forms
             this.MinimumSize = new System.Drawing.Size(372, 446);
             this.Name = "ChangeUserForm";
             this.ShowIcon = false;
-            this.Text = "ChangeUserForm";
+            this.Text = "Изменить профиль";
             this.Load += new System.EventHandler(this.ChangeUserForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

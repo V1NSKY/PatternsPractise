@@ -19,9 +19,21 @@ namespace PatternsPractise.Forms
     public partial class AddGameForm : Form
     {
         private List<GameGenre> listGenres = new List<GameGenre>();
-        public AddGameForm()
+        private static AddGameForm addGameForm;
+        private AddGameForm()
         {
             InitializeComponent();
+        }
+        public static AddGameForm GetAddGameForm()
+        {
+            if(addGameForm == null || addGameForm.IsDisposed)
+            {
+                return addGameForm = new AddGameForm();
+            }
+            else
+            {
+                return addGameForm;
+            }
         }
 
         private void addButton_Click(object sender, EventArgs e)

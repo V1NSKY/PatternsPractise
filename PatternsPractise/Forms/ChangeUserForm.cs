@@ -17,9 +17,21 @@ namespace PatternsPractise.Forms
     public partial class ChangeUserForm : Form
     {
         User user;
-        public ChangeUserForm()
+        static private ChangeUserForm changeUserForm;
+        private ChangeUserForm()
         {
             InitializeComponent();
+        }
+        public static ChangeUserForm GetChangeUserForm()
+        {
+            if(changeUserForm == null || changeUserForm.IsDisposed)
+            {
+                return changeUserForm = new ChangeUserForm();
+            }
+            else
+            {
+                return changeUserForm;
+            }
         }
 
         private void ChangeUserForm_Load(object sender, EventArgs e)

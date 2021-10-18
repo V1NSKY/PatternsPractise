@@ -114,13 +114,13 @@ namespace PatternsPractise
 
         private void registerButton_Click(object sender, EventArgs e)
         {
-            RegisterForm registerForm = new RegisterForm();
+            RegisterForm registerForm = RegisterForm.GetRegisterForm();
             registerForm.Show();
         }
 
         private void addUserButton_Click(object sender, EventArgs e)
         {
-            RegisterForm registerForm = new RegisterForm();
+            RegisterForm registerForm = RegisterForm.GetRegisterForm();
             registerForm.Show();
         }
 
@@ -148,7 +148,7 @@ namespace PatternsPractise
 
         private void gameInfoButton_Click(object sender, EventArgs e)
         {
-            GameInfoForm gameInfoForm = new GameInfoForm();
+            GameInfoForm gameInfoForm = GameInfoForm.GetGameInfoForm();
             gameInfoForm.Show();
         }
 
@@ -174,7 +174,7 @@ namespace PatternsPractise
 
         private void libraryButton_Click(object sender, EventArgs e)
         {
-            GameLibrary gameLibrary = new GameLibrary();
+            GameLibrary gameLibrary = GameLibrary.GetGameLibrary();
             gameLibrary.Show();
             this.Hide();
         }
@@ -188,7 +188,7 @@ namespace PatternsPractise
 
         private void addGameButton_Click(object sender, EventArgs e)
         {
-            AddGameForm addGameForm = new AddGameForm();
+            AddGameForm addGameForm = AddGameForm.GetAddGameForm();
             addGameForm.Show();
         }
 
@@ -208,13 +208,13 @@ namespace PatternsPractise
 
         private void changeGameButton_Click(object sender, EventArgs e)
         {
-            ChangeGameForm changeGameForm = new ChangeGameForm();
+            ChangeGameForm changeGameForm = ChangeGameForm.GetChangeGameForm();
             changeGameForm.Show();
         }
 
         private void changeUserButton_Click(object sender, EventArgs e)
         {
-            ChangeUserForm changeUserForm = new ChangeUserForm();
+            ChangeUserForm changeUserForm = ChangeUserForm.GetChangeUserForm();
             changeUserForm.Show();
         }
     }

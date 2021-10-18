@@ -16,9 +16,21 @@ namespace PatternsPractise.Forms
 {
     public partial class GameLibrary : Form
     {
-        public GameLibrary()
+        private static GameLibrary gameLibrary;
+        private GameLibrary()
         {
             InitializeComponent();
+        }
+        public static GameLibrary GetGameLibrary()
+        {
+            if (gameLibrary == null || gameLibrary.IsDisposed)
+            {
+                return gameLibrary = new GameLibrary();
+            }
+            else
+            {
+                return gameLibrary;
+            }
         }
         private void ShowLibrary()
         {

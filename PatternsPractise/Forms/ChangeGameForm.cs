@@ -18,12 +18,24 @@ namespace PatternsPractise.Forms
 {
     public partial class ChangeGameForm : Form
     {
+        static private ChangeGameForm changeGameForm;
         List<GameGenre> gameGenres;
         List<SystemReq> systemReqs;
         Game game;
-        public ChangeGameForm()
+        private ChangeGameForm()
         {
             InitializeComponent();
+        }
+        public static ChangeGameForm GetChangeGameForm()
+        {
+            if(changeGameForm == null || changeGameForm.IsDisposed)
+            {
+                return changeGameForm = new ChangeGameForm();
+            }
+            else
+            {
+                return changeGameForm;
+            }
         }
 
         private void ChangeGameForm_Load(object sender, EventArgs e)
@@ -155,7 +167,7 @@ namespace PatternsPractise.Forms
                             .processor(maxProcTextBox.Text)
                             .sr_video(maxVideoTextBox.Text)
                             .sr_RAM(Convert.ToUInt32(maxRAMTextBox.Text))
-                            .sr_space(Convert.ToUInt32(minSpaceTextBox.Text))
+                            .sr_space(Convert.ToUInt32(maxSpaceTextBox.Text))
                             .Build();
                         daoSystemReq.UpdateSystemReq(maxSystemReq);
                         break;
