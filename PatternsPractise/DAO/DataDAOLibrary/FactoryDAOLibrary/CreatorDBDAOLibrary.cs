@@ -8,7 +8,7 @@ namespace PatternsPractise.DAO.DAOLibrary.FactoryDAOLibrary
 {
     class CreatorDBDAOLibrary : CreatorDAOLibrary
     {
-        DAOLibrary daoLibrary;
+        private static DAOLibrary daoLibrary;
         public override IDAOLibrary FactoryMetod(DBtype dbType)
         {
             switch (dbType)

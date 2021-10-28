@@ -8,7 +8,7 @@ namespace PatternsPractise.DAO.FactoryDAOUser
 {
     class CreatorDBDAOUser : CreatorDAOUser
     {
-        DAOUser daoUser;
+        private static DAOUser daoUser;
         public override IDAOUser FactoryMetod(DBtype dbType)
         {
             switch (dbType)

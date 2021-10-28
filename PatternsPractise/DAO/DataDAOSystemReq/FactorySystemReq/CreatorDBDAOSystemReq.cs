@@ -8,7 +8,7 @@ namespace PatternsPractise.DAO.DAOSystemReq.FactorySystemReq
 {
     class CreatorDBDAOSystemReq : CreatorDAOSystemReq
     {
-        DAOSystemReq daoSystemReq;
+        private static DAOSystemReq daoSystemReq;
         public override IDAOSystemReq FactoryMetod(DBtype dbType)
         {
             switch (dbType)
