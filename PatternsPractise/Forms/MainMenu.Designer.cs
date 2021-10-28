@@ -540,6 +540,7 @@ namespace PatternsPractise
             this.Name = "MainMenu";
             this.ShowIcon = false;
             this.Text = "Main Menu";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainMenu_FormClosing);
             this.Load += new System.EventHandler(this.MainMenu_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gameGridView)).EndInit();
             this.ResumeLayout(false);

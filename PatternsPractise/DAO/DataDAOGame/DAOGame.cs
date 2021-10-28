@@ -32,7 +32,7 @@ namespace PatternsPractise.DAO.DAOGame
 
         public String AddGame(Game game)
         {
-            MySqlConnection conn = SQLConnection.GetConnection();
+            MySqlConnection conn = Connection.Connection.GetSQLConnection();
             String returnString = "";
             MySqlCommand cmd = new MySqlCommand
             {
@@ -136,7 +136,7 @@ namespace PatternsPractise.DAO.DAOGame
         {
             String returnString = "";
 
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand
@@ -156,7 +156,7 @@ namespace PatternsPractise.DAO.DAOGame
 
         public List<GameGenre> GetGameGenres(int idGame)
         {
-            MySqlConnection conn = SQLConnection.GetConnection();
+            MySqlConnection conn = Connection.Connection.GetSQLConnection();
             List<GameGenre> listGameGenres = new List<GameGenre>();
             List<int> listIdGenres = new List<int>();
             MySqlCommand cmd = new MySqlCommand
@@ -216,7 +216,7 @@ namespace PatternsPractise.DAO.DAOGame
         {
             List<Game> listGames = new List<Game>();
 
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand
@@ -254,7 +254,7 @@ namespace PatternsPractise.DAO.DAOGame
         {
             List<Game> listGames = new List<Game>();
 
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 MySqlCommand cmd = new MySqlCommand
                 {
@@ -293,7 +293,7 @@ namespace PatternsPractise.DAO.DAOGame
         {
             String returnString = "";
 
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand
@@ -320,7 +320,7 @@ namespace PatternsPractise.DAO.DAOGame
         {
             Game game = new GameBuilder().Build();
             
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand
@@ -354,7 +354,7 @@ namespace PatternsPractise.DAO.DAOGame
 
         public GameGenre GetGameGenreByName(string genreName)
         {
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand
@@ -380,7 +380,7 @@ namespace PatternsPractise.DAO.DAOGame
 
         public string AddGenreByName(string genreName)
         {
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand
@@ -395,7 +395,7 @@ namespace PatternsPractise.DAO.DAOGame
 
         public Game GetGameByName(string gameName)
         {
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 Game game = new GameBuilder().Build();
                 MySqlCommand cmd = new MySqlCommand

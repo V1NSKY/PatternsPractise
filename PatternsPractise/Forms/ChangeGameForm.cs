@@ -40,10 +40,10 @@ namespace PatternsPractise.Forms
 
         private void ChangeGameForm_Load(object sender, EventArgs e)
         {
-            CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod();
-            CreatorDAOSystemReq creatorDAOSystemReq = new CreatorSQLDAOSystemReq();
-            IDAOSystemReq daoSystemReq = creatorDAOSystemReq.FactoryMetod();
+            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
+            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
+            CreatorDAOSystemReq creatorDAOSystemReq = new CreatorDBDAOSystemReq();
+            IDAOSystemReq daoSystemReq = creatorDAOSystemReq.FactoryMetod(Session.dbType);
 
             game = daoGame.GetGameById(Session.selectedGameid);
 
@@ -88,8 +88,8 @@ namespace PatternsPractise.Forms
 
         private void addGenreButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod();
+            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
+            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
 
             GameGenre genre = daoGame.GetGameGenreByName(addGenreTextBox.Text.ToString());
 
@@ -125,10 +125,10 @@ namespace PatternsPractise.Forms
         }
         private void updateButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod();
-            CreatorDAOSystemReq creatorDAOSystemReq = new CreatorSQLDAOSystemReq();
-            IDAOSystemReq daoSystemReq = creatorDAOSystemReq.FactoryMetod();
+            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
+            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
+            CreatorDAOSystemReq creatorDAOSystemReq = new CreatorDBDAOSystemReq();
+            IDAOSystemReq daoSystemReq = creatorDAOSystemReq.FactoryMetod(Session.dbType);
 
             Game newGame = new GameBuilder()
                 .gameId(game.GameId)

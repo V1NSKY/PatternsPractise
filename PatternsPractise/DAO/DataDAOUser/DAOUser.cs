@@ -29,7 +29,7 @@ namespace PatternsPractise.DAO
 
         public string AddUser(User user)
         {
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand
@@ -71,7 +71,7 @@ namespace PatternsPractise.DAO
         {
             String returnString = "";
 
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand
@@ -93,7 +93,7 @@ namespace PatternsPractise.DAO
         {
             List<User> listUser = new List<User>();
                        
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand
@@ -132,7 +132,7 @@ namespace PatternsPractise.DAO
         {
             User user = new UserBuilder(1).Build();           
 
-            using(MySqlConnection conn = SQLConnection.GetConnection())
+            using(MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand
@@ -172,7 +172,7 @@ namespace PatternsPractise.DAO
 
         public int GetUserIdByCred(string login, string password)
         {
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand
@@ -203,7 +203,7 @@ namespace PatternsPractise.DAO
 
         public int GetUserIdByLogin(string login)
         {
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand
@@ -237,7 +237,7 @@ namespace PatternsPractise.DAO
         {
             List<User> listUsers = new List<User>();
 
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand
@@ -275,7 +275,7 @@ namespace PatternsPractise.DAO
 
         public string UpdateUser(User user)
         {
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand

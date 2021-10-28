@@ -11,6 +11,7 @@ namespace PatternsPractise
 {
     public static class Session
     {
+        public static DBtype dbType;
         public static User user { private set; get; }
         public static int selectedGameid { set; get; }
         public static Form mainMenu { set; get; }

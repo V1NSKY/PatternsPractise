@@ -34,8 +34,8 @@ namespace PatternsPractise.Forms
         }
         private void registerButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOUser creatorDAOUser = new CreatorSQLDAOUser();
-            IDAOUser daoUser = creatorDAOUser.FactoryMetod();
+            CreatorDAOUser creatorDAOUser = new CreatorDBDAOUser();
+            IDAOUser daoUser = creatorDAOUser.FactoryMetod(Session.dbType);
 
             
             if(daoUser.GetUserIdByLogin(loginTextBox.Text.ToString()) == 0 && loginTextBox.Text != "")

@@ -34,7 +34,7 @@ namespace PatternsPractise.DAO.DAOLibrary
             }
            
 
-            using(MySqlConnection conn = SQLConnection.GetConnection())
+            using(MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 MySqlCommand cmd = new MySqlCommand
                 {
@@ -53,7 +53,7 @@ namespace PatternsPractise.DAO.DAOLibrary
 
         public string DeleteLibrary(int idUser)
         {
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 MySqlCommand cmd = new MySqlCommand
                 {
@@ -69,7 +69,7 @@ namespace PatternsPractise.DAO.DAOLibrary
 
         public int DeleteLibraryGame(int idGame)
         {
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 MySqlCommand cmd = new MySqlCommand
                 {
@@ -87,7 +87,7 @@ namespace PatternsPractise.DAO.DAOLibrary
         {
             List<UserGameLibrary> listLibrary = new List<UserGameLibrary>();
 
-            using(MySqlConnection conn = SQLConnection.GetConnection())
+            using(MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 MySqlCommand cmd = new MySqlCommand
                 {

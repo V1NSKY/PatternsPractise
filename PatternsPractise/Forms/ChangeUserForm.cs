@@ -36,8 +36,8 @@ namespace PatternsPractise.Forms
 
         private void ChangeUserForm_Load(object sender, EventArgs e)
         {
-            CreatorDAOUser creatorDAOUser = new CreatorSQLDAOUser();
-            IDAOUser daoUser = creatorDAOUser.FactoryMetod();
+            CreatorDAOUser creatorDAOUser = new CreatorDBDAOUser();
+            IDAOUser daoUser = creatorDAOUser.FactoryMetod(Session.dbType);
 
             user = daoUser.GetUserById(Session.user.UserId);
 
@@ -52,8 +52,8 @@ namespace PatternsPractise.Forms
 
         private void changeButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOUser creatorDAOUser = new CreatorSQLDAOUser();
-            IDAOUser daoUser = creatorDAOUser.FactoryMetod();
+            CreatorDAOUser creatorDAOUser = new CreatorDBDAOUser();
+            IDAOUser daoUser = creatorDAOUser.FactoryMetod(Session.dbType);
 
             
 

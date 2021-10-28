@@ -34,10 +34,10 @@ namespace PatternsPractise.Forms
         }
         private void ShowLibrary()
         {
-            CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod();
-            CreatorDAOLibrary creatorDAOLibrary = new CreatorSQLDAOLibrary();
-            IDAOLibrary daoLibrary = creatorDAOLibrary.FactoryMetod();
+            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
+            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
+            CreatorDAOLibrary creatorDAOLibrary = new CreatorDBDAOLibrary();
+            IDAOLibrary daoLibrary = creatorDAOLibrary.FactoryMetod(Session.dbType);
 
             List<UserGameLibrary> userGames = new List<UserGameLibrary>();
             userGames = daoLibrary.GetAllUserLibrary(Session.user.UserId);
@@ -67,8 +67,8 @@ namespace PatternsPractise.Forms
         {
             DataGridViewSelectedCellCollection cells = gameGridView.SelectedCells;
 
-            CreatorDAOLibrary creatorDAOLibrary = new CreatorSQLDAOLibrary();
-            IDAOLibrary daoLibrary = creatorDAOLibrary.FactoryMetod();
+            CreatorDAOLibrary creatorDAOLibrary = new CreatorDBDAOLibrary();
+            IDAOLibrary daoLibrary = creatorDAOLibrary.FactoryMetod(Session.dbType);
 
             if(daoLibrary.DeleteLibraryGame(Convert.ToInt32(cells[1].Value)) != 0)
             {

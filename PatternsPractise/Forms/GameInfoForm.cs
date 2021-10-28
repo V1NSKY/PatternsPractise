@@ -36,10 +36,10 @@ namespace PatternsPractise.Forms
 
         private void GameInfoForm_Load(object sender, EventArgs e)
         {
-            CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod();
-            CreatorDAOSystemReq creatorDAOSystemReq = new CreatorSQLDAOSystemReq();
-            IDAOSystemReq daoSystemReq = creatorDAOSystemReq.FactoryMetod();
+            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
+            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
+            CreatorDAOSystemReq creatorDAOSystemReq = new CreatorDBDAOSystemReq();
+            IDAOSystemReq daoSystemReq = creatorDAOSystemReq.FactoryMetod(Session.dbType);
 
             Game game = daoGame.GetGameById(Session.selectedGameid);
 

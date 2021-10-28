@@ -7,12 +7,12 @@ using MySql.Data.MySqlClient;
 
 namespace PatternsPractise.Connection
 {
-    public class SQLConnection
+    public class Connection
     {
         static private MySqlConnection connection;
         static public String connectionString = "server=localhost;uid=root;pwd=root;database=gamelibrarydb";
-        private SQLConnection() { }
-        public static MySqlConnection GetConnection()
+        private Connection() { }
+        public static MySqlConnection GetSQLConnection()
         {
             if (connection == null)
             {

@@ -24,8 +24,8 @@ namespace PatternsPractise.DAO.DAOSystemReq
         public DAOSystemReq() { }
         public string AddSystemReq(SystemReq systemReq)
         {
-            CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod();
+            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
+            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
             String returnString = "";
 
             Game game = daoGame.GetGameById(systemReq.Game.GameId);
@@ -34,7 +34,7 @@ namespace PatternsPractise.DAO.DAOSystemReq
                 return "Игра не найдена";
             }
 
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 MySqlCommand cmd = new MySqlCommand
                 {
@@ -58,7 +58,7 @@ namespace PatternsPractise.DAO.DAOSystemReq
 
         public string DeleteSystemReq(int idSystemReq)
         {
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand
@@ -75,7 +75,7 @@ namespace PatternsPractise.DAO.DAOSystemReq
         {
             List<SystemReq> listSystemReqs = new List<SystemReq>();
 
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 MySqlCommand cmd = new MySqlCommand
                 {
@@ -113,7 +113,7 @@ namespace PatternsPractise.DAO.DAOSystemReq
         {
             List<SystemReq> listSystemReqs = new List<SystemReq>();
 
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 MySqlCommand cmd = new MySqlCommand
                 {
@@ -152,7 +152,7 @@ namespace PatternsPractise.DAO.DAOSystemReq
         {
             SystemReq systemReq = new ReqBuilder().Build();
 
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 MySqlCommand cmd = new MySqlCommand
                 {
@@ -188,7 +188,7 @@ namespace PatternsPractise.DAO.DAOSystemReq
 
         public string UpdateSystemReq(SystemReq systemReq)
         {
-            using (MySqlConnection conn = SQLConnection.GetConnection())
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 MySqlCommand cmd = new MySqlCommand
                 {

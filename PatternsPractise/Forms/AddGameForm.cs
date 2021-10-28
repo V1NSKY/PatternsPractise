@@ -38,10 +38,10 @@ namespace PatternsPractise.Forms
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod();
-            CreatorDAOSystemReq creatorDAOSystemReq = new CreatorSQLDAOSystemReq();
-            IDAOSystemReq daoSystemReq = creatorDAOSystemReq.FactoryMetod();
+            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
+            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
+            CreatorDAOSystemReq creatorDAOSystemReq = new CreatorDBDAOSystemReq();
+            IDAOSystemReq daoSystemReq = creatorDAOSystemReq.FactoryMetod(Session.dbType);
 
             Game game = new GameBuilder()
                 .listGenre(listGenres)
@@ -96,8 +96,8 @@ namespace PatternsPractise.Forms
 
         private void addGenreButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod();
+            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
+            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
 
             GameGenre genre = daoGame.GetGameGenreByName(addGenreTextBox.Text.ToString());
 

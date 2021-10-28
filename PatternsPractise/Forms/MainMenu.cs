@@ -27,8 +27,8 @@ namespace PatternsPractise
     {
         private void GetAllGames()
         {
-            CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod();
+            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
+            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
             List<Game> listGames = daoGame.GetAllGame();
             gameGridView.DataSource = listGames;
         }
@@ -53,8 +53,8 @@ namespace PatternsPractise
 
         private void loginInButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOUser creatorDAOUser = new CreatorSQLDAOUser();
-            IDAOUser daoUser = creatorDAOUser.FactoryMetod();
+            CreatorDAOUser creatorDAOUser = new CreatorDBDAOUser();
+            IDAOUser daoUser = creatorDAOUser.FactoryMetod(Session.dbType);
             Session.SetUser(daoUser.GetUserById(daoUser.GetUserIdByCred(loginTextBox.Text, passwordTextBox.Text)));
 
             if(Session.user == null)
@@ -127,8 +127,8 @@ namespace PatternsPractise
         private void SearchByNameButton_Click(object sender, EventArgs e)
         {
             clearButton.Visible = true;
-            CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod();
+            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
+            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
             List<Game> listGames = daoGame.SearchGameByName(searchTextBox.Text.ToString());
             gameGridView.DataSource = listGames;
         }
@@ -156,12 +156,12 @@ namespace PatternsPractise
         {
             if(Session.user != null)
             {
-                CreatorDAOUser creatorDAOUser = new CreatorSQLDAOUser();
-                IDAOUser daoUser = creatorDAOUser.FactoryMetod();
-                CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
-                IDAOGame daoGame = creatorDAOGame.FactoryMetod();
-                CreatorDAOLibrary creatorDAOLibrary = new CreatorSQLDAOLibrary();
-                IDAOLibrary daoLibrary = creatorDAOLibrary.FactoryMetod();
+                CreatorDAOUser creatorDAOUser = new CreatorDBDAOUser();
+                IDAOUser daoUser = creatorDAOUser.FactoryMetod(Session.dbType);
+                CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
+                IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
+                CreatorDAOLibrary creatorDAOLibrary = new CreatorDBDAOLibrary();
+                IDAOLibrary daoLibrary = creatorDAOLibrary.FactoryMetod(Session.dbType);
 
                 isAddedLabel.Text = daoLibrary.AddLibrary(new LibraryBuilder()
                                     .game(daoGame.GetGameById(Session.selectedGameid))
@@ -194,8 +194,8 @@ namespace PatternsPractise
 
         private void deleteGameButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOGame creatorDAOGame = new CreatorSQLDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod();
+            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
+            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
             daoGame.DeleteGame(Session.selectedGameid);
             GetAllGames();
         }
@@ -216,6 +216,12 @@ namespace PatternsPractise
         {
             ChangeUserForm changeUserForm = ChangeUserForm.GetChangeUserForm();
             changeUserForm.Show();
+        }
+
+        private void MainMenu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DBTypeForm dBTypeForm = DBTypeForm.GetDBTypeForm();
+            dBTypeForm.Show();
         }
     }
 }

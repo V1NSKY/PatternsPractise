@@ -8,6 +8,6 @@ namespace PatternsPractise.DAO.DAOGame.FactoryDAOGame
 {
     abstract class CreatorDAOGame
     {
-        public abstract IDAOGame FactoryMetod();
+        public abstract IDAOGame FactoryMetod(DBtype dbType);
     }
 }
