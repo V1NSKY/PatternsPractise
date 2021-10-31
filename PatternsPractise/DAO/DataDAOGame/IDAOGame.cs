@@ -1,4 +1,5 @@
-﻿using PatternsPractise.Entities;
+﻿using PatternsPractise.DAO.ObserverDAO;
+using PatternsPractise.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PatternsPractise.DAO
 {
-    interface IDAOGame
+    public interface IDAOGame
     {
         public String AddGame(Game game);
         public String AddGenreByName(String genreName);
@@ -20,5 +21,8 @@ namespace PatternsPractise.DAO
 
         public List<GameGenre> GetGameGenres(int idGame);
         public GameGenre GetGameGenreByName(String genreName);
+        public void AddObserver(IObserverDAOGame observer);
+        public void DeleteObserver(IObserverDAOGame observer);
+        public void Notify();
     }
 }

@@ -34,15 +34,11 @@ namespace PatternsPractise.Forms
         }
         private void registerButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOUser creatorDAOUser = new CreatorDBDAOUser();
-            IDAOUser daoUser = creatorDAOUser.FactoryMetod(Session.dbType);
-
-            
-            if(daoUser.GetUserIdByLogin(loginTextBox.Text.ToString()) == 0 && loginTextBox.Text != "")
+            if(Session.daoUser.GetUserIdByLogin(loginTextBox.Text.ToString()) == 0 && loginTextBox.Text != "")
             {
                 notLoginLabel.ForeColor = Color.Green;
                 notLoginLabel.Visible = true;
-                daoUser.AddUser(new UserBuilder(Convert.ToInt32(roleComboBox.SelectedItem))
+                Session.daoUser.AddUser(new UserBuilder(Convert.ToInt32(roleComboBox.SelectedItem))
                 .userName(nameTextBox.Text.ToString())
                 .userSurname(surnameTextBox.Text.ToString())
                 .userMiddleName(middlenameTextBox.Text.ToString())

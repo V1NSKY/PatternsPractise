@@ -36,14 +36,9 @@ namespace PatternsPractise.Forms
 
         private void GameInfoForm_Load(object sender, EventArgs e)
         {
-            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
-            CreatorDAOSystemReq creatorDAOSystemReq = new CreatorDBDAOSystemReq();
-            IDAOSystemReq daoSystemReq = creatorDAOSystemReq.FactoryMetod(Session.dbType);
+            Game game = Session.daoGame.GetGameById(Session.selectedGameid);
 
-            Game game = daoGame.GetGameById(Session.selectedGameid);
-
-            List<GameGenre> gameGenres = daoGame.GetGameGenres(Session.selectedGameid);
+            List<GameGenre> gameGenres = Session.daoGame.GetGameGenres(Session.selectedGameid);
 
             for(int i = 0; i < gameGenres.Count; i++)
             {
@@ -67,7 +62,7 @@ namespace PatternsPractise.Forms
             dateOfReleaseLabel.Text = game.DateOfRelease.ToString();
             descriptionLabel.Text = game.GameDescription;
 
-            List<SystemReq> systemReqs = daoSystemReq.GetSystemReqByGameId(game.GameId);
+            List<SystemReq> systemReqs = Session.daoSystemReq.GetSystemReqByGameId(game.GameId);
 
             foreach(SystemReq req in systemReqs)
             {

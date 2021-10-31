@@ -8,20 +8,12 @@ namespace PatternsPractise.DAO.FactoryDAOUser
 {
     class CreatorDBDAOUser : CreatorDAOUser
     {
-        private static DAOUser daoUser;
         public override IDAOUser FactoryMetod(DBtype dbType)
         {
             switch (dbType)
             {
                 case DBtype.MySQL:
-                    if (daoUser == null)
-                    {
-                        return new DAOUser();
-                    }
-                    else
-                    {
-                        return daoUser;
-                    }
+                    return new DAOUser();
                 case DBtype.MongoDB:
                     return null;
                 default:

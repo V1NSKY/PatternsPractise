@@ -8,20 +8,12 @@ namespace PatternsPractise.DAO.DAOLibrary.FactoryDAOLibrary
 {
     class CreatorDBDAOLibrary : CreatorDAOLibrary
     {
-        private static DAOLibrary daoLibrary;
         public override IDAOLibrary FactoryMetod(DBtype dbType)
         {
             switch (dbType)
             {
                 case DBtype.MySQL:
-                    if (daoLibrary == null)
-                    {
-                        return new DAOLibrary();
-                    }
-                    else
-                    {
-                        return daoLibrary;
-                    }
+                    return new DAOLibrary();
                 case DBtype.MongoDB:
                     return null;
                 default:

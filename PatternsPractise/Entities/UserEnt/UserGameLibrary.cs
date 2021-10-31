@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PatternsPractise.Entities
 {
-    class UserGameLibrary
+    public class UserGameLibrary
     {
         private User user;
         private Game game;

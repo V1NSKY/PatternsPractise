@@ -20,16 +20,20 @@ using PatternsPractise.Forms;
 using PatternsPractise.DAO.DAOGame.FactoryDAOGame;
 using PatternsPractise.DAO.DAOLibrary.FactoryDAOLibrary;
 using static PatternsPractise.Entities.UserGameLibrary;
+using PatternsPractise.DAO.ObserverDAO;
+using PatternsPractise.DAO.DAOSystemReq.FactorySystemReq;
 
 namespace PatternsPractise
 {
     public partial class MainMenu : Form
     {
+        private static CreatorDAOUser creatorDAOUser = new CreatorDBDAOUser();
+        private static IDAOUser daoUser = creatorDAOUser.FactoryMetod(Session.dbType);
+        private static CreatorDAOLibrary creatorDAOLibrary = new CreatorDBDAOLibrary();
+        private static IDAOLibrary daoLibrary = creatorDAOLibrary.FactoryMetod(Session.dbType);
         private void GetAllGames()
         {
-            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
-            List<Game> listGames = daoGame.GetAllGame();
+            List<Game> listGames = Session.daoGame.GetAllGame();
             gameGridView.DataSource = listGames;
         }
         private void UpdateUser()
@@ -47,14 +51,18 @@ namespace PatternsPractise
 
         private void MainMenu_Load(object sender, EventArgs e)
         {
+            Session.daoGame = new CreatorDBDAOGame().FactoryMetod(Session.dbType);
+            Session.daoUser = new CreatorDBDAOUser().FactoryMetod(Session.dbType);
+            Session.daoLibrary = new CreatorDBDAOLibrary().FactoryMetod(Session.dbType);
+            Session.daoSystemReq = new CreatorDBDAOSystemReq().FactoryMetod(Session.dbType);
             GetAllGames();
             Session.mainMenu = this;
+            Session.daoGame.AddObserver(new ObserverDAOGame(gameGridView));
         }
 
         private void loginInButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOUser creatorDAOUser = new CreatorDBDAOUser();
-            IDAOUser daoUser = creatorDAOUser.FactoryMetod(Session.dbType);
+            
             Session.SetUser(daoUser.GetUserById(daoUser.GetUserIdByCred(loginTextBox.Text, passwordTextBox.Text)));
 
             if(Session.user == null)
@@ -127,9 +135,7 @@ namespace PatternsPractise
         private void SearchByNameButton_Click(object sender, EventArgs e)
         {
             clearButton.Visible = true;
-            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
-            List<Game> listGames = daoGame.SearchGameByName(searchTextBox.Text.ToString());
+            List<Game> listGames = Session.daoGame.SearchGameByName(searchTextBox.Text.ToString());
             gameGridView.DataSource = listGames;
         }
 
@@ -156,15 +162,8 @@ namespace PatternsPractise
         {
             if(Session.user != null)
             {
-                CreatorDAOUser creatorDAOUser = new CreatorDBDAOUser();
-                IDAOUser daoUser = creatorDAOUser.FactoryMetod(Session.dbType);
-                CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
-                IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
-                CreatorDAOLibrary creatorDAOLibrary = new CreatorDBDAOLibrary();
-                IDAOLibrary daoLibrary = creatorDAOLibrary.FactoryMetod(Session.dbType);
-
                 isAddedLabel.Text = daoLibrary.AddLibrary(new LibraryBuilder()
-                                    .game(daoGame.GetGameById(Session.selectedGameid))
+                                    .game(Session.daoGame.GetGameById(Session.selectedGameid))
                                     .user(daoUser.GetUserById(Session.user.UserId))
                                     .Build());
 
@@ -194,10 +193,7 @@ namespace PatternsPractise
 
         private void deleteGameButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
-            daoGame.DeleteGame(Session.selectedGameid);
-            GetAllGames();
+            Session.daoGame.DeleteGame(Session.selectedGameid);
         }
 
         private void updateButton_Click(object sender, EventArgs e)

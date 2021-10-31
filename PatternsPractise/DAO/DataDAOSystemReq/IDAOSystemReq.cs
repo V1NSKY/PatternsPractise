@@ -7,7 +7,7 @@ using PatternsPractise.Entities;
 
 namespace PatternsPractise.DAO
 {
-    interface IDAOSystemReq
+    public interface IDAOSystemReq
     {
         public String AddSystemReq(SystemReq systemReq);
         public String DeleteSystemReq(int idSystemReq);

@@ -38,11 +38,6 @@ namespace PatternsPractise.Forms
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
-            CreatorDAOSystemReq creatorDAOSystemReq = new CreatorDBDAOSystemReq();
-            IDAOSystemReq daoSystemReq = creatorDAOSystemReq.FactoryMetod(Session.dbType);
-
             Game game = new GameBuilder()
                 .listGenre(listGenres)
                 .gameName(addNameTextBox.Text.ToString())
@@ -53,8 +48,8 @@ namespace PatternsPractise.Forms
                 .gameDescription(addDescriptionTextBox.Text.ToString())
                 .Build();
 
-            daoGame.AddGame(game);
-            game = daoGame.GetGameByName(game.GameName);
+            Session.daoGame.AddGame(game);
+            game = Session.daoGame.GetGameByName(game.GameName);
 
             SystemReq minSystemReq = new ReqBuilder()
                 .idSystemReqType(1)
@@ -75,8 +70,8 @@ namespace PatternsPractise.Forms
                 .sr_space(Convert.ToUInt32(maxSpaceTextBox.Text))
                 .Build();
             
-            daoSystemReq.AddSystemReq(minSystemReq);
-            daoSystemReq.AddSystemReq(maxSystemReq);
+            Session.daoSystemReq.AddSystemReq(minSystemReq);
+            Session.daoSystemReq.AddSystemReq(maxSystemReq);
 
             DialogResult result = MessageBox.Show(
                     "Игра добавлена",
@@ -96,10 +91,7 @@ namespace PatternsPractise.Forms
 
         private void addGenreButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
-
-            GameGenre genre = daoGame.GetGameGenreByName(addGenreTextBox.Text.ToString());
+            GameGenre genre = Session.daoGame.GetGameGenreByName(addGenreTextBox.Text.ToString());
 
             if(genre != null)
             {
@@ -119,7 +111,7 @@ namespace PatternsPractise.Forms
 
                 if(result == DialogResult.Yes)
                 {
-                    daoGame.AddGenreByName(addGenreTextBox.Text.ToString());
+                    Session.daoGame.AddGenreByName(addGenreTextBox.Text.ToString());
                     genre = new GameGenre(addGenreTextBox.Text.ToString());
                     addedGenresLabel.Text += genre.genreName + " ";
                     listGenres.Add(genre);

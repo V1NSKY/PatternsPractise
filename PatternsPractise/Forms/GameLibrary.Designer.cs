@@ -218,6 +218,7 @@ namespace PatternsPractise.Forms
             this.Name = "GameLibrary";
             this.ShowIcon = false;
             this.Text = "Библиотека игор";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameLibrary_FormClosing);
             this.Load += new System.EventHandler(this.GameLibrary_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gameGridView)).EndInit();
             this.ResumeLayout(false);

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PatternsPractise.DAO
 {
-    interface IDAOUser
+    public interface IDAOUser
     {
         public List<User> GetAllUsers();
         public List<User> SearchUsersByName(String userName);

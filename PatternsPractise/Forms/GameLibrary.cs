@@ -1,6 +1,7 @@
 ﻿using PatternsPractise.DAO;
 using PatternsPractise.DAO.DAOGame.FactoryDAOGame;
 using PatternsPractise.DAO.DAOLibrary.FactoryDAOLibrary;
+using PatternsPractise.DAO.ObserverDAO;
 using PatternsPractise.Entities;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace PatternsPractise.Forms
     public partial class GameLibrary : Form
     {
         private static GameLibrary gameLibrary;
+        private ObserverDAOLibrary observer;
         private GameLibrary()
         {
             InitializeComponent();
@@ -34,19 +36,14 @@ namespace PatternsPractise.Forms
         }
         private void ShowLibrary()
         {
-            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
-            CreatorDAOLibrary creatorDAOLibrary = new CreatorDBDAOLibrary();
-            IDAOLibrary daoLibrary = creatorDAOLibrary.FactoryMetod(Session.dbType);
-
             List<UserGameLibrary> userGames = new List<UserGameLibrary>();
-            userGames = daoLibrary.GetAllUserLibrary(Session.user.UserId);
+            userGames = Session.daoLibrary.GetAllUserLibrary(Session.user.UserId);
 
             if(userGames != null)
             {
                 foreach (UserGameLibrary library in userGames)
                 {
-                    library.Game = daoGame.GetGameById(library.Game.GameId);
+                    library.Game = Session.daoGame.GetGameById(library.Game.GameId);
                 }
                 gameGridView.DataSource = userGames;
             }
@@ -54,6 +51,8 @@ namespace PatternsPractise.Forms
         }
         private void GameLibrary_Load(object sender, EventArgs e)
         {
+            this.observer = new ObserverDAOLibrary(gameGridView);
+            Session.daoLibrary.AddObserver(this.observer);
             ShowLibrary();
         }
 
@@ -67,14 +66,9 @@ namespace PatternsPractise.Forms
         {
             DataGridViewSelectedCellCollection cells = gameGridView.SelectedCells;
 
-            CreatorDAOLibrary creatorDAOLibrary = new CreatorDBDAOLibrary();
-            IDAOLibrary daoLibrary = creatorDAOLibrary.FactoryMetod(Session.dbType);
-
-            if(daoLibrary.DeleteLibraryGame(Convert.ToInt32(cells[1].Value)) != 0)
+            if(Session.daoLibrary.DeleteLibraryGame(Convert.ToInt32(cells[1].Value)) != 0)
             {
                 isDeletedLabel.Visible = true;
-                isDeletedLabel.Text = "Игра удалена из библиотеки";
-                ShowLibrary();
                 isDeletedLabel.Text = "Игра удалена из библиотеки";
             }
             
@@ -88,6 +82,11 @@ namespace PatternsPractise.Forms
         private void gameGridView_SelectionChanged(object sender, EventArgs e)
         {
             gameGridView.DefaultCellStyle.SelectionBackColor = Color.FromArgb(44, 57, 75);
+        }
+
+        private void GameLibrary_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Session.daoLibrary.DeleteObserver(this.observer);
         }
     }
 }

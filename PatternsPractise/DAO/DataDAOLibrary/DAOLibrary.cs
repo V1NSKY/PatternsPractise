@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using PatternsPractise.Connection;
+using PatternsPractise.DAO.ObserverDAO;
 using PatternsPractise.Entities;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace PatternsPractise.DAO.DAOLibrary
         readonly String SQLDeleteUserLibrary = "DELETE FROM gamelibrarydb.usergamelibrary WHERE idUser = @idUser;";
         readonly String SQLDeleteUserLibraryGame = "DELETE FROM gamelibrarydb.usergamelibrary WHERE idGame = @idGame;";
         readonly String SQLSelectAllUserLibraryGame = "SELECT * FROM gamelibrarydb.usergamelibrary WHERE idUser = @idUser";
+        private List<IObserverDAOGameLibrary> observers = new List<IObserverDAOGameLibrary>();
         public string AddLibrary(UserGameLibrary userGameLibrary)
         {
             List<UserGameLibrary> library = GetAllUserLibrary(userGameLibrary.User.UserId);
@@ -47,12 +49,19 @@ namespace PatternsPractise.DAO.DAOLibrary
                 cmd.Parameters.AddWithValue("@idUser", userGameLibrary.User.UserId);
                 cmd.Parameters.AddWithValue("@hoursPlayed", userGameLibrary.HoursPlayed);
                 cmd.ExecuteNonQuery();
-                return "Игра добавлена в библиотеку";
+                Notify();
             }
+            return "Игра добавлена в библиотеку";
+        }
+
+        public void AddObserver(IObserverDAOGameLibrary observer)
+        {
+            observers.Add(observer);
         }
 
         public string DeleteLibrary(int idUser)
         {
+            String count;
             using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 MySqlCommand cmd = new MySqlCommand
@@ -63,12 +72,14 @@ namespace PatternsPractise.DAO.DAOLibrary
 
                 conn.Open();
                 cmd.Parameters.AddWithValue("@idUser", idUser);
-                return cmd.ExecuteNonQuery().ToString();
+                count = cmd.ExecuteNonQuery().ToString();
             }
+            return count;
         }
 
         public int DeleteLibraryGame(int idGame)
         {
+            int count;
             using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
                 MySqlCommand cmd = new MySqlCommand
@@ -79,8 +90,15 @@ namespace PatternsPractise.DAO.DAOLibrary
 
                 conn.Open();
                 cmd.Parameters.AddWithValue("@idGame", idGame);
-                return cmd.ExecuteNonQuery();
+                count = cmd.ExecuteNonQuery();
             }
+            Notify();
+            return count;
+        }
+
+        public void DeleteObserver(IObserverDAOGameLibrary observer)
+        {
+            observers.Add(observer);
         }
 
         public List<UserGameLibrary> GetAllUserLibrary(int idUser)
@@ -120,6 +138,14 @@ namespace PatternsPractise.DAO.DAOLibrary
                 }
             }
             return listLibrary;
+        }
+
+        public void Notify()
+        {
+            foreach(IObserverDAOGameLibrary observer in observers)
+            {
+                observer.Update(this);
+            }
         }
     }
 }

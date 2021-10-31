@@ -8,20 +8,12 @@ namespace PatternsPractise.DAO.DAOGame.FactoryDAOGame
 {
     class CreatorDBDAOGame : CreatorDAOGame
     {
-        private static IDAOGame daoGame;
         public override IDAOGame FactoryMetod(DBtype dbType)
         {
             switch (dbType)
             {
                 case DBtype.MySQL:
-                    if(daoGame == null)
-                    {
-                        return new DAOGame();
-                    }
-                    else
-                    {
-                        return daoGame;
-                    }
+                    return new DAOGame();
                 case DBtype.MongoDB:
                     return null;
                 default: 

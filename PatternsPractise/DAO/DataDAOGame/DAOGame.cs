@@ -8,6 +8,7 @@ using PatternsPractise.Connection;
 using static PatternsPractise.Entities.Game;
 using MySql.Data.MySqlClient;
 using System.Data.Common;
+using PatternsPractise.DAO.ObserverDAO;
 
 namespace PatternsPractise.DAO.DAOGame
 {
@@ -27,6 +28,8 @@ namespace PatternsPractise.DAO.DAOGame
         readonly String SQLUpdateGame = "UPDATE gamelibrarydb.game SET gameDeveloper = @gameDeveloper, gamePublisher = @gamePublisher, gameName = @gameName, gamePrice = @gamePrice, gameDateOfRelease = @gameDateOfRelease, gameDescription = @gameDescription WHERE idGame = @idGame;";
         readonly String SQLGetGenreByName = "SELECT * FROM gamelibrarydb.gamegenre WHERE genreName = @genreName;";
         public DAOGame() { }
+
+        private List<IObserverDAOGame> observers = new List<IObserverDAOGame>();
 
         //DAO AddGame
 
@@ -127,6 +130,7 @@ namespace PatternsPractise.DAO.DAOGame
             }
             
             cmd.Parameters.Clear();
+            Notify();
             return returnString + "Добавлено " + countRecords + " записей в жанры игры; ";
         }
 
@@ -148,7 +152,7 @@ namespace PatternsPractise.DAO.DAOGame
                 returnString += "Удалено " + cmd.ExecuteNonQuery() + " записей ";
                 cmd.Parameters.Clear();
             }
-
+            Notify();
             return returnString;
         }
 
@@ -310,7 +314,7 @@ namespace PatternsPractise.DAO.DAOGame
                 cmd.Parameters.AddWithValue("@gameDescription", updatedGame.GameDescription);
                 returnString += " Изменено " + cmd.ExecuteNonQuery() + " запись ";
             }
-
+            Notify();
             return returnString;
         }
 
@@ -428,6 +432,24 @@ namespace PatternsPractise.DAO.DAOGame
                     }
                 }
                 return game;
+            }
+        }
+
+        public void AddObserver(IObserverDAOGame observer)
+        {
+            observers.Add(observer);
+        }
+
+        public void DeleteObserver(IObserverDAOGame observer)
+        {
+            observers.Remove(observer);
+        }
+
+        public void Notify()
+        {
+            foreach(IObserverDAOGame observer in observers)
+            {
+                observer.Update(this);
             }
         }
     }

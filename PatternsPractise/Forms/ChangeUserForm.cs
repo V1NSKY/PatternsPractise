@@ -36,10 +36,7 @@ namespace PatternsPractise.Forms
 
         private void ChangeUserForm_Load(object sender, EventArgs e)
         {
-            CreatorDAOUser creatorDAOUser = new CreatorDBDAOUser();
-            IDAOUser daoUser = creatorDAOUser.FactoryMetod(Session.dbType);
-
-            user = daoUser.GetUserById(Session.user.UserId);
+            user = Session.daoUser.GetUserById(Session.user.UserId);
 
             nameTextBox.Text = user.UserName;
             surnameTextBox.Text = user.UserSurname;
@@ -52,12 +49,7 @@ namespace PatternsPractise.Forms
 
         private void changeButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOUser creatorDAOUser = new CreatorDBDAOUser();
-            IDAOUser daoUser = creatorDAOUser.FactoryMetod(Session.dbType);
-
-            
-
-            if (daoUser.GetUserIdByLogin(loginTextBox.Text.ToString()) == user.UserId && loginTextBox.Text != "" || daoUser.GetUserIdByLogin(loginTextBox.Text.ToString()) != user.UserId && daoUser.GetUserIdByLogin(loginTextBox.Text.ToString()) == 0 && loginTextBox.Text != "")
+            if (Session.daoUser.GetUserIdByLogin(loginTextBox.Text.ToString()) == user.UserId && loginTextBox.Text != "" || Session.daoUser.GetUserIdByLogin(loginTextBox.Text.ToString()) != user.UserId && Session.daoUser.GetUserIdByLogin(loginTextBox.Text.ToString()) == 0 && loginTextBox.Text != "")
             {
 
                 User newUser = new UserBuilder(((int)user.UserRole))
@@ -71,7 +63,7 @@ namespace PatternsPractise.Forms
                     .userDescription(descriptionTextBox.Text.ToString())
                     .Build();
 
-                daoUser.UpdateUser(newUser);
+                Session.daoUser.UpdateUser(newUser);
 
                 Session.SetUser(newUser);
 

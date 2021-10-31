@@ -1,6 +1,7 @@
 ﻿using PatternsPractise.DAO;
 using PatternsPractise.DAO.DAOGame.FactoryDAOGame;
 using PatternsPractise.DAO.DAOSystemReq.FactorySystemReq;
+using PatternsPractise.DAO.ObserverDAO;
 using PatternsPractise.Entities;
 using System;
 using System.Collections.Generic;
@@ -40,12 +41,7 @@ namespace PatternsPractise.Forms
 
         private void ChangeGameForm_Load(object sender, EventArgs e)
         {
-            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
-            CreatorDAOSystemReq creatorDAOSystemReq = new CreatorDBDAOSystemReq();
-            IDAOSystemReq daoSystemReq = creatorDAOSystemReq.FactoryMetod(Session.dbType);
-
-            game = daoGame.GetGameById(Session.selectedGameid);
+            game = Session.daoGame.GetGameById(Session.selectedGameid);
 
             addNameTextBox.Text = game.GameName;
             addDeveloperTextBox.Text = game.GameDeveloper;
@@ -54,7 +50,7 @@ namespace PatternsPractise.Forms
             addDateOfRelease.Text = game.DateOfRelease;
             addDescriptionTextBox.Text = game.GameDescription;
 
-            systemReqs = daoSystemReq.GetSystemReqByGameId(game.GameId);
+            systemReqs = Session.daoSystemReq.GetSystemReqByGameId(game.GameId);
 
             foreach(SystemReq systemReq in systemReqs)
             {
@@ -77,7 +73,7 @@ namespace PatternsPractise.Forms
                 }
             }
 
-            gameGenres = daoGame.GetGameGenres(game.GameId);
+            gameGenres = Session.daoGame.GetGameGenres(game.GameId);
             game.GameGenre = gameGenres;
 
             foreach(GameGenre genre in gameGenres)
@@ -88,10 +84,7 @@ namespace PatternsPractise.Forms
 
         private void addGenreButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
-
-            GameGenre genre = daoGame.GetGameGenreByName(addGenreTextBox.Text.ToString());
+            GameGenre genre = Session.daoGame.GetGameGenreByName(addGenreTextBox.Text.ToString());
 
             if (genre != null)
             {
@@ -111,7 +104,7 @@ namespace PatternsPractise.Forms
 
                 if (result == DialogResult.Yes)
                 {
-                    daoGame.AddGenreByName(addGenreTextBox.Text.ToString());
+                    Session.daoGame.AddGenreByName(addGenreTextBox.Text.ToString());
                     genre = new GameGenre(addGenreTextBox.Text.ToString());
                     addedGenresLabel.Text += genre.genreName + " ";
                     gameGenres.Add(genre);
@@ -125,11 +118,6 @@ namespace PatternsPractise.Forms
         }
         private void updateButton_Click(object sender, EventArgs e)
         {
-            CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
-            CreatorDAOSystemReq creatorDAOSystemReq = new CreatorDBDAOSystemReq();
-            IDAOSystemReq daoSystemReq = creatorDAOSystemReq.FactoryMetod(Session.dbType);
-
             Game newGame = new GameBuilder()
                 .gameId(game.GameId)
                 .listGenre(gameGenres)
@@ -156,7 +144,7 @@ namespace PatternsPractise.Forms
                             .sr_RAM(Convert.ToUInt32(minRAMTextBox.Text))
                             .sr_space(Convert.ToUInt32(minSpaceTextBox.Text))
                             .Build();
-                        daoSystemReq.UpdateSystemReq(minSystemReq);
+                        Session.daoSystemReq.UpdateSystemReq(minSystemReq);
                         break;
                     case 2:
                         SystemReq maxSystemReq = new ReqBuilder()
@@ -169,13 +157,13 @@ namespace PatternsPractise.Forms
                             .sr_RAM(Convert.ToUInt32(maxRAMTextBox.Text))
                             .sr_space(Convert.ToUInt32(maxSpaceTextBox.Text))
                             .Build();
-                        daoSystemReq.UpdateSystemReq(maxSystemReq);
+                        Session.daoSystemReq.UpdateSystemReq(maxSystemReq);
                         break;
                 }
             }
             
         
-            daoGame.UpdateGame(newGame);
+            Session.daoGame.UpdateGame(newGame);
 
             DialogResult result = MessageBox.Show(
                    "Игра изменена",

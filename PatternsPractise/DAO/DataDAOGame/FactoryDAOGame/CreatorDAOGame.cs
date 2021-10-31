@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PatternsPractise.DAO.DAOGame.FactoryDAOGame
 {
-    abstract class CreatorDAOGame
+    public abstract class CreatorDAOGame
     {
         public abstract IDAOGame FactoryMetod(DBtype dbType);
     }
