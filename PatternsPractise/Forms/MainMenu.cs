@@ -58,6 +58,7 @@ namespace PatternsPractise
             GetAllGames();
             Session.mainMenu = this;
             Session.daoGame.AddObserver(new ObserverDAOGame(gameGridView));
+            Session.daoUser.AddObserver(new ObserverDAOUser(userNameLabel));
         }
 
         private void loginInButton_Click(object sender, EventArgs e)

@@ -63,9 +63,9 @@ namespace PatternsPractise.Forms
                     .userDescription(descriptionTextBox.Text.ToString())
                     .Build();
 
-                Session.daoUser.UpdateUser(newUser);
-
                 Session.SetUser(newUser);
+
+                Session.daoUser.UpdateUser(newUser);
 
                 DialogResult result = MessageBox.Show(
                     "Пользователь изменён",

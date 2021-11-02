@@ -8,6 +8,7 @@ using PatternsPractise.Connection;
 using static PatternsPractise.Entities.User;
 using MySql.Data.MySqlClient;
 using System.Data.Common;
+using PatternsPractise.DAO.ObserverDAO;
 
 namespace PatternsPractise.DAO
 {
@@ -24,6 +25,11 @@ namespace PatternsPractise.DAO
         readonly String SQLSelectUserIdByCred = "SELECT idUser FROM gamelibrarydb.user WHERE userLogin = @userLogin AND userPassword = @userPassword";
         readonly String SQLSelectUserIdByLogin = "SELECT idUser FROM gamelibrarydb.user WHERE userLogin = @userLogin";
         public DAOUser() { }
+        private static List<IObserverDAOUser> observers = new List<IObserverDAOUser>();
+        public void AddObserver(IObserverDAOUser observer)
+        {
+            observers.Add(observer);
+        }
 
         //DAO AddUser
 
@@ -60,9 +66,15 @@ namespace PatternsPractise.DAO
                 cmd.Parameters.AddWithValue("@userDescription", user.UserDescription);
                 returnString += " Добавлена " + cmd.ExecuteNonQuery() + " запись ";
                 cmd.Parameters.Clear();
+                Notify();
                 return returnString;
             }
             
+        }
+
+        public void DeleteObserver(IObserverDAOUser observer)
+        {
+            observers.Remove(observer);
         }
 
         //DAO DeleteUser
@@ -83,7 +95,7 @@ namespace PatternsPractise.DAO
                 returnString += " Удалена " + cmd.ExecuteNonQuery() + " запись ";
                 cmd.Parameters.Clear();
             }
-            
+            Notify();
             return returnString;
         }
 
@@ -231,6 +243,14 @@ namespace PatternsPractise.DAO
             }
         }
 
+        public void Notify()
+        {
+            foreach(IObserverDAOUser observer in observers)
+            {
+                observer.Update(this);
+            }
+        }
+
         //DAO SearchUsersByName
 
         public List<User> SearchUsersByName(String userName)
@@ -294,6 +314,7 @@ namespace PatternsPractise.DAO
                 cmd.Parameters.AddWithValue("@userPhone", user.UserPhone);
                 cmd.Parameters.AddWithValue("@userDescription", user.UserDescription);
                 returnString += " Изменена " + cmd.ExecuteNonQuery() + " запись ";
+                Notify();
                 return returnString;
             }
         }

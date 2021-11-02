@@ -1,4 +1,5 @@
-﻿using PatternsPractise.Entities;
+﻿using PatternsPractise.DAO.ObserverDAO;
+using PatternsPractise.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,8 @@ namespace PatternsPractise.DAO
         public User GetUserById(int idUser);
         public int GetUserIdByCred(String login, String password);
         public int GetUserIdByLogin(String login);
+        public void AddObserver(IObserverDAOUser observer);
+        public void DeleteObserver(IObserverDAOUser observer);
+        public void Notify();
     }
 }
