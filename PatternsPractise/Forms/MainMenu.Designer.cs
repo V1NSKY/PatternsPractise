@@ -62,8 +62,9 @@ namespace PatternsPractise
             this.isAddedLabel = new System.Windows.Forms.Label();
             this.clearButton = new System.Windows.Forms.Button();
             this.deleteGameButton = new System.Windows.Forms.Button();
-            this.updateGridButton = new System.Windows.Forms.Button();
             this.changeUserButton = new System.Windows.Forms.Button();
+            this.returnStateButton = new System.Windows.Forms.Button();
+            this.CountLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gameGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -475,21 +476,6 @@ namespace PatternsPractise
             this.deleteGameButton.Visible = false;
             this.deleteGameButton.Click += new System.EventHandler(this.deleteGameButton_Click);
             // 
-            // updateGridButton
-            // 
-            this.updateGridButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
-            this.updateGridButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.updateGridButton.FlatAppearance.BorderSize = 0;
-            this.updateGridButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.updateGridButton.ForeColor = System.Drawing.Color.White;
-            this.updateGridButton.Location = new System.Drawing.Point(15, 68);
-            this.updateGridButton.Name = "updateGridButton";
-            this.updateGridButton.Size = new System.Drawing.Size(100, 23);
-            this.updateGridButton.TabIndex = 25;
-            this.updateGridButton.Text = "Обновить";
-            this.updateGridButton.UseVisualStyleBackColor = false;
-            this.updateGridButton.Click += new System.EventHandler(this.updateButton_Click);
-            // 
             // changeUserButton
             // 
             this.changeUserButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
@@ -506,14 +492,42 @@ namespace PatternsPractise
             this.changeUserButton.Visible = false;
             this.changeUserButton.Click += new System.EventHandler(this.changeUserButton_Click);
             // 
+            // returnStateButton
+            // 
+            this.returnStateButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            this.returnStateButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.returnStateButton.FlatAppearance.BorderSize = 0;
+            this.returnStateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.returnStateButton.ForeColor = System.Drawing.Color.White;
+            this.returnStateButton.Location = new System.Drawing.Point(15, 68);
+            this.returnStateButton.Name = "returnStateButton";
+            this.returnStateButton.Size = new System.Drawing.Size(37, 23);
+            this.returnStateButton.TabIndex = 27;
+            this.returnStateButton.Text = "<";
+            this.returnStateButton.UseVisualStyleBackColor = false;
+            this.returnStateButton.Visible = false;
+            this.returnStateButton.Click += new System.EventHandler(this.returnStateButton_Click);
+            // 
+            // CountLabel
+            // 
+            this.CountLabel.AutoSize = true;
+            this.CountLabel.ForeColor = System.Drawing.Color.White;
+            this.CountLabel.Location = new System.Drawing.Point(58, 72);
+            this.CountLabel.Name = "CountLabel";
+            this.CountLabel.Size = new System.Drawing.Size(13, 15);
+            this.CountLabel.TabIndex = 28;
+            this.CountLabel.Text = "0";
+            this.CountLabel.Visible = false;
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(884, 528);
+            this.Controls.Add(this.CountLabel);
+            this.Controls.Add(this.returnStateButton);
             this.Controls.Add(this.changeUserButton);
-            this.Controls.Add(this.updateGridButton);
             this.Controls.Add(this.deleteGameButton);
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.isAddedLabel);
@@ -579,8 +593,9 @@ namespace PatternsPractise
         private System.Windows.Forms.Label isAddedLabel;
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.Button deleteGameButton;
-        private System.Windows.Forms.Button updateGridButton;
         private System.Windows.Forms.Button changeUserButton;
+        private System.Windows.Forms.Button returnStateButton;
+        private System.Windows.Forms.Label CountLabel;
     }
 }
 

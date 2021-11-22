@@ -350,9 +350,12 @@ namespace PatternsPractise.DAO.DAOGame
                                 .Build();
                         }
                     }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
-            
             return game;
         }
 
@@ -449,7 +452,7 @@ namespace PatternsPractise.DAO.DAOGame
         {
             foreach(IObserverDAOGame observer in observers)
             {
-                observer.Update(this);
+                observer.Update();
             }
         }
     }

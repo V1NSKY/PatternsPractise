@@ -14,9 +14,9 @@ namespace PatternsPractise.DAO.ObserverDAO
         {
             _gridView = gridView;
         }
-        public void Update(IDAOGame daoGame)
+        public void Update()
         {
-            _gridView.DataSource = daoGame.GetAllGame();
+            _gridView.DataSource = Session.daoGame.GetAllGame();
         }
     }
 }

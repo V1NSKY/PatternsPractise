@@ -22,6 +22,8 @@ using PatternsPractise.DAO.DAOLibrary.FactoryDAOLibrary;
 using static PatternsPractise.Entities.UserGameLibrary;
 using PatternsPractise.DAO.ObserverDAO;
 using PatternsPractise.DAO.DAOSystemReq.FactorySystemReq;
+using PatternsPractise.Entities.GameEnt;
+using PatternsPractise.Entities.GameEnt.GameMementoData.CaretakerObserver;
 
 namespace PatternsPractise
 {
@@ -31,6 +33,7 @@ namespace PatternsPractise
         private static IDAOUser daoUser = creatorDAOUser.FactoryMetod(Session.dbType);
         private static CreatorDAOLibrary creatorDAOLibrary = new CreatorDBDAOLibrary();
         private static IDAOLibrary daoLibrary = creatorDAOLibrary.FactoryMetod(Session.dbType);
+
         private void GetAllGames()
         {
             List<Game> listGames = Session.daoGame.GetAllGame();
@@ -51,6 +54,7 @@ namespace PatternsPractise
 
         private void MainMenu_Load(object sender, EventArgs e)
         {
+            Session.selectedGameid = 0;
             Session.daoGame = new CreatorDBDAOGame().FactoryMetod(Session.dbType);
             Session.daoUser = new CreatorDBDAOUser().FactoryMetod(Session.dbType);
             Session.daoLibrary = new CreatorDBDAOLibrary().FactoryMetod(Session.dbType);
@@ -59,6 +63,8 @@ namespace PatternsPractise
             Session.mainMenu = this;
             Session.daoGame.AddObserver(new ObserverDAOGame(gameGridView));
             Session.daoUser.AddObserver(new ObserverDAOUser(userNameLabel));
+            Session.gameCaretaker = new GameCaretaker();
+            Session.gameCaretaker.AddObserver(new GameCaretakerObserver(CountLabel));
         }
 
         private void loginInButton_Click(object sender, EventArgs e)
@@ -80,6 +86,8 @@ namespace PatternsPractise
                     addUserButton.Visible = true;
                     changeGameButton.Visible = true;
                     deleteGameButton.Visible = true;
+                    returnStateButton.Visible = true;
+                    CountLabel.Visible = true;
                 }
                 notUserLabel.Visible = false;
                 loginTextBox.Text = "";
@@ -119,6 +127,8 @@ namespace PatternsPractise
             isAddedLabel.Visible = false;
             deleteGameButton.Visible = false;
             changeUserButton.Visible = false;
+            returnStateButton.Visible = false;
+            CountLabel.Visible = false;
         }
 
         private void registerButton_Click(object sender, EventArgs e)
@@ -155,13 +165,37 @@ namespace PatternsPractise
 
         private void gameInfoButton_Click(object sender, EventArgs e)
         {
-            GameInfoForm gameInfoForm = GameInfoForm.GetGameInfoForm();
-            gameInfoForm.Show();
+            if (Session.selectedGameid == 0)
+            {
+                DialogResult result = MessageBox.Show(
+                   "Игра не выбрана",
+                   "Ошибка",
+                   MessageBoxButtons.OK,
+                   MessageBoxIcon.Error,
+                   MessageBoxDefaultButton.Button1
+                   );
+            }
+            else
+            {
+                GameInfoForm gameInfoForm = GameInfoForm.GetGameInfoForm();
+                gameInfoForm.Show();
+            }
         }
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            if(Session.user != null)
+            if (Session.selectedGameid == 0)
+            {
+                DialogResult result = MessageBox.Show(
+                   "Игра не выбрана",
+                   "Ошибка",
+                   MessageBoxButtons.OK,
+                   MessageBoxIcon.Error,
+                   MessageBoxDefaultButton.Button1
+                   );
+            }
+            else
+            if (Session.user != null)
             {
                 isAddedLabel.Text = daoLibrary.AddLibrary(new LibraryBuilder()
                                     .game(Session.daoGame.GetGameById(Session.selectedGameid))
@@ -205,8 +239,22 @@ namespace PatternsPractise
 
         private void changeGameButton_Click(object sender, EventArgs e)
         {
-            ChangeGameForm changeGameForm = ChangeGameForm.GetChangeGameForm();
-            changeGameForm.Show();
+            if (Session.selectedGameid == 0)
+            {
+                DialogResult result = MessageBox.Show(
+                   "Игра не выбрана",
+                   "Ошибка",
+                   MessageBoxButtons.OK,
+                   MessageBoxIcon.Error,
+                   MessageBoxDefaultButton.Button1
+                   );
+            }
+            else
+            {
+                ChangeGameForm changeGameForm = ChangeGameForm.GetChangeGameForm();
+                changeGameForm.Show();
+            }
+            
         }
 
         private void changeUserButton_Click(object sender, EventArgs e)
@@ -219,6 +267,38 @@ namespace PatternsPractise
         {
             DBTypeForm dBTypeForm = DBTypeForm.GetDBTypeForm();
             dBTypeForm.Show();
+        }
+
+        private void returnStateButton_Click(object sender, EventArgs e)
+        {
+            if (Session.gameCaretaker.ReturnCountOfMemento() == 0)
+            {
+                DialogResult result = MessageBox.Show(
+                   "Невозможно вернуть изменения: изменений нет",
+                   "Ошибка",
+                   MessageBoxButtons.OK,
+                   MessageBoxIcon.Error,
+                   MessageBoxDefaultButton.Button1
+                   );
+            }
+            else if(Session.gameCaretaker.IsLastStateDeleted() == true)
+            {
+                while (Session.gameCaretaker.IsLastStateDeleted() == true)
+                {
+                    Session.gameCaretaker.RemoveLastState();
+                }
+                DialogResult result = MessageBox.Show(
+                   "Невозможно вернуть изменения: объект не найден",
+                   "Ошибка",
+                   MessageBoxButtons.OK,
+                   MessageBoxIcon.Error,
+                   MessageBoxDefaultButton.Button1
+                   );
+            }
+            else
+            {
+                Session.daoGame.UpdateGame(Session.gameCaretaker.ReturnToLastGameState().GetGameState());
+            }
         }
     }
 }

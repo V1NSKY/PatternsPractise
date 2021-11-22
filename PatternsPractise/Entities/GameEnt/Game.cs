@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PatternsPractise.Entities.GameEnt;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,21 @@ namespace PatternsPractise.Entities
         private String? gameDescription = "";
 
         private Game() { }
+        public GameMemento SaveGameState()
+        {
+            return new GameMemento(this);
+        }
+        public void RestoreGameState(GameMemento memento)
+        {
+            this.GameId = memento.GetGameState().GameId;
+            this.gameGenres = memento.GetGameState().gameGenres;
+            this.gameDeveloper = memento.GetGameState().gameDeveloper;
+            this.gamePublisher = memento.GetGameState().gamePublisher;
+            this.gameName = memento.GetGameState().gameName;
+            this.gamePrice = memento.GetGameState().gamePrice;
+            this.dateOfRelease = memento.GetGameState().dateOfRelease;
+            this.gameDescription = memento.GetGameState().gameDescription;
+        }
         public int GameId
         {
             get

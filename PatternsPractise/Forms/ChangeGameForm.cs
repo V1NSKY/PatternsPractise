@@ -42,7 +42,6 @@ namespace PatternsPractise.Forms
         private void ChangeGameForm_Load(object sender, EventArgs e)
         {
             game = Session.daoGame.GetGameById(Session.selectedGameid);
-
             addNameTextBox.Text = game.GameName;
             addDeveloperTextBox.Text = game.GameDeveloper;
             addPublisherTextBox.Text = game.GamePublisher;
@@ -118,6 +117,7 @@ namespace PatternsPractise.Forms
         }
         private void updateButton_Click(object sender, EventArgs e)
         {
+            Session.gameCaretaker.AddGameState(game.SaveGameState());
             Game newGame = new GameBuilder()
                 .gameId(game.GameId)
                 .listGenre(gameGenres)

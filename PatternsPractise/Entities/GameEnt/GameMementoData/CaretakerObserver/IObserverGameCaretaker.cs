@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace PatternsPractise.DAO.ObserverDAO
+namespace PatternsPractise.Entities.GameEnt.GameMementoData.MementoObserver
 {
-    public interface IObserverDAOGame
+    public interface IObserverGameCaretaker
     {
         public void Update();
     }
