@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PatternsPractise.DAO.DataDAOLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace PatternsPractise.DAO.DAOLibrary.FactoryDAOLibrary
                 case DBtype.MySQL:
                     return new DAOLibrary();
                 case DBtype.MongoDB:
-                    return null;
+                    return new DAOMongoLibrary();
                 default:
                     return null;
             }

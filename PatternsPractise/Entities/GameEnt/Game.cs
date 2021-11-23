@@ -1,4 +1,5 @@
-﻿using PatternsPractise.Entities.GameEnt;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using PatternsPractise.Entities.GameEnt;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace PatternsPractise.Entities
 {
+    [BsonIgnoreExtraElements]
     public class Game
     {
         private int gameId;
@@ -40,9 +42,9 @@ namespace PatternsPractise.Entities
             {
                 return gameId;
             }
-            private set
+            set
             {
-
+                gameId = value;
             }
         }
         public List<GameGenre> GameGenre

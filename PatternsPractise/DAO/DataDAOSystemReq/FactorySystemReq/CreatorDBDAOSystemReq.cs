@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PatternsPractise.DAO.DataDAOSystemReq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,22 +9,14 @@ namespace PatternsPractise.DAO.DAOSystemReq.FactorySystemReq
 {
     class CreatorDBDAOSystemReq : CreatorDAOSystemReq
     {
-        private static DAOSystemReq daoSystemReq;
         public override IDAOSystemReq FactoryMetod(DBtype dbType)
         {
             switch (dbType)
             {
                 case DBtype.MySQL:
-                    if (daoSystemReq == null)
-                    {
-                        return new DAOSystemReq();
-                    }
-                    else
-                    {
-                        return daoSystemReq;
-                    }
+                    return new DAOSystemReq();
                 case DBtype.MongoDB:
-                    return null;
+                    return new DAOMongoSystemReq();
                 default:
                     return null;
             }

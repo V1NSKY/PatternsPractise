@@ -29,10 +29,6 @@ namespace PatternsPractise
 {
     public partial class MainMenu : Form
     {
-        private static CreatorDAOUser creatorDAOUser = new CreatorDBDAOUser();
-        private static IDAOUser daoUser = creatorDAOUser.FactoryMetod(Session.dbType);
-        private static CreatorDAOLibrary creatorDAOLibrary = new CreatorDBDAOLibrary();
-        private static IDAOLibrary daoLibrary = creatorDAOLibrary.FactoryMetod(Session.dbType);
 
         private void GetAllGames()
         {
@@ -70,7 +66,7 @@ namespace PatternsPractise
         private void loginInButton_Click(object sender, EventArgs e)
         {
             
-            Session.SetUser(daoUser.GetUserById(daoUser.GetUserIdByCred(loginTextBox.Text, passwordTextBox.Text)));
+            Session.SetUser(Session.daoUser.GetUserById(Session.daoUser.GetUserIdByCred(loginTextBox.Text, passwordTextBox.Text)));
 
             if(Session.user == null)
             {
@@ -197,9 +193,9 @@ namespace PatternsPractise
             else
             if (Session.user != null)
             {
-                isAddedLabel.Text = daoLibrary.AddLibrary(new LibraryBuilder()
+                isAddedLabel.Text = Session.daoLibrary.AddLibrary(new LibraryBuilder()
                                     .game(Session.daoGame.GetGameById(Session.selectedGameid))
-                                    .user(daoUser.GetUserById(Session.user.UserId))
+                                    .user(Session.daoUser.GetUserById(Session.user.UserId))
                                     .Build());
 
                 isAddedLabel.Visible = true;
@@ -266,6 +262,7 @@ namespace PatternsPractise
         private void MainMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
             DBTypeForm dBTypeForm = DBTypeForm.GetDBTypeForm();
+            Session.NullUser();
             dBTypeForm.Show();
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PatternsPractise.DAO.DataDAOGame;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace PatternsPractise.DAO.DAOGame.FactoryDAOGame
                 case DBtype.MySQL:
                     return new DAOGame();
                 case DBtype.MongoDB:
-                    return null;
+                    return new DAOMongoGame();
                 default: 
                     return null;     
             }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PatternsPractise.Entities
 {
+    [BsonIgnoreExtraElements]
     public class SystemReq
     {
         private Game game;
@@ -35,7 +37,7 @@ namespace PatternsPractise.Entities
             {
                 return this.idSystemReq;
             }
-            private set
+            set
             {
                 this.idSystemReq = value;
             }

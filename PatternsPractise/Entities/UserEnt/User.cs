@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace PatternsPractise.Entities
 {
-     public class User
+    [BsonIgnoreExtraElements]
+    public class User
     {
         private UserRole userRole;
         private int userId;
@@ -39,7 +41,7 @@ namespace PatternsPractise.Entities
             {
                 return this.userId;
             }
-            private set
+            set
             {
                 this.userId = value;
             }

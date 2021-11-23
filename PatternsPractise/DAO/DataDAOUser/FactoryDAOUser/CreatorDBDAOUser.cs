@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PatternsPractise.DAO.DataDAOUser.FactoryDAOUser;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace PatternsPractise.DAO.FactoryDAOUser
                 case DBtype.MySQL:
                     return new DAOUser();
                 case DBtype.MongoDB:
-                    return null;
+                    return new DAOMongoUser();
                 default:
                     return null;
             }

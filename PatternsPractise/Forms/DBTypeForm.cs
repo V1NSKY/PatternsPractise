@@ -32,6 +32,7 @@ namespace PatternsPractise.Forms
         private void applyButton_Click(object sender, EventArgs e)
         {
             MainMenu mainMenu = new MainMenu();
+            TEST tEST = new TEST();
             if (mySQLRadioButton.Checked)
             {
                 Session.dbType = DBtype.MySQL;

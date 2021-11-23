@@ -91,37 +91,51 @@ namespace PatternsPractise.Forms
 
         private void addGenreButton_Click(object sender, EventArgs e)
         {
-            GameGenre genre = Session.daoGame.GetGameGenreByName(addGenreTextBox.Text.ToString());
-
-            if(genre != null)
+            if(Session.dbType == DBtype.MongoDB)
             {
-                addedGenresLabel.Text += genre.genreName + " ";
-                listGenres.Add(genre);
-                addGenreTextBox.Text = "";
-            }
-            else
-            {
-                DialogResult result = MessageBox.Show(
-                    "Жанр " + addGenreTextBox.Text + " не найден. Добавить его в базу?",
-                    "Ошибка",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question,
-                    MessageBoxDefaultButton.Button2,
-                    MessageBoxOptions.DefaultDesktopOnly);
-
-                if(result == DialogResult.Yes)
+                GameGenre genre = new GameGenre(addGenreTextBox.Text.ToString());
+                if (genre != null)
                 {
-                    Session.daoGame.AddGenreByName(addGenreTextBox.Text.ToString());
-                    genre = new GameGenre(addGenreTextBox.Text.ToString());
                     addedGenresLabel.Text += genre.genreName + " ";
                     listGenres.Add(genre);
                     addGenreTextBox.Text = "";
                 }
-                else if (result == DialogResult.No)
+            }
+            else
+            {
+                GameGenre genre = Session.daoGame.GetGameGenreByName(addGenreTextBox.Text.ToString());
+
+                if (genre != null)
                 {
+                    addedGenresLabel.Text += genre.genreName + " ";
+                    listGenres.Add(genre);
                     addGenreTextBox.Text = "";
                 }
+                else
+                {
+                    DialogResult result = MessageBox.Show(
+                        "Жанр " + addGenreTextBox.Text + " не найден. Добавить его в базу?",
+                        "Ошибка",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question,
+                        MessageBoxDefaultButton.Button2,
+                        MessageBoxOptions.DefaultDesktopOnly);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        Session.daoGame.AddGenreByName(addGenreTextBox.Text.ToString());
+                        genre = new GameGenre(addGenreTextBox.Text.ToString());
+                        addedGenresLabel.Text += genre.genreName + " ";
+                        listGenres.Add(genre);
+                        addGenreTextBox.Text = "";
+                    }
+                    else if (result == DialogResult.No)
+                    {
+                        addGenreTextBox.Text = "";
+                    }
+                }
             }
+            
         }
     }
 }

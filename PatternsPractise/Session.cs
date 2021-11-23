@@ -31,14 +31,7 @@ namespace PatternsPractise
         }
         public static User GetUser(User newUser)
         {
-            if(user == null)
-            {
-                return user = newUser;
-            }
-            else
-            {
                 return user;
-            }
         }
         public static void NullUser()
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PatternsPractise.Entities
 {
+    [BsonIgnoreExtraElements]
     public class UserGameLibrary
     {
         private User user;
@@ -58,7 +60,7 @@ namespace PatternsPractise.Entities
             {
                 return this.dateAdded;
             }
-            private set
+            set
             {
                 this.dateAdded = value;
             }
@@ -80,7 +82,7 @@ namespace PatternsPractise.Entities
             {
                 return this.dateLastPlayed;
             }
-            private set
+            set
             {
                 this.dateLastPlayed = value;
             }
