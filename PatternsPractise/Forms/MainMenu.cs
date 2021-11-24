@@ -32,8 +32,7 @@ namespace PatternsPractise
 
         private void GetAllGames()
         {
-            List<Game> listGames = Session.daoGame.GetAllGame();
-            gameGridView.DataSource = listGames;
+            gameGridView.DataSource = Session.daoGame.GetAllGame();
         }
         private void UpdateUser()
         {
@@ -129,14 +128,12 @@ namespace PatternsPractise
 
         private void registerButton_Click(object sender, EventArgs e)
         {
-            RegisterForm registerForm = RegisterForm.GetRegisterForm();
-            registerForm.Show();
+            RegisterForm.GetRegisterForm().Show();
         }
 
         private void addUserButton_Click(object sender, EventArgs e)
         {
-            RegisterForm registerForm = RegisterForm.GetRegisterForm();
-            registerForm.Show();
+            RegisterForm.GetRegisterForm().Show();
         }
 
         private void SearchByNameButton_Click(object sender, EventArgs e)
@@ -171,10 +168,19 @@ namespace PatternsPractise
                    MessageBoxDefaultButton.Button1
                    );
             }
+            else if(Session.daoGame.GetGameById(Session.selectedGameid) != null)
+            {
+                GameInfoForm.GetGameInfoForm().Show();
+            }
             else
             {
-                GameInfoForm gameInfoForm = GameInfoForm.GetGameInfoForm();
-                gameInfoForm.Show();
+                DialogResult result = MessageBox.Show(
+                   "Игра не найдена",
+                   "Ошибка",
+                   MessageBoxButtons.OK,
+                   MessageBoxIcon.Error,
+                   MessageBoxDefaultButton.Button1
+                   );
             }
         }
 
@@ -191,7 +197,7 @@ namespace PatternsPractise
                    );
             }
             else
-            if (Session.user != null)
+            if (Session.user != null && Session.daoGame.GetGameById(Session.selectedGameid) != null)
             {
                 isAddedLabel.Text = Session.daoLibrary.AddLibrary(new LibraryBuilder()
                                     .game(Session.daoGame.GetGameById(Session.selectedGameid))
@@ -199,13 +205,22 @@ namespace PatternsPractise
                                     .Build());
 
                 isAddedLabel.Visible = true;
-            }  
+            }
+            else
+            {
+                DialogResult result = MessageBox.Show(
+                   "Игра или пользователь не найдены",
+                   "Ошибка",
+                   MessageBoxButtons.OK,
+                   MessageBoxIcon.Error,
+                   MessageBoxDefaultButton.Button1
+                   );
+            }
         }
 
         private void libraryButton_Click(object sender, EventArgs e)
         {
-            GameLibrary gameLibrary = GameLibrary.GetGameLibrary();
-            gameLibrary.Show();
+            GameLibrary.GetGameLibrary().Show();
             this.Hide();
         }
 
@@ -218,8 +233,7 @@ namespace PatternsPractise
 
         private void addGameButton_Click(object sender, EventArgs e)
         {
-            AddGameForm addGameForm = AddGameForm.GetAddGameForm();
-            addGameForm.Show();
+            AddGameForm.GetAddGameForm().Show();
         }
 
         private void deleteGameButton_Click(object sender, EventArgs e)
@@ -247,23 +261,20 @@ namespace PatternsPractise
             }
             else
             {
-                ChangeGameForm changeGameForm = ChangeGameForm.GetChangeGameForm();
-                changeGameForm.Show();
+                ChangeGameForm.GetChangeGameForm().Show();
             }
             
         }
 
         private void changeUserButton_Click(object sender, EventArgs e)
         {
-            ChangeUserForm changeUserForm = ChangeUserForm.GetChangeUserForm();
-            changeUserForm.Show();
+            ChangeUserForm.GetChangeUserForm().Show();
         }
 
         private void MainMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DBTypeForm dBTypeForm = DBTypeForm.GetDBTypeForm();
             Session.NullUser();
-            dBTypeForm.Show();
+            DBTypeForm.GetDBTypeForm().Show();
         }
 
         private void returnStateButton_Click(object sender, EventArgs e)

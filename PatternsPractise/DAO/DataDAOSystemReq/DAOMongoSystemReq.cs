@@ -13,53 +13,35 @@ namespace PatternsPractise.DAO.DataDAOSystemReq
     {
         public string AddSystemReq(SystemReq systemReq)
         {
-            Random random = new Random();
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            var collection = database.GetCollection<SystemReq>("SystemReq");
-            systemReq.IdSystemReq = random.Next();
-            collection.InsertOne(systemReq);
+            systemReq.IdSystemReq = new Random().Next();
+            Connection.Connection.GetMongoDataBase().GetCollection<SystemReq>("SystemReq").InsertOne(systemReq);
             return "Inserted";
         }
 
         public string DeleteSystemReq(int idSystemReq)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            var collection = database.GetCollection<BsonDocument>("SystemReq");
-            var filter = new BsonDocument("IdSystemReq", idSystemReq);
-            collection.DeleteOne(filter);
+            Connection.Connection.GetMongoDataBase().GetCollection<BsonDocument>("SystemReq").DeleteOne(new BsonDocument("IdSystemReq", idSystemReq));
             return "Deleted";
         }
 
         public List<SystemReq> GetAllSystemReq()
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<SystemReq> collection = database.GetCollection<SystemReq>("SystemReq");
-            FilterDefinition<SystemReq> filter = Builders<SystemReq>.Filter.Empty;
-            return collection.Find<SystemReq>(filter).ToList<SystemReq>();
+            return Connection.Connection.GetMongoDataBase().GetCollection<SystemReq>("SystemReq").Find<SystemReq>(Builders<SystemReq>.Filter.Empty).ToList<SystemReq>();
         }
 
         public List<SystemReq> GetSystemReqByGameId(int idGame)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<SystemReq> collection = database.GetCollection<SystemReq>("SystemReq");
-            FilterDefinition<SystemReq> filter = Builders<SystemReq>.Filter.Eq("Game.GameId", idGame);
-            return collection.Find<SystemReq>(filter).ToList<SystemReq>();
+            return Connection.Connection.GetMongoDataBase().GetCollection<SystemReq>("SystemReq").Find<SystemReq>(Builders<SystemReq>.Filter.Eq("Game.GameId", idGame)).ToList<SystemReq>();
         }
 
         public SystemReq GetSystemReqById(int idSystemReq)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<SystemReq> collection = database.GetCollection<SystemReq>("SystemReq");
-            FilterDefinition<SystemReq> filter = Builders<SystemReq>.Filter.Eq("IdSystemReq", idSystemReq);
-            return collection.Find<SystemReq>(filter).ToList().LastOrDefault();
+            return Connection.Connection.GetMongoDataBase().GetCollection<SystemReq>("SystemReq").Find<SystemReq>(Builders<SystemReq>.Filter.Eq("IdSystemReq", idSystemReq)).ToList().LastOrDefault();
         }
 
         public string UpdateSystemReq(SystemReq systemReq)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<SystemReq> collection = database.GetCollection<SystemReq>("SystemReq");
-            FilterDefinition<SystemReq> filter = Builders<SystemReq>.Filter.Eq("IdSystemReq", systemReq.IdSystemReq);
-            collection.ReplaceOne(filter, systemReq);
+            Connection.Connection.GetMongoDataBase().GetCollection<SystemReq>("SystemReq").ReplaceOne(Builders<SystemReq>.Filter.Eq("IdSystemReq", systemReq.IdSystemReq), systemReq);
             return "Updated";
         }
     }

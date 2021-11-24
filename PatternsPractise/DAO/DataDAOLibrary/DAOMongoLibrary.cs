@@ -30,34 +30,23 @@ namespace PatternsPractise.DAO.DataDAOLibrary
             userGameLibrary.DateAdded = DateTime.Today.ToString();
             userGameLibrary.DateLastPlayed = DateTime.Today.ToString();
 
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            var collection = database.GetCollection<UserGameLibrary>("GameLibrary");
-            collection.InsertOne(userGameLibrary);
+            Connection.Connection.GetMongoDataBase().GetCollection<UserGameLibrary>("GameLibrary").InsertOne(userGameLibrary);
             return "Игра добавлена в библиотеку";
         }
         public string DeleteLibrary(int idUser)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            var collection = database.GetCollection<BsonDocument>("GameLibrary");
-            var filter = new BsonDocument("User.UserId", idUser);
-            collection.DeleteOne(filter);
+            Connection.Connection.GetMongoDataBase().GetCollection<BsonDocument>("GameLibrary").DeleteOne(new BsonDocument("User.UserId", idUser));
             return "Deleted";
         }
         public int DeleteLibraryGame(int idGame)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            var collection = database.GetCollection<BsonDocument>("GameLibrary");
-            var filter = new BsonDocument("Game.GameId", idGame);
-            collection.DeleteOne(filter);
+            Connection.Connection.GetMongoDataBase().GetCollection<BsonDocument>("GameLibrary").DeleteOne(new BsonDocument("Game.GameId", idGame));
             Notify();
             return 1;
         }
         public List<UserGameLibrary> GetAllUserLibrary(int idUser)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<UserGameLibrary> collection = database.GetCollection<UserGameLibrary>("GameLibrary");
-            FilterDefinition<UserGameLibrary> filter = Builders<UserGameLibrary>.Filter.Eq("User.UserId", idUser);
-            return collection.Find<UserGameLibrary>(filter).ToList<UserGameLibrary>();
+            return Connection.Connection.GetMongoDataBase().GetCollection<UserGameLibrary>("GameLibrary").Find<UserGameLibrary>(Builders<UserGameLibrary>.Filter.Eq("User.UserId", idUser)).ToList<UserGameLibrary>();
         }
         public void AddObserver(IObserverDAOGameLibrary observer)
         {

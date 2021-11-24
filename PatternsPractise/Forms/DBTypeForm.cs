@@ -31,18 +31,16 @@ namespace PatternsPractise.Forms
 
         private void applyButton_Click(object sender, EventArgs e)
         {
-            MainMenu mainMenu = new MainMenu();
-            TEST tEST = new TEST();
             if (mySQLRadioButton.Checked)
             {
                 Session.dbType = DBtype.MySQL;
-                mainMenu.Show();
+                new MainMenu().Show();
                 this.Hide();
             }
             else if (mongoDBRadioButton.Checked)
             {
                 Session.dbType = DBtype.MongoDB;
-                mainMenu.Show();
+                new MainMenu().Show();
                 this.Hide();
             }
         }

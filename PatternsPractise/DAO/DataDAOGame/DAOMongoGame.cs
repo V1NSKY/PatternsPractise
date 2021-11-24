@@ -15,72 +15,48 @@ namespace PatternsPractise.DAO.DataDAOGame
         private List<IObserverDAOGame> observers = new List<IObserverDAOGame>();
         public string AddGame(Game game)
         {
-            Random random = new Random();
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            var collection = database.GetCollection<Game>("Game");
-            game.GameId = random.Next();
-            collection.InsertOne(game);
+            game.GameId = new Random().Next();
+            Connection.Connection.GetMongoDataBase().GetCollection<Game>("Game").InsertOne(game);
             Notify();
             return "Inserted";
         }
        
         public string DeleteGame(int idGame)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            var collection = database.GetCollection<BsonDocument>("Game");
-            var filter = new BsonDocument("GameId", idGame);
-            collection.DeleteOne(filter);
+            Connection.Connection.GetMongoDataBase().GetCollection<BsonDocument>("Game").DeleteOne(new BsonDocument("GameId", idGame));
             Notify();
             return "Deleted";
         }
 
         public List<Game> GetAllGame()
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<Game> collection = database.GetCollection<Game>("Game");
-            FilterDefinition<Game> filter = Builders<Game>.Filter.Empty;
-            return collection.Find<Game>(filter).ToList<Game>();
+            return Connection.Connection.GetMongoDataBase().GetCollection<Game>("Game").Find<Game>(Builders<Game>.Filter.Empty).ToList<Game>();
         }
 
         public Game GetGameById(int idGame)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<Game> collection = database.GetCollection<Game>("Game");
-            FilterDefinition<Game> filter = Builders<Game>.Filter.Eq("GameId", idGame);
-            return collection.Find<Game>(filter).ToList().LastOrDefault();
+            return Connection.Connection.GetMongoDataBase().GetCollection<Game>("Game").Find<Game>(Builders<Game>.Filter.Eq("GameId", idGame)).ToList().LastOrDefault();
         }
 
         public Game GetGameByName(string gameName)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<Game> collection = database.GetCollection<Game>("Game");
-            FilterDefinition<Game> filter = Builders<Game>.Filter.Eq("GameName", gameName);
-            return collection.Find<Game>(filter).ToList().LastOrDefault();
+            return Connection.Connection.GetMongoDataBase().GetCollection<Game>("Game").Find<Game>(Builders<Game>.Filter.Eq("GameName", gameName)).ToList().LastOrDefault();
         }
 
         public List<GameGenre> GetGameGenres(int idGame)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<Game> collection = database.GetCollection<Game>("Game");
-            FilterDefinition<Game> filter = Builders<Game>.Filter.Eq("GameId", idGame);
-            return collection.Find<Game>(filter).ToList().LastOrDefault().GetGenres();
+            return Connection.Connection.GetMongoDataBase().GetCollection<Game>("Game").Find<Game>(Builders<Game>.Filter.Eq("GameId", idGame)).ToList().LastOrDefault().GetGenres();
         }
 
        
         public List<Game> SearchGameByName(string gameName)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<Game> collection = database.GetCollection<Game>("Game");
-            FilterDefinition<Game> filter = Builders<Game>.Filter.Eq("GameName", gameName);
-            return collection.Find<Game>(filter).ToList();
+            return Connection.Connection.GetMongoDataBase().GetCollection<Game>("Game").Find<Game>(Builders<Game>.Filter.Eq("GameName", gameName)).ToList();
         }
 
         public string UpdateGame(Game game)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<Game> collection = database.GetCollection<Game>("Game");
-            FilterDefinition<Game> filter = Builders<Game>.Filter.Eq("GameId", game.GameId);
-            collection.ReplaceOne(filter, game);
+            Connection.Connection.GetMongoDataBase().GetCollection<Game>("Game").ReplaceOne(Builders<Game>.Filter.Eq("GameId", game.GameId), game);
             Notify();
             return "Updated";
         }

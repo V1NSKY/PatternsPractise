@@ -15,44 +15,29 @@ namespace PatternsPractise.DAO.DataDAOUser.FactoryDAOUser
         private List<IObserverDAOUser> observers = new List<IObserverDAOUser>();
         public string AddUser(User user)
         {
-            Random random = new Random();
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            var collection = database.GetCollection<User>("User");
-            user.UserId = random.Next();
-            collection.InsertOne(user);
+            user.UserId = new Random().Next();
+            Connection.Connection.GetMongoDataBase().GetCollection<User>("User").InsertOne(user);
             return "Inserted";
         }
         public string DeleteUser(int idUser)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            var collection = database.GetCollection<BsonDocument>("User");
-            var filter = new BsonDocument("UserId", idUser);
-            collection.DeleteOne(filter);
+            Connection.Connection.GetMongoDataBase().GetCollection<BsonDocument>("User").DeleteOne(new BsonDocument("UserId", idUser));
             return "Deleted";
         }
 
         public List<User> GetAllUsers()
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<User> collection = database.GetCollection<User>("User");
-            FilterDefinition<User> filter = Builders<User>.Filter.Empty;
-            return collection.Find<User>(filter).ToList<User>();
+            return Connection.Connection.GetMongoDataBase().GetCollection<User>("User").Find<User>(Builders<User>.Filter.Empty).ToList<User>();
         }
 
         public User GetUserById(int idUser)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<User> collection = database.GetCollection<User>("User");
-            FilterDefinition<User> filter = Builders<User>.Filter.Eq("UserId", idUser);
-            return collection.Find<User>(filter).ToList().LastOrDefault();
+            return Connection.Connection.GetMongoDataBase().GetCollection<User>("User").Find<User>(Builders<User>.Filter.Eq("UserId", idUser)).ToList().LastOrDefault();
         }
 
         public int GetUserIdByCred(string login, string password)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<User> collection = database.GetCollection<User>("User");
-            FilterDefinition<User> filter = Builders<User>.Filter.Eq("UserLogin", login) & Builders<User>.Filter.Eq("UserPassword", password);
-            User user = collection.Find<User>(filter).ToList().LastOrDefault();
+            User user = Connection.Connection.GetMongoDataBase().GetCollection<User>("User").Find<User>(Builders<User>.Filter.Eq("UserLogin", login) & Builders<User>.Filter.Eq("UserPassword", password)).ToList().LastOrDefault();
 
             if (user != null)
             {
@@ -66,10 +51,7 @@ namespace PatternsPractise.DAO.DataDAOUser.FactoryDAOUser
 
         public int GetUserIdByLogin(string login)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<User> collection = database.GetCollection<User>("User");
-            FilterDefinition<User> filter = Builders<User>.Filter.Eq("UserLogin", login);
-            User user = collection.Find<User>(filter).ToList().LastOrDefault();
+            User user = Connection.Connection.GetMongoDataBase().GetCollection<User>("User").Find<User>(Builders<User>.Filter.Eq("UserLogin", login)).ToList().LastOrDefault();
 
             if (user != null)
             {
@@ -83,18 +65,12 @@ namespace PatternsPractise.DAO.DataDAOUser.FactoryDAOUser
         }
         public List<User> SearchUsersByName(string userName)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<User> collection = database.GetCollection<User>("User");
-            FilterDefinition<User> filter = Builders<User>.Filter.Eq("UserName", userName);
-            return collection.Find<User>(filter).ToList();
+            return Connection.Connection.GetMongoDataBase().GetCollection<User>("User").Find<User>(Builders<User>.Filter.Eq("UserName", userName)).ToList();
         }
 
         public string UpdateUser(User user)
         {
-            IMongoDatabase database = Connection.Connection.GetMongoDataBase();
-            IMongoCollection<User> collection = database.GetCollection<User>("User");
-            FilterDefinition<User> filter = Builders<User>.Filter.Eq("UserId", user.UserId);
-            collection.ReplaceOne(filter, user);
+            Connection.Connection.GetMongoDataBase().GetCollection<User>("User").ReplaceOne(Builders<User>.Filter.Eq("UserId", user.UserId), user);
             Notify();
             return "Updated";
         }
