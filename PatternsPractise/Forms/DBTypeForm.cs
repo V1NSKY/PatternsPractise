@@ -44,5 +44,10 @@ namespace PatternsPractise.Forms
                 this.Hide();
             }
         }
+
+        private void testButton_Click(object sender, EventArgs e)
+        {
+            new TEST().Show();
+        }
     }
 }

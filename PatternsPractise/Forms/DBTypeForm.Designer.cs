@@ -33,6 +33,7 @@ namespace PatternsPractise.Forms
             this.applyButton = new System.Windows.Forms.Button();
             this.mySQLRadioButton = new System.Windows.Forms.RadioButton();
             this.mongoDBRadioButton = new System.Windows.Forms.RadioButton();
+            this.testButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -84,12 +85,28 @@ namespace PatternsPractise.Forms
             this.mongoDBRadioButton.Text = "MongoDB";
             this.mongoDBRadioButton.UseVisualStyleBackColor = true;
             // 
+            // testButton
+            // 
+            this.testButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            this.testButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.testButton.FlatAppearance.BorderSize = 0;
+            this.testButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.testButton.ForeColor = System.Drawing.Color.White;
+            this.testButton.Location = new System.Drawing.Point(25, 146);
+            this.testButton.Name = "testButton";
+            this.testButton.Size = new System.Drawing.Size(100, 23);
+            this.testButton.TabIndex = 25;
+            this.testButton.Text = "Тест";
+            this.testButton.UseVisualStyleBackColor = false;
+            this.testButton.Click += new System.EventHandler(this.testButton_Click);
+            // 
             // DBTypeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
-            this.ClientSize = new System.Drawing.Size(153, 147);
+            this.ClientSize = new System.Drawing.Size(153, 181);
+            this.Controls.Add(this.testButton);
             this.Controls.Add(this.mongoDBRadioButton);
             this.Controls.Add(this.mySQLRadioButton);
             this.Controls.Add(this.applyButton);
@@ -111,5 +128,6 @@ namespace PatternsPractise.Forms
         private System.Windows.Forms.Button applyButton;
         private System.Windows.Forms.RadioButton mySQLRadioButton;
         private System.Windows.Forms.RadioButton mongoDBRadioButton;
+        private System.Windows.Forms.Button testButton;
     }
 }

@@ -89,5 +89,15 @@ namespace PatternsPractise.DAO.DataDAOUser.FactoryDAOUser
                 observer.Update(this);
             }
         }
+
+        public int DeleteUserByName(string name)
+        {
+            return (int)Connection.Connection.GetMongoDataBase().GetCollection<BsonDocument>("User").DeleteMany(new BsonDocument("UserName", name)).DeletedCount;
+        }
+
+        public List<User> SearchUsersByNameAndPassword(string userName, string password)
+        {
+            return Connection.Connection.GetMongoDataBase().GetCollection<User>("User").Find<User>(Builders<User>.Filter.Eq("UserName", userName) & Builders<User>.Filter.Eq("UserPassword", password)).ToList();
+        }
     }
 }

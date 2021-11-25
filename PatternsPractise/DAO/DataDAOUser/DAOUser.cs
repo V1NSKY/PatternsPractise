@@ -318,5 +318,59 @@ namespace PatternsPractise.DAO
                 return returnString;
             }
         }
+
+        public int DeleteUserByName(string name)
+        {
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand
+                {
+                    Connection = conn,
+                    CommandText = "DELETE FROM gamelibrarydb.user WHERE userName = @userName;"
+                };
+                cmd.Parameters.AddWithValue("@userName", name);
+                return cmd.ExecuteNonQuery();
+            }
+        }
+
+        public List<User> SearchUsersByNameAndPassword(string userName, String password)
+        {
+            List<User> listUsers = new List<User>();
+
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand
+                {
+                    Connection = conn,
+                    CommandText = "SELECT * FROM gamelibrarydb.user WHERE userName = @userName AND userPassword = @userPassword;"
+                };
+                cmd.Parameters.AddWithValue("@userName", userName);
+                cmd.Parameters.AddWithValue("@userPassword", password);
+                using (MySqlDataReader selectUserByNameReader = cmd.ExecuteReader())
+                {
+                    if (selectUserByNameReader.HasRows)
+                    {
+                        while (selectUserByNameReader.Read())
+                        {
+                            User user = new UserBuilder(Convert.ToInt32(selectUserByNameReader.GetValue(1)))
+                                .userId(Convert.ToInt32(selectUserByNameReader.GetValue(0)))
+                                .userName(selectUserByNameReader.GetString(2))
+                                .userSurname(selectUserByNameReader.GetString(3))
+                                .userMiddleName(selectUserByNameReader.GetString(4))
+                                .userLogin(selectUserByNameReader.GetString(5))
+                                .userPassword(selectUserByNameReader.GetString(6))
+                                .userPhone(selectUserByNameReader.GetString(7))
+                                .userDescription(selectUserByNameReader.GetString(8))
+                                .Build();
+                            listUsers.Add(user);
+                        }
+                    }
+                }
+            }
+
+            return listUsers;
+        }
     }
 }

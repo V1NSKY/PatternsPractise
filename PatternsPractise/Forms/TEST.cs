@@ -1,4 +1,6 @@
-﻿using PatternsPractise.DAO.DAOGame.FactoryDAOGame;
+﻿using PatternsPractise.DAO;
+using PatternsPractise.DAO.DAOGame.FactoryDAOGame;
+using PatternsPractise.DAO.FactoryDAOUser;
 using PatternsPractise.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,58 +12,55 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static PatternsPractise.Entities.Game;
+using static PatternsPractise.Entities.User;
 
 namespace PatternsPractise.Forms
 {
     public partial class TEST : Form
     {
-
-        List<GameGenre> listGenres = new List<GameGenre>();
         public TEST()
         {
             InitializeComponent();
         }
-
-        private void TEST_Load(object sender, EventArgs e)
+        private String Test(int count, DBtype btype)
         {
-            Session.daoGame = new CreatorDBDAOGame().FactoryMetod(Session.dbType);
-            gameGridView.DataSource = Session.daoGame.GetAllGame();
-        }
-
-        private void addButton_Click(object sender, EventArgs e)
-        {
-            Game game = new GameBuilder()
-               .listGenre(listGenres)
-               .gameName(addNameTextBox.Text.ToString())
-               .gameDeveloper(addDeveloperTextBox.Text.ToString())
-               .gamePublisher(addPublisherTextBox.Text.ToString())
-               .gamePrice(Convert.ToDouble(addPriceTextBox.Text))
-               .gameDateOfRelease(addDateOfRelease.Text.ToString())
-               .gameDescription(addDescriptionTextBox.Text.ToString())
-               .Build();
-            
-        }
-
-        private void addGenreButton_Click(object sender, EventArgs e)
-        {
-            GameGenre genre = new GameGenre(addGenreTextBox.Text.ToString());
-            if (genre != null)
+            String returnString = "";
+            IDAOUser daoUser = new CreatorDBDAOUser().FactoryMetod(btype);
+            var timer = System.Diagnostics.Stopwatch.StartNew();
+            for (int i = 0; i < count; i++)
             {
-                addedGenresLabel.Text += genre.genreName + " ";
-                listGenres.Add(genre);
-                addGenreTextBox.Text = "";
+                User user = new UserBuilder(1)
+                    .userName("Test")
+                    .userSurname("Test")
+                    .userMiddleName("Test")
+                    .userPhone("Test")
+                    .userLogin("Test" + i)
+                    .userPassword("Test")
+                    .userDescription("Test")
+                    .Build();
+                daoUser.AddUser(user);
             }
+            returnString += "Insert " + count + ": " + timer.Elapsed.TotalSeconds + " s\n";
+            timer.Restart();
+            daoUser.SearchUsersByNameAndPassword("Test", "Test");
+            returnString += "Select " + count + ": " + timer.Elapsed.TotalSeconds + " s\n";
+            timer.Reset();
+            daoUser.DeleteUserByName("Test");
+            return returnString;
         }
 
-        private void TEST_FormClosing(object sender, FormClosingEventArgs e)
+        private void testButton_Click(object sender, EventArgs e)
         {
-            DBTypeForm dBTypeForm = DBTypeForm.GetDBTypeForm();
-            dBTypeForm.Show();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Session.daoGame.DeleteGame(Convert.ToInt32(textBox1.Text));
+            DialogResult result = MessageBox.Show(
+                   "MySQL\n"+
+                   Test(Convert.ToInt32(textBox1.Text), DBtype.MySQL) + 
+                   "MongoDB\n" +
+                   Test(Convert.ToInt32(textBox1.Text), DBtype.MongoDB),
+                   "Тест",
+                   MessageBoxButtons.OK,
+                   MessageBoxIcon.Information,
+                   MessageBoxDefaultButton.Button1
+                   );
         }
     }
 }
