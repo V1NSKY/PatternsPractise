@@ -49,5 +49,10 @@ namespace PatternsPractise.Forms
         {
             new TEST().Show();
         }
+
+        private void migrateButton_Click(object sender, EventArgs e)
+        {
+            new MigrateForm().Show();
+        }
     }
 }

@@ -34,6 +34,7 @@ namespace PatternsPractise.Forms
             this.mySQLRadioButton = new System.Windows.Forms.RadioButton();
             this.mongoDBRadioButton = new System.Windows.Forms.RadioButton();
             this.testButton = new System.Windows.Forms.Button();
+            this.migrateButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -100,12 +101,28 @@ namespace PatternsPractise.Forms
             this.testButton.UseVisualStyleBackColor = false;
             this.testButton.Click += new System.EventHandler(this.testButton_Click);
             // 
+            // migrateButton
+            // 
+            this.migrateButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            this.migrateButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.migrateButton.FlatAppearance.BorderSize = 0;
+            this.migrateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.migrateButton.ForeColor = System.Drawing.Color.White;
+            this.migrateButton.Location = new System.Drawing.Point(25, 175);
+            this.migrateButton.Name = "migrateButton";
+            this.migrateButton.Size = new System.Drawing.Size(100, 23);
+            this.migrateButton.TabIndex = 26;
+            this.migrateButton.Text = "Миграция";
+            this.migrateButton.UseVisualStyleBackColor = false;
+            this.migrateButton.Click += new System.EventHandler(this.migrateButton_Click);
+            // 
             // DBTypeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
-            this.ClientSize = new System.Drawing.Size(153, 181);
+            this.ClientSize = new System.Drawing.Size(153, 207);
+            this.Controls.Add(this.migrateButton);
             this.Controls.Add(this.testButton);
             this.Controls.Add(this.mongoDBRadioButton);
             this.Controls.Add(this.mySQLRadioButton);
@@ -129,5 +146,6 @@ namespace PatternsPractise.Forms
         private System.Windows.Forms.RadioButton mySQLRadioButton;
         private System.Windows.Forms.RadioButton mongoDBRadioButton;
         private System.Windows.Forms.Button testButton;
+        private System.Windows.Forms.Button migrateButton;
     }
 }

@@ -15,7 +15,10 @@ namespace PatternsPractise.DAO.DataDAOUser.FactoryDAOUser
         private List<IObserverDAOUser> observers = new List<IObserverDAOUser>();
         public string AddUser(User user)
         {
-            user.UserId = new Random().Next();
+            if(user.UserId == 0)
+            {
+                user.UserId = new Random().Next();
+            }
             Connection.Connection.GetMongoDataBase().GetCollection<User>("User").InsertOne(user);
             return "Inserted";
         }

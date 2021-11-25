@@ -13,7 +13,10 @@ namespace PatternsPractise.DAO.DataDAOSystemReq
     {
         public string AddSystemReq(SystemReq systemReq)
         {
-            systemReq.IdSystemReq = new Random().Next();
+            if(systemReq.IdSystemReq == 0)
+            {
+                systemReq.IdSystemReq = new Random().Next();
+            }            
             Connection.Connection.GetMongoDataBase().GetCollection<SystemReq>("SystemReq").InsertOne(systemReq);
             return "Inserted";
         }

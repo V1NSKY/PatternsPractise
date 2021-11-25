@@ -24,7 +24,7 @@ namespace PatternsPractise.Entities
             {
                 return user;
             }
-            private set
+            set
             {
                 this.user = value;
             }

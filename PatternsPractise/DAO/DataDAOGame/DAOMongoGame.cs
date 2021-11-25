@@ -15,7 +15,10 @@ namespace PatternsPractise.DAO.DataDAOGame
         private List<IObserverDAOGame> observers = new List<IObserverDAOGame>();
         public string AddGame(Game game)
         {
-            game.GameId = new Random().Next();
+            if(game.GameId == 0)
+            {
+                game.GameId = new Random().Next();
+            }
             Connection.Connection.GetMongoDataBase().GetCollection<Game>("Game").InsertOne(game);
             Notify();
             return "Inserted";

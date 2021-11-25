@@ -55,7 +55,7 @@ namespace PatternsPractise.Entities
             {
                 return this.game;
             }
-            private set
+            set
             {
                 this.game = value;
             }
