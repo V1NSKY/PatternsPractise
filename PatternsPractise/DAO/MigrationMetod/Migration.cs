@@ -3,11 +3,7 @@ using PatternsPractise.DAO.DAOLibrary.FactoryDAOLibrary;
 using PatternsPractise.DAO.DAOSystemReq.FactorySystemReq;
 using PatternsPractise.DAO.FactoryDAOUser;
 using PatternsPractise.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PatternsPractise.DAO.MigrationMetod
 {

@@ -1,16 +1,8 @@
-﻿using PatternsPractise.DAO;
-using PatternsPractise.DAO.DAOGame.FactoryDAOGame;
-using PatternsPractise.DAO.DAOLibrary.FactoryDAOLibrary;
-using PatternsPractise.DAO.ObserverDAO;
+﻿using PatternsPractise.DAO.ObserverDAO;
 using PatternsPractise.Entities;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PatternsPractise.Forms

@@ -1,15 +1,6 @@
-﻿using PatternsPractise.DAO;
-using PatternsPractise.DAO.DAOGame.FactoryDAOGame;
-using PatternsPractise.DAO.DAOSystemReq.FactorySystemReq;
-using PatternsPractise.Entities;
+﻿using PatternsPractise.Entities;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static PatternsPractise.Entities.Game;
 using static PatternsPractise.Entities.SystemReq;

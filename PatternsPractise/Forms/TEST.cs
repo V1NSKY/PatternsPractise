@@ -1,17 +1,8 @@
 ﻿using PatternsPractise.DAO;
-using PatternsPractise.DAO.DAOGame.FactoryDAOGame;
 using PatternsPractise.DAO.FactoryDAOUser;
 using PatternsPractise.Entities;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static PatternsPractise.Entities.Game;
 using static PatternsPractise.Entities.User;
 
 namespace PatternsPractise.Forms
@@ -51,16 +42,16 @@ namespace PatternsPractise.Forms
 
         private void testButton_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show(
-                   "MySQL\n"+
-                   Test(Convert.ToInt32(textBox1.Text), DBtype.MySQL) + 
-                   "MongoDB\n" +
-                   Test(Convert.ToInt32(textBox1.Text), DBtype.MongoDB),
-                   "Тест",
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Information,
-                   MessageBoxDefaultButton.Button1
-                   );
+            MessageBox.Show(
+                "MySQL\n"+
+                Test(Convert.ToInt32(textBox1.Text), DBtype.MySQL) + 
+                "MongoDB\n" +
+                Test(Convert.ToInt32(textBox1.Text), DBtype.MongoDB),
+                "Тест",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button1
+            );
         }
     }
 }

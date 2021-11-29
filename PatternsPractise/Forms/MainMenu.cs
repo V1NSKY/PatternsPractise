@@ -1,21 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using PatternsPractise.Connection;
 using PatternsPractise.Entities;
-using static PatternsPractise.Entities.Game;
-using static PatternsPractise.Entities.User;
-using static PatternsPractise.Entities.SystemReq;
-using PatternsPractise.DAO.DAOGame;
 using PatternsPractise.DAO.FactoryDAOUser;
-using PatternsPractise.DAO;
 using PatternsPractise.Forms;
 using PatternsPractise.DAO.DAOGame.FactoryDAOGame;
 using PatternsPractise.DAO.DAOLibrary.FactoryDAOLibrary;
@@ -139,7 +127,7 @@ namespace PatternsPractise
         private void SearchByNameButton_Click(object sender, EventArgs e)
         {
             clearButton.Visible = true;
-            List<Game> listGames = Session.daoGame.SearchGameByName(searchTextBox.Text.ToString());
+            List<Game> listGames = Session.daoGame.SearchGameByName(searchTextBox.Text);
             gameGridView.DataSource = listGames;
         }
 
@@ -160,13 +148,13 @@ namespace PatternsPractise
         {
             if (Session.selectedGameid == 0)
             {
-                DialogResult result = MessageBox.Show(
-                   "Игра не выбрана",
-                   "Ошибка",
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Error,
-                   MessageBoxDefaultButton.Button1
-                   );
+                MessageBox.Show(
+                    "Игра не выбрана",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error,
+                    MessageBoxDefaultButton.Button1
+                );
             }
             else if(Session.daoGame.GetGameById(Session.selectedGameid) != null)
             {
@@ -174,13 +162,13 @@ namespace PatternsPractise
             }
             else
             {
-                DialogResult result = MessageBox.Show(
-                   "Игра не найдена",
-                   "Ошибка",
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Error,
-                   MessageBoxDefaultButton.Button1
-                   );
+                MessageBox.Show(
+                    "Игра не найдена",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error,
+                    MessageBoxDefaultButton.Button1
+                );
             }
         }
 
@@ -188,13 +176,13 @@ namespace PatternsPractise
         {
             if (Session.selectedGameid == 0)
             {
-                DialogResult result = MessageBox.Show(
-                   "Игра не выбрана",
-                   "Ошибка",
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Error,
-                   MessageBoxDefaultButton.Button1
-                   );
+                MessageBox.Show(
+                    "Игра не выбрана",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error,
+                    MessageBoxDefaultButton.Button1
+                );
             }
             else
             if (Session.user != null && Session.daoGame.GetGameById(Session.selectedGameid) != null)
@@ -208,13 +196,13 @@ namespace PatternsPractise
             }
             else
             {
-                DialogResult result = MessageBox.Show(
-                   "Игра или пользователь не найдены",
-                   "Ошибка",
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Error,
-                   MessageBoxDefaultButton.Button1
-                   );
+                MessageBox.Show(
+                    "Игра или пользователь не найдены",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error,
+                    MessageBoxDefaultButton.Button1
+                );
             }
         }
 
@@ -241,23 +229,17 @@ namespace PatternsPractise
             Session.daoGame.DeleteGame(Session.selectedGameid);
         }
 
-        private void updateButton_Click(object sender, EventArgs e)
-        {
-            GetAllGames();
-            UpdateUser();
-        }
-
         private void changeGameButton_Click(object sender, EventArgs e)
         {
             if (Session.selectedGameid == 0)
             {
-                DialogResult result = MessageBox.Show(
-                   "Игра не выбрана",
-                   "Ошибка",
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Error,
-                   MessageBoxDefaultButton.Button1
-                   );
+                MessageBox.Show(
+                    "Игра не выбрана",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error,
+                    MessageBoxDefaultButton.Button1
+                );
             }
             else
             {
@@ -281,27 +263,28 @@ namespace PatternsPractise
         {
             if (Session.gameCaretaker.ReturnCountOfMemento() == 0)
             {
-                DialogResult result = MessageBox.Show(
-                   "Невозможно вернуть изменения: изменений нет",
-                   "Ошибка",
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Error,
-                   MessageBoxDefaultButton.Button1
-                   );
+                MessageBox.Show(
+                    "Невозможно вернуть изменения: изменений нет",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error,
+                    MessageBoxDefaultButton.Button1
+                );
             }
-            else if(Session.gameCaretaker.IsLastStateDeleted() == true)
+            else if(Session.gameCaretaker.IsLastStateDeleted())
             {
-                while (Session.gameCaretaker.IsLastStateDeleted() == true)
+                while (Session.gameCaretaker.IsLastStateDeleted())
                 {
                     Session.gameCaretaker.RemoveLastState();
                 }
-                DialogResult result = MessageBox.Show(
-                   "Невозможно вернуть изменения: объект не найден",
-                   "Ошибка",
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Error,
-                   MessageBoxDefaultButton.Button1
-                   );
+
+                MessageBox.Show(
+                    "Невозможно вернуть изменения: объект не найден",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error,
+                    MessageBoxDefaultButton.Button1
+                );
             }
             else
             {
