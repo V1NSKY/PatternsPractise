@@ -11,16 +11,22 @@ namespace PatternsPractise.DAO.DAOSystemReq
     class DAOSystemReq : IDAOSystemReq
     {
         readonly String SQLInsertSystemReq = "INSERT INTO gamelibrarydb.systemreq (idGame, idSystemReqType ,sr_OS,sr_processor,sr_RAM,sr_video,sr_space) VALUE (@idGame, @idSystemReqType,@sr_OS, @sr_processor, @sr_RAM, @sr_video, @sr_space);";
+        readonly String SQLInsertSystemReqWithId = "INSERT INTO gamelibrarydb.systemreq (idSystemReq, idGame, idSystemReqType ,sr_OS,sr_processor,sr_RAM,sr_video,sr_space) VALUE (@idSystemReq ,@idGame, @idSystemReqType,@sr_OS, @sr_processor, @sr_RAM, @sr_video, @sr_space);";
         readonly String SQLDeleteSystemReq = "DELETE FROM gamelibrarydb.systemreq WHERE idSystemReq = @idSystemReq;";
         readonly String SQLSelectAllSystemReq = "SELECT * FROM gamelibrarydb.systemreq;";
         readonly String SQLSelectSystemReqByGameId = "SELECT * FROM gamelibrarydb.systemreq WHERE idGame = @idGame;";
         readonly String SQLSelectSystemReqById = "SELECT * FROM gamelibrarydb.systemreq WHERE idSystemReq = @idSystemReq;";
         readonly String SQLUpdateSystemReq = "UPDATE gamelibrarydb.systemreq SET idGame = @idGame, idSystemReqType = @idSystemReqType, sr_OS = @sr_OS, sr_processor = @sr_processor, sr_RAM = @sr_RAM, sr_video = @sr_video, sr_space = @sr_space WHERE idSystemReq = @idSystemReq;";
         public DAOSystemReq() { }
+        public void TruncateSysReq()
+        {
+            throw new NotImplementedException();
+        }
+
         public string AddSystemReq(SystemReq systemReq)
         {
             CreatorDAOGame creatorDAOGame = new CreatorDBDAOGame();
-            IDAOGame daoGame = creatorDAOGame.FactoryMetod(Session.dbType);
+            IDAOGame daoGame = creatorDAOGame.FactoryMetod(DBtype.MySQL);
             String returnString = "";
 
             Game game = daoGame.GetGameById(systemReq.Game.GameId);
@@ -33,10 +39,17 @@ namespace PatternsPractise.DAO.DAOSystemReq
             {
                 MySqlCommand cmd = new MySqlCommand
                 {
-                    Connection = conn,
-                    CommandText = SQLInsertSystemReq
+                    Connection = conn
                 };
-
+                if (systemReq.IdSystemReq != 0)
+                {
+                    cmd.CommandText = SQLInsertSystemReqWithId;
+                    cmd.Parameters.AddWithValue("@idSystemReq", systemReq.IdSystemReq);
+                }
+                else
+                {
+                    cmd.CommandText = SQLInsertSystemReq;
+                }
                 conn.Open();
                 cmd.Parameters.AddWithValue("@idGame", systemReq.Game.GameId);
                 cmd.Parameters.AddWithValue("@idSystemReqType", systemReq.IdSystemReqType);

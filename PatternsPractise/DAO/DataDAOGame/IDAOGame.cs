@@ -7,6 +7,7 @@ namespace PatternsPractise.DAO
 {
     public interface IDAOGame
     {
+        public void TruncateGame();
         public String AddGame(Game game);
         public String AddGenreByName(String genreName);
         public String DeleteGame(int idGame);

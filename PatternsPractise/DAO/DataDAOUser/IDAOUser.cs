@@ -7,6 +7,7 @@ namespace PatternsPractise.DAO
 {
     public interface IDAOUser
     {
+        public void TruncateUser();
         public List<User> GetAllUsers();
         public List<User> SearchUsersByName(String userName);
         public List<User> SearchUsersByNameAndPassword(String userName, String password);

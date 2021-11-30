@@ -143,5 +143,10 @@ namespace PatternsPractise.DAO.DAOLibrary
                 observer.Update(this);
             }
         }
+
+        public void TruncateLibrary()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

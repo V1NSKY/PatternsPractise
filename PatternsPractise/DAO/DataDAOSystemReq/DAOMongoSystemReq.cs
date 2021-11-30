@@ -4,6 +4,7 @@ using PatternsPractise.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace PatternsPractise.DAO.DataDAOSystemReq
 {
@@ -38,6 +39,15 @@ namespace PatternsPractise.DAO.DataDAOSystemReq
         public SystemReq GetSystemReqById(int idSystemReq)
         {
             return Connection.Connection.GetMongoDataBase().GetCollection<SystemReq>("SystemReq").Find<SystemReq>(Builders<SystemReq>.Filter.Eq("IdSystemReq", idSystemReq)).ToList().LastOrDefault();
+        }
+
+        public void TruncateSysReq()
+        {
+            var db = Connection.Connection.GetMongoDataBase();
+                db.DropCollection("SystemReq");
+                db.CreateCollection("SystemReq");
+                db.GetCollection<SystemReq>("SystemReq").Indexes
+                    .CreateOne(new CreateIndexModel<SystemReq>(Builders<SystemReq>.IndexKeys.Ascending(systemReq => systemReq.IdSystemReq), new CreateIndexOptions() { Unique = true }));
         }
 
         public string UpdateSystemReq(SystemReq systemReq)

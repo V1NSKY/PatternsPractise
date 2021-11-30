@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using static PatternsPractise.Entities.User;
 using MySql.Data.MySqlClient;
 using PatternsPractise.DAO.ObserverDAO;
+using System.Windows.Forms;
 
 namespace PatternsPractise.DAO
 {
     class DAOUser : IDAOUser
     {
-        readonly String SQLConnectionString;
         readonly String SQLSelectUserRoleById = "SELECT * FROM gamelibrarydb.userrole WHERE idUserRole = @idUserRole;";
         readonly String SQLInsertUser = "INSERT INTO gamelibrarydb.user(idUserRole,userName,userSurname,userMiddleName,userLogin,userPassword,userPhone,userDescription) VALUES (@idUserRole, @userName, @userSurname, @userMiddleName, @userLogin, @userPassword, @userPhone, @userDescription);";
+        readonly String SQLInsertUserWithId = "INSERT INTO gamelibrarydb.user(idUser,idUserRole,userName,userSurname,userMiddleName,userLogin,userPassword,userPhone,userDescription) VALUES (@idUser,@idUserRole, @userName, @userSurname, @userMiddleName, @userLogin, @userPassword, @userPhone, @userDescription);";
         readonly String SQLDeleteUser = "DELETE FROM gamelibrarydb.user WHERE idUser = @idUser;";
         readonly String SQLSelectAllUsers = "SELECT * FROM gamelibrarydb.user;";
         readonly String SQLSelectUserById = "SELECT * FROM gamelibrarydb.user WHERE idUser = @idUser;";
@@ -19,6 +20,7 @@ namespace PatternsPractise.DAO
         readonly String SQLUpdateUserById = "UPDATE gamelibrarydb.user SET idUserRole = @idUserRole, userName = @userName, userSurname = @userSurname, userMiddleName = @userMiddleName, userLogin = @userLogin, userPassword = @userPassword, userPhone = @userPhone, userDescription = @userDescription WHERE idUser = @idUser;";
         readonly String SQLSelectUserIdByCred = "SELECT idUser FROM gamelibrarydb.user WHERE userLogin = @userLogin AND userPassword = @userPassword";
         readonly String SQLSelectUserIdByLogin = "SELECT idUser FROM gamelibrarydb.user WHERE userLogin = @userLogin";
+        private readonly String SQLTruncateTable = "DELETE FROM gamelibrarydb.user";
         public DAOUser() { }
         private static List<IObserverDAOUser> observers = new List<IObserverDAOUser>();
         public void AddObserver(IObserverDAOUser observer)
@@ -48,9 +50,15 @@ namespace PatternsPractise.DAO
                     }
                 }
                 cmd.Parameters.Clear();
-
-                cmd.CommandText = SQLInsertUser;
-                String returnString = "";
+                if (user.UserId != 0)
+                {
+                    cmd.CommandText = SQLInsertUserWithId;
+                    cmd.Parameters.AddWithValue("@idUser", (user.UserId));
+                }
+                else
+                {
+                    cmd.CommandText = SQLInsertUser;
+                }
                 cmd.Parameters.AddWithValue("@idUserRole", ((int)user.UserRole));
                 cmd.Parameters.AddWithValue("@userName", user.UserName);
                 cmd.Parameters.AddWithValue("@userSurname", user.UserSurname);
@@ -59,7 +67,7 @@ namespace PatternsPractise.DAO
                 cmd.Parameters.AddWithValue("@userPassword", user.UserPassword);
                 cmd.Parameters.AddWithValue("@userPhone", user.UserPhone);
                 cmd.Parameters.AddWithValue("@userDescription", user.UserDescription);
-                returnString += " Добавлена " + cmd.ExecuteNonQuery() + " запись ";
+                String returnString = " Добавлена " + cmd.ExecuteNonQuery() + " запись ";
                 cmd.Parameters.Clear();
                 Notify();
                 return returnString;
@@ -366,6 +374,18 @@ namespace PatternsPractise.DAO
             }
 
             return listUsers;
+        }
+
+        public void TruncateUser()
+        {
+                using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
+                {
+                    using (MySqlCommand cmd = new MySqlCommand() { Connection = conn, CommandText = SQLTruncateTable })
+                    {
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
         }
     }
 }

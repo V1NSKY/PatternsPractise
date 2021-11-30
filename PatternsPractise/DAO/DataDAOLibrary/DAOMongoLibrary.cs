@@ -4,12 +4,20 @@ using PatternsPractise.DAO.ObserverDAO;
 using PatternsPractise.Entities;
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace PatternsPractise.DAO.DataDAOLibrary
 {
     class DAOMongoLibrary : IDAOLibrary
     {
         private List<IObserverDAOGameLibrary> observers = new List<IObserverDAOGameLibrary>();
+        public void TruncateLibrary()
+        {
+            var db = Connection.Connection.GetMongoDataBase();
+                db.DropCollection("GameLibrary");
+                db.CreateCollection("GameLibrary");
+        }
+
         public string AddLibrary(UserGameLibrary userGameLibrary)
         {
             List<UserGameLibrary> libraries = GetAllUserLibrary(userGameLibrary.User.UserId);

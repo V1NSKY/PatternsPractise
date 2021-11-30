@@ -5,6 +5,7 @@ using PatternsPractise.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace PatternsPractise.DAO.DataDAOGame
 {
@@ -77,7 +78,14 @@ namespace PatternsPractise.DAO.DataDAOGame
                 observer.Update();
             }
         }
-
+        public void TruncateGame()
+        {
+            var db = Connection.Connection.GetMongoDataBase();
+                db.DropCollection("Game");
+                db.CreateCollection("Game");
+                db.GetCollection<Game>("Game").Indexes
+                    .CreateOne(new CreateIndexModel<Game>(Builders<Game>.IndexKeys.Ascending(game => game.GameId), new CreateIndexOptions() { Unique = true }));
+        }
         // not impl
         public string AddGenreByName(string genreName)
         {
@@ -87,5 +95,7 @@ namespace PatternsPractise.DAO.DataDAOGame
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }

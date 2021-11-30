@@ -7,6 +7,7 @@ namespace PatternsPractise.DAO
 {
     public interface IDAOLibrary
     {
+        public void TruncateLibrary();
         public String AddLibrary(UserGameLibrary userGameLibrary);
         public String DeleteLibrary(int idUser);
         public int DeleteLibraryGame(int idGame);

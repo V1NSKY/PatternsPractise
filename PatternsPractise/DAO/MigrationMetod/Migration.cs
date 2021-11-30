@@ -7,18 +7,18 @@ using System.Collections.Generic;
 
 namespace PatternsPractise.DAO.MigrationMetod
 {
-    class Migration
+    public static class Migration
     {
-        IDAOGame daoGameSQL = new CreatorDBDAOGame().FactoryMetod(DBtype.MySQL);
-        IDAOUser daoUserSQL = new CreatorDBDAOUser().FactoryMetod(DBtype.MySQL);
-        IDAOLibrary daoLibrarySQL = new CreatorDBDAOLibrary().FactoryMetod(DBtype.MySQL);
-        IDAOSystemReq daoSysReqSQL = new CreatorDBDAOSystemReq().FactoryMetod(DBtype.MySQL);
-        IDAOGame daoGameMongo = new CreatorDBDAOGame().FactoryMetod(DBtype.MongoDB);
-        IDAOUser daoUserMongo = new CreatorDBDAOUser().FactoryMetod(DBtype.MongoDB);
-        IDAOLibrary daoLibraryMongo = new CreatorDBDAOLibrary().FactoryMetod(DBtype.MongoDB);
-        IDAOSystemReq daoSysReqMongo = new CreatorDBDAOSystemReq().FactoryMetod(DBtype.MongoDB);
+        public static IDAOGame daoGameSQL = new CreatorDBDAOGame().FactoryMetod(DBtype.MySQL);
+        public static IDAOUser daoUserSQL = new CreatorDBDAOUser().FactoryMetod(DBtype.MySQL);
+        public static IDAOLibrary daoLibrarySQL = new CreatorDBDAOLibrary().FactoryMetod(DBtype.MySQL);
+        public static IDAOSystemReq daoSysReqSQL = new CreatorDBDAOSystemReq().FactoryMetod(DBtype.MySQL);
+        public static IDAOGame daoGameMongo = new CreatorDBDAOGame().FactoryMetod(DBtype.MongoDB);
+        public static IDAOUser daoUserMongo = new CreatorDBDAOUser().FactoryMetod(DBtype.MongoDB);
+        public static IDAOLibrary daoLibraryMongo = new CreatorDBDAOLibrary().FactoryMetod(DBtype.MongoDB);
+        public static IDAOSystemReq daoSysReqMongo = new CreatorDBDAOSystemReq().FactoryMetod(DBtype.MongoDB);
 
-        public void Migrate_SQL_To_MongoBD()
+        public static void Migrate_SQL_To_MongoBD()
         {
             List<Game> listGames = daoGameSQL.GetAllGame();
             List<SystemReq> listSysReq = daoSysReqSQL.GetAllSystemReq();
@@ -59,6 +59,52 @@ namespace PatternsPractise.DAO.MigrationMetod
                 daoUserMongo.AddUser(user);
             }
             
+        }
+
+        public static void Migrate_MongoDB_To_SQL()
+        {
+            List<Game> listGames = daoGameMongo.GetAllGame();
+            List<SystemReq> listSysReq = daoSysReqMongo.GetAllSystemReq();
+            List<User> listUser = daoUserMongo.GetAllUsers();
+            foreach (Game game in listGames)
+            {
+                List<GameGenre> genres = daoGameMongo.GetGameGenres(game.GameId);
+                foreach (var genre in genres)
+                {
+                    daoGameSQL.AddGenreByName(genre.genreName);
+                }
+
+                game.GameGenre = genres;
+                daoGameSQL.AddGame(game);
+                foreach (SystemReq systemReq in listSysReq)
+                {
+                    if (systemReq.Game.GameId == game.GameId)
+                    {
+                        systemReq.Game = game;
+                        daoSysReqSQL.AddSystemReq(systemReq);
+                    }
+                }
+            }
+            foreach (User user in listUser)
+            {
+                daoUserSQL.AddUser(user);
+                List<UserGameLibrary> listLibrary = daoLibraryMongo.GetAllUserLibrary(user.UserId);
+                if (listLibrary != null)
+                {
+                    foreach (UserGameLibrary library in listLibrary)
+                    {
+                        foreach (Game game in listGames)
+                        {
+                            if (library.Game.GameId == game.GameId)
+                            {
+                                library.Game = game;
+                            }
+                        }
+                        library.User = user;
+                        daoLibrarySQL.AddLibrary(library);
+                    }
+                }
+            }
         }
     }
 }

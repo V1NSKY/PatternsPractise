@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using static PatternsPractise.Entities.Game;
 using MySql.Data.MySqlClient;
 using PatternsPractise.DAO.ObserverDAO;
+using System.Windows.Forms;
+using PatternsPractise.DAO.DAOGame.FactoryDAOGame;
 
 namespace PatternsPractise.DAO.DAOGame
 {
     class DAOGame : IDAOGame
     {
         readonly String SQLInsertGame = "INSERT INTO gamelibrarydb.game(gameDeveloper,gamePublisher,gameName,gamePrice,gameDateOfRelease,gameDescription) VALUES(@gameDeveloper, @gamePublisher, @gameName, @gamePrice, @gameDateOfRelease, @gameDescription);";
+
+        private readonly String SQLInsertGameWithId =
+            "INSERT INTO gamelibrarydb.game(idGame,gameDeveloper,gamePublisher,gameName,gamePrice,gameDateOfRelease,gameDescription) VALUES(@idGame,@gameDeveloper, @gamePublisher, @gameName, @gamePrice, @gameDateOfRelease, @gameDescription);";
         readonly String SQLInsertGameGenreByName = "INSERT INTO gamelibrarydb.gamegenre(genreName) VALUES(@genreName);";
         readonly String SQLSelectGenreByName = "SELECT idGameGenre FROM gamelibrarydb.gamegenre WHERE genreName = @genreName;";
         readonly String SQLInsertSpecificGenre = "INSERT INTO gamelibrarydb.specificgenre VALUES (@idGame,@idGameGenre);";
@@ -22,6 +27,7 @@ namespace PatternsPractise.DAO.DAOGame
         readonly String SQLSelectGameById = "SELECT * FROM gamelibrarydb.game WHERE idGame = @idGame;";
         readonly String SQLUpdateGame = "UPDATE gamelibrarydb.game SET gameDeveloper = @gameDeveloper, gamePublisher = @gamePublisher, gameName = @gameName, gamePrice = @gamePrice, gameDateOfRelease = @gameDateOfRelease, gameDescription = @gameDescription WHERE idGame = @idGame;";
         readonly String SQLGetGenreByName = "SELECT * FROM gamelibrarydb.gamegenre WHERE genreName = @genreName;";
+        private readonly String SQLTruncateTable = "DELETE FROM gamelibrarydb.game; DELETE FROM gamelibrarydb.gamegenre;";
         public DAOGame() { }
 
         private List<IObserverDAOGame> observers = new List<IObserverDAOGame>();
@@ -56,9 +62,11 @@ namespace PatternsPractise.DAO.DAOGame
                         }
                         else
                         {
-                            idGenres.Add(++countIdGenres);
+                            while (checkGenreReader.Read())
+                            {
+                                idGenres.Add(Convert.ToInt32(checkGenreReader.GetValue(0)));
+                            }
                         }
-                        checkGenreReader.Close();
                     }
                 }
                 
@@ -72,7 +80,16 @@ namespace PatternsPractise.DAO.DAOGame
             using (conn)
             {
                 conn.Open();
-                cmd.CommandText = SQLInsertGame;
+                if (game.GameId != 0)
+                {
+                    cmd.CommandText = SQLInsertGameWithId;
+                    cmd.Parameters.Add("@idGame", MySqlDbType.VarChar).Value = game.GameId;
+
+                }
+                else
+                {
+                    cmd.CommandText = SQLInsertGame;
+                }
                 cmd.Parameters.Add("@gameDeveloper", MySqlDbType.VarChar).Value = game.GameDeveloper;
                 cmd.Parameters.Add("@gamePublisher", MySqlDbType.VarChar).Value = game.GamePublisher;
                 cmd.Parameters.Add("@gameName", MySqlDbType.VarChar).Value = game.GameName;
@@ -384,14 +401,21 @@ namespace PatternsPractise.DAO.DAOGame
         {
             using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
             {
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand
                 {
                     Connection = conn,
                     CommandText = SQLInsertGameGenreByName
                 };
-                cmd.Parameters.AddWithValue("@genreName", genreName);
-                return cmd.ExecuteNonQuery().ToString();
+                if (new CreatorDBDAOGame().FactoryMetod(DBtype.MySQL).GetGameGenreByName(genreName) == null)
+                {
+                    conn.Open();
+                    cmd.Parameters.AddWithValue("@genreName", genreName);
+                    return cmd.ExecuteNonQuery().ToString();
+                }
+                else
+                {
+                    return "";
+                }
             }
         }
 
@@ -449,6 +473,18 @@ namespace PatternsPractise.DAO.DAOGame
             {
                 observer.Update();
             }
+        }
+
+        public void TruncateGame()
+        {
+            using (MySqlConnection conn = Connection.Connection.GetSQLConnection())
+                {
+                    using (MySqlCommand cmd = new MySqlCommand() { Connection = conn, CommandText = SQLTruncateTable })
+                    {
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
         }
     }
 }

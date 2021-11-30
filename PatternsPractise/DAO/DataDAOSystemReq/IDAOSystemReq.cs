@@ -6,6 +6,7 @@ namespace PatternsPractise.DAO
 {
     public interface IDAOSystemReq
     {
+        public void TruncateSysReq();
         public String AddSystemReq(SystemReq systemReq);
         public String DeleteSystemReq(int idSystemReq);
         public String UpdateSystemReq(SystemReq systemReq);

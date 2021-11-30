@@ -5,6 +5,7 @@ using PatternsPractise.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace PatternsPractise.DAO.DataDAOUser.FactoryDAOUser
 {
@@ -24,6 +25,17 @@ namespace PatternsPractise.DAO.DataDAOUser.FactoryDAOUser
         {
             Connection.Connection.GetMongoDataBase().GetCollection<BsonDocument>("User").DeleteOne(new BsonDocument("UserId", idUser));
             return "Deleted";
+        }
+
+        public void TruncateUser()
+        {
+            var db = Connection.Connection.GetMongoDataBase();
+                db.DropCollection("User");
+                db.CreateCollection("User");
+                db.GetCollection<User>("User").Indexes
+                    .CreateOne(new CreateIndexModel<User>(Builders<User>.IndexKeys.Ascending(user => user.UserId), new CreateIndexOptions() { Unique = true }));
+                db.GetCollection<User>("User").Indexes
+                    .CreateOne(new CreateIndexModel<User>(Builders<User>.IndexKeys.Ascending(user => user.UserName).Ascending(user=>user.UserPassword)));
         }
 
         public List<User> GetAllUsers()

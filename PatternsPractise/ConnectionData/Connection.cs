@@ -6,7 +6,6 @@ namespace PatternsPractise.Connection
     public sealed class Connection
     {
         static private MySqlConnection connection;
-        static private MongoClient mongoClient;
         static private IMongoDatabase _mongoDataBase;
         private Connection() { }
         public static MySqlConnection GetSQLConnection()

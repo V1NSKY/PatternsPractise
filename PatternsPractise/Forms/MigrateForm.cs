@@ -13,8 +13,49 @@ namespace PatternsPractise.Forms
 
         private void migrateButton_Click(object sender, EventArgs e)
         {
-            Migration migration = new Migration();
-            migration.Migrate_SQL_To_MongoBD();
+            if (mySqlMongoRadioButton.Checked)
+            {
+                var result = MessageBox.Show(
+                    "Очистить MongoDB",
+                    "Очистка",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button2
+                );
+                if (result == DialogResult.Yes)
+                {
+                    Migration.daoGameMongo.TruncateGame();
+                    Migration.daoUserMongo.TruncateUser();
+                    Migration.daoSysReqMongo.TruncateSysReq();
+                    Migration.daoLibraryMongo.TruncateLibrary();
+                    Migration.Migrate_SQL_To_MongoBD();
+                }
+                else
+                {
+                    Migration.Migrate_SQL_To_MongoBD();
+                }
+            }
+
+            if (mongoMySqlRadioButton.Checked)
+            {
+                var result = MessageBox.Show(
+                    "Очистить MySQL",
+                    "Очистка",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button2
+                );
+                if (result == DialogResult.Yes)
+                {
+                    Migration.daoGameSQL.TruncateGame();
+                    Migration.daoUserSQL.TruncateUser();
+                    Migration.Migrate_MongoDB_To_SQL();
+                }
+                else
+                {
+                    Migration.Migrate_MongoDB_To_SQL();
+                }
+            }
         }
     }
 }
