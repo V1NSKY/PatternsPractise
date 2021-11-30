@@ -11,6 +11,17 @@ namespace PatternsPractise.Forms
             InitializeComponent();
         }
 
+        private void ShowFinalMessageBox()
+        {
+            MessageBox.Show(
+                "Миграция закончена!",
+                "Миграция",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button1
+            );
+        }
+
         private void migrateButton_Click(object sender, EventArgs e)
         {
             if (mySqlMongoRadioButton.Checked)
@@ -29,10 +40,12 @@ namespace PatternsPractise.Forms
                     Migration.daoSysReqMongo.TruncateSysReq();
                     Migration.daoLibraryMongo.TruncateLibrary();
                     Migration.Migrate_SQL_To_MongoBD();
+                    ShowFinalMessageBox();
                 }
                 else
                 {
                     Migration.Migrate_SQL_To_MongoBD();
+                    ShowFinalMessageBox();
                 }
             }
 
@@ -50,10 +63,12 @@ namespace PatternsPractise.Forms
                     Migration.daoGameSQL.TruncateGame();
                     Migration.daoUserSQL.TruncateUser();
                     Migration.Migrate_MongoDB_To_SQL();
+                    ShowFinalMessageBox();
                 }
                 else
                 {
                     Migration.Migrate_MongoDB_To_SQL();
+                    ShowFinalMessageBox();
                 }
             }
         }
