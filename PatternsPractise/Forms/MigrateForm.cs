@@ -35,10 +35,7 @@ namespace PatternsPractise.Forms
                 );
                 if (result == DialogResult.Yes)
                 {
-                    Migration.daoGameMongo.TruncateGame();
-                    Migration.daoUserMongo.TruncateUser();
-                    Migration.daoSysReqMongo.TruncateSysReq();
-                    Migration.daoLibraryMongo.TruncateLibrary();
+                    Migration.MongoClear();
                     Migration.Migrate_SQL_To_MongoBD();
                     ShowFinalMessageBox();
                 }
@@ -60,8 +57,7 @@ namespace PatternsPractise.Forms
                 );
                 if (result == DialogResult.Yes)
                 {
-                    Migration.daoGameSQL.TruncateGame();
-                    Migration.daoUserSQL.TruncateUser();
+                    Migration.SQLClear();
                     Migration.Migrate_MongoDB_To_SQL();
                     ShowFinalMessageBox();
                 }

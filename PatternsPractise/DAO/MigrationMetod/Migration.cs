@@ -9,34 +9,57 @@ namespace PatternsPractise.DAO.MigrationMetod
 {
     public static class Migration
     {
-        public static IDAOGame daoGameSQL = new CreatorDBDAOGame().FactoryMetod(DBtype.MySQL);
-        public static IDAOUser daoUserSQL = new CreatorDBDAOUser().FactoryMetod(DBtype.MySQL);
-        public static IDAOLibrary daoLibrarySQL = new CreatorDBDAOLibrary().FactoryMetod(DBtype.MySQL);
-        public static IDAOSystemReq daoSysReqSQL = new CreatorDBDAOSystemReq().FactoryMetod(DBtype.MySQL);
-        public static IDAOGame daoGameMongo = new CreatorDBDAOGame().FactoryMetod(DBtype.MongoDB);
-        public static IDAOUser daoUserMongo = new CreatorDBDAOUser().FactoryMetod(DBtype.MongoDB);
-        public static IDAOLibrary daoLibraryMongo = new CreatorDBDAOLibrary().FactoryMetod(DBtype.MongoDB);
-        public static IDAOSystemReq daoSysReqMongo = new CreatorDBDAOSystemReq().FactoryMetod(DBtype.MongoDB);
+        private static IDAOGame daoGameSQL = new CreatorDBDAOGame().FactoryMetod(DBtype.MySQL);
+        private static IDAOUser daoUserSQL = new CreatorDBDAOUser().FactoryMetod(DBtype.MySQL);
+        private static IDAOLibrary daoLibrarySQL = new CreatorDBDAOLibrary().FactoryMetod(DBtype.MySQL);
+        private static IDAOSystemReq daoSysReqSQL = new CreatorDBDAOSystemReq().FactoryMetod(DBtype.MySQL);
+        private static IDAOGame daoGameMongo = new CreatorDBDAOGame().FactoryMetod(DBtype.MongoDB);
+        private static IDAOUser daoUserMongo = new CreatorDBDAOUser().FactoryMetod(DBtype.MongoDB);
+        private static IDAOLibrary daoLibraryMongo = new CreatorDBDAOLibrary().FactoryMetod(DBtype.MongoDB);
+        private static IDAOSystemReq daoSysReqMongo = new CreatorDBDAOSystemReq().FactoryMetod(DBtype.MongoDB);
 
+        public static void MongoClear()
+        {
+            daoGameMongo.TruncateGame();
+            daoUserMongo.TruncateUser();
+            daoSysReqMongo.TruncateSysReq();
+            daoLibraryMongo.TruncateLibrary();
+        }
+        public static void SQLClear()
+        {
+            daoGameSQL.TruncateGame();
+            daoUserSQL.TruncateUser();
+        }
         public static void Migrate_SQL_To_MongoBD()
         {
             List<Game> listGames = daoGameSQL.GetAllGame();
-            List<SystemReq> listSysReq = daoSysReqSQL.GetAllSystemReq();
+            List<SystemReq> listSysReqTemp = daoSysReqSQL.GetAllSystemReq();
             List<User> listUser = daoUserSQL.GetAllUsers();
-            
-            
+            List<SystemReq> listSysReq = new List<SystemReq>();
+            foreach (var systemReq in listSysReqTemp)
+            {
+                if (daoSysReqMongo.GetSystemReqById(systemReq.IdSystemReq) == null)
+                {
+                    listSysReq.Add(systemReq);
+                }
+            }
+
             foreach (Game game in listGames)
             {
+                
                 game.GameGenre = daoGameSQL.GetGameGenres(game.GameId);
-                foreach(SystemReq systemReq in listSysReq)
+                foreach (SystemReq systemReq in listSysReq)
                 {
-                    if(systemReq.Game.GameId == game.GameId)
+                    if (systemReq.Game.GameId == game.GameId)
                     {
                         systemReq.Game = game;
                         daoSysReqMongo.AddSystemReq(systemReq);
                     }
                 }
-                daoGameMongo.AddGame(game);
+                if (daoGameMongo.GetGameById(game.GameId) == null)
+                {
+                    daoGameMongo.AddGame(game);
+                }
             }
             foreach(User user in listUser)
             {
@@ -53,10 +76,17 @@ namespace PatternsPractise.DAO.MigrationMetod
                             }
                         }
                         library.User = user;
-                        daoLibraryMongo.AddLibrary(library);
+                        if (daoLibraryMongo.GetAllUserLibrary(user.UserId) == null)
+                        {
+                            daoLibraryMongo.AddLibrary(library);
+                        }
                     }
                 }
-                daoUserMongo.AddUser(user);
+
+                if (daoUserMongo.GetUserById(user.UserId) == null)
+                {
+                    daoUserMongo.AddUser(user);
+                }
             }
             
         }
@@ -64,8 +94,16 @@ namespace PatternsPractise.DAO.MigrationMetod
         public static void Migrate_MongoDB_To_SQL()
         {
             List<Game> listGames = daoGameMongo.GetAllGame();
-            List<SystemReq> listSysReq = daoSysReqMongo.GetAllSystemReq();
+            List<SystemReq> listSysReqTemp = daoSysReqMongo.GetAllSystemReq();
             List<User> listUser = daoUserMongo.GetAllUsers();
+            List<SystemReq> listSysReq = new List<SystemReq>();
+            foreach (var systemReq in listSysReqTemp)
+            {
+                if (daoSysReqSQL.GetSystemReqById(systemReq.IdSystemReq) == null)
+                {
+                    listSysReq.Add(systemReq);
+                }
+            }
             foreach (Game game in listGames)
             {
                 List<GameGenre> genres = daoGameMongo.GetGameGenres(game.GameId);
@@ -75,7 +113,11 @@ namespace PatternsPractise.DAO.MigrationMetod
                 }
 
                 game.GameGenre = genres;
-                daoGameSQL.AddGame(game);
+                if (daoGameSQL.GetGameById(game.GameId) == null)
+                {
+                    daoGameSQL.AddGame(game);
+                }
+
                 foreach (SystemReq systemReq in listSysReq)
                 {
                     if (systemReq.Game.GameId == game.GameId)
@@ -87,21 +129,27 @@ namespace PatternsPractise.DAO.MigrationMetod
             }
             foreach (User user in listUser)
             {
-                daoUserSQL.AddUser(user);
+                if (daoUserSQL.GetUserById(user.UserId) == null)
+                {
+                    daoUserSQL.AddUser(user);
+                }
                 List<UserGameLibrary> listLibrary = daoLibraryMongo.GetAllUserLibrary(user.UserId);
                 if (listLibrary != null)
                 {
                     foreach (UserGameLibrary library in listLibrary)
                     {
-                        foreach (Game game in listGames)
+                        if (daoLibrarySQL.GetAllUserLibrary(user.UserId) == null)
                         {
-                            if (library.Game.GameId == game.GameId)
+                            foreach (Game game in listGames)
                             {
-                                library.Game = game;
+                                if (library.Game.GameId == game.GameId)
+                                {
+                                    library.Game = game;
+                                }
                             }
+                            library.User = user;
+                            daoLibrarySQL.AddLibrary(library);
                         }
-                        library.User = user;
-                        daoLibrarySQL.AddLibrary(library);
                     }
                 }
             }
