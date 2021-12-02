@@ -63,6 +63,11 @@ namespace PatternsPractise.DAO.MigrationMetod
             }
             foreach(User user in listUser)
             {
+                if (daoUserMongo.GetUserById(user.UserId) == null)
+                {
+                    daoUserMongo.AddUser(user);
+                }
+
                 List<UserGameLibrary> listLibrary = daoLibrarySQL.GetAllUserLibrary(user.UserId);
                 if(listLibrary != null)
                 {
@@ -76,17 +81,27 @@ namespace PatternsPractise.DAO.MigrationMetod
                             }
                         }
                         library.User = user;
-                        if (daoLibraryMongo.GetAllUserLibrary(user.UserId) == null)
+                        List<UserGameLibrary> tempList = daoLibraryMongo.GetAllUserLibrary(user.UserId);
+                        if (tempList.Count != 0)
+                        {
+                            foreach (var mongoGameLibrary in tempList)
+                            {
+                                if (mongoGameLibrary.Game.GameId != library.Game.GameId)
+                                {
+                                    daoLibraryMongo.AddLibrary(library);
+                                }
+                            }
+                        }
+                        else
                         {
                             daoLibraryMongo.AddLibrary(library);
                         }
+                       
+                        
                     }
                 }
 
-                if (daoUserMongo.GetUserById(user.UserId) == null)
-                {
-                    daoUserMongo.AddUser(user);
-                }
+               
             }
             
         }
@@ -127,6 +142,8 @@ namespace PatternsPractise.DAO.MigrationMetod
                     }
                 }
             }
+
+            
             foreach (User user in listUser)
             {
                 if (daoUserSQL.GetUserById(user.UserId) == null)
@@ -138,6 +155,7 @@ namespace PatternsPractise.DAO.MigrationMetod
                 {
                     foreach (UserGameLibrary library in listLibrary)
                     {
+
                         if (daoLibrarySQL.GetAllUserLibrary(user.UserId) == null)
                         {
                             foreach (Game game in listGames)

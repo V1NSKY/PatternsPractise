@@ -188,6 +188,10 @@ namespace PatternsPractise.DAO.DAOSystemReq
                                 .Build();
                         }
                     }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
             
