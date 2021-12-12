@@ -47,5 +47,10 @@ namespace PatternsPractise.Forms
         {
             new MigrateForm().Show();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            new ProxyTestForm().Show();
+        }
     }
 }
