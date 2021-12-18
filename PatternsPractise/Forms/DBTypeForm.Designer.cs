@@ -36,6 +36,7 @@ namespace PatternsPractise.Forms
             this.testButton = new System.Windows.Forms.Button();
             this.migrateButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.repButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -132,12 +133,28 @@ namespace PatternsPractise.Forms
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // repButton
+            // 
+            this.repButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            this.repButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.repButton.FlatAppearance.BorderSize = 0;
+            this.repButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.repButton.ForeColor = System.Drawing.Color.White;
+            this.repButton.Location = new System.Drawing.Point(150, 172);
+            this.repButton.Name = "repButton";
+            this.repButton.Size = new System.Drawing.Size(100, 23);
+            this.repButton.TabIndex = 28;
+            this.repButton.Text = "Репликация";
+            this.repButton.UseVisualStyleBackColor = false;
+            this.repButton.Click += new System.EventHandler(this.repButton_Click);
+            // 
             // DBTypeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(263, 207);
+            this.Controls.Add(this.repButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.migrateButton);
             this.Controls.Add(this.testButton);
@@ -165,5 +182,6 @@ namespace PatternsPractise.Forms
         private System.Windows.Forms.Button testButton;
         private System.Windows.Forms.Button migrateButton;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button repButton;
     }
 }

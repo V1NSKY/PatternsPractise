@@ -52,5 +52,10 @@ namespace PatternsPractise.Forms
         {
             new ProxyTestForm().Show();
         }
+
+        private void repButton_Click(object sender, EventArgs e)
+        {
+            new ReplicationTestForm().Show();
+        }
     }
 }
