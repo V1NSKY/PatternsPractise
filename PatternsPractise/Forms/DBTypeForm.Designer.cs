@@ -37,6 +37,7 @@ namespace PatternsPractise.Forms
             this.migrateButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.repButton = new System.Windows.Forms.Button();
+            this.aggregationButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -148,12 +149,28 @@ namespace PatternsPractise.Forms
             this.repButton.UseVisualStyleBackColor = false;
             this.repButton.Click += new System.EventHandler(this.repButton_Click);
             // 
+            // aggregationButton
+            // 
+            this.aggregationButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(76)))), ((int)(((byte)(41)))));
+            this.aggregationButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.aggregationButton.FlatAppearance.BorderSize = 0;
+            this.aggregationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.aggregationButton.ForeColor = System.Drawing.Color.White;
+            this.aggregationButton.Location = new System.Drawing.Point(77, 201);
+            this.aggregationButton.Name = "aggregationButton";
+            this.aggregationButton.Size = new System.Drawing.Size(100, 23);
+            this.aggregationButton.TabIndex = 29;
+            this.aggregationButton.Text = "Агрегация";
+            this.aggregationButton.UseVisualStyleBackColor = false;
+            this.aggregationButton.Click += new System.EventHandler(this.aggregationButton_Click);
+            // 
             // DBTypeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(32)))), ((int)(((byte)(50)))));
-            this.ClientSize = new System.Drawing.Size(263, 207);
+            this.ClientSize = new System.Drawing.Size(263, 234);
+            this.Controls.Add(this.aggregationButton);
             this.Controls.Add(this.repButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.migrateButton);
@@ -183,5 +200,6 @@ namespace PatternsPractise.Forms
         private System.Windows.Forms.Button migrateButton;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button repButton;
+        private System.Windows.Forms.Button aggregationButton;
     }
 }

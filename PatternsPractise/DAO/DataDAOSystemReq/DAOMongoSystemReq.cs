@@ -20,6 +20,56 @@ namespace PatternsPractise.DAO.DataDAOSystemReq
             return "Inserted";
         }
 
+        public List<BsonDocument> Agr_query_1()
+        {
+            var collection = Connection.Connection.GetMongoDataBase().GetCollection<SystemReq>("SystemReq");
+            return collection.Aggregate()
+                .Match(new BsonDocument { { "Processor", "Intel Core I5" } })
+                .Group(new BsonDocument { { "_id", "$Processor" }, { "gameCount", new BsonDocument("$sum", 1) } })
+                .Project(new BsonDocument { { "_id", 0 }, { "ProcessorName", "$_id" }, { "gameCount", 1 } })
+                .ToList();
+        }
+
+        public List<BsonDocument> Agr_query_2()
+        {
+            var collection = Connection.Connection.GetMongoDataBase().GetCollection<SystemReq>("SystemReq");
+            return collection.Aggregate()
+                .Group(new BsonDocument { { "_id", "$Game.GameDeveloper" }, { "gameCount", new BsonDocument("$sum", 1) } })
+                .Project(new BsonDocument { { "_id", 0 }, { "developerName", "$_id" }, { "gameCount", 1 } })
+                .ToList();
+        }
+
+        public List<BsonDocument> Agr_query_3()
+        {
+            var collection = Connection.Connection.GetMongoDataBase().GetCollection<SystemReq>("SystemReq");
+            return collection.Aggregate()
+                .Match(Builders<SystemReq>.Filter.Gte(s=>s.Sr_RAM,4) & Builders<SystemReq>.Filter.Lte(s => s.Sr_RAM, 12))
+                .Group(new BsonDocument { { "_id", "$Sr_RAM" }, { "gameCount", new BsonDocument("$sum", 1) } })
+                .Project(new BsonDocument { { "_id", 0 }, { "RAM", "$_id" }, { "gameCount", 1 } })
+                .Sort("{RAM:-1}")
+                .ToList();
+        }
+
+        public List<BsonDocument> Agr_query_4()
+        {
+            var collection = Connection.Connection.GetMongoDataBase().GetCollection<SystemReq>("SystemReq");
+            return collection.Aggregate()
+                .Match(new BsonDocument { { "Sr_Video", "GeForce RTX 2070" }, { "Processor", "Ryzen 7" } })
+                .Group(new BsonDocument { { "_id", "$Sr_OS" }, { "gameCount", new BsonDocument("$sum", 1) } })
+                .Project(new BsonDocument { { "_id", 0 }, { "OS", "$_id" }, { "gameCount", 1 } })
+                .ToList();
+        }
+
+        public List<BsonDocument> Agr_query_5()
+        {
+            var collection = Connection.Connection.GetMongoDataBase().GetCollection<SystemReq>("SystemReq");
+            return collection.Aggregate()
+                .Match(new BsonDocument {{ "Sr_OS", "Linux" }})
+                .Group(new BsonDocument { { "_id", "$Sr_OS" }, { "gameCount", new BsonDocument("$sum", 1) } })
+                .Project(new BsonDocument { { "_id", 0 }, { "OS", "$_id" }, { "gameCount", 1 } })
+                .ToList();
+        }
+
         public string DeleteSystemReq(int idSystemReq)
         {
             Connection.Connection.GetMongoDataBase().GetCollection<BsonDocument>("SystemReq").DeleteOne(new BsonDocument("IdSystemReq", idSystemReq));

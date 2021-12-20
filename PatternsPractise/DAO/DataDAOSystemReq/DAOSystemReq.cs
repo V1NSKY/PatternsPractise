@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MongoDB.Bson;
+using MySql.Data.MySqlClient;
 using PatternsPractise.DAO.DAOGame.FactoryDAOGame;
 using PatternsPractise.Entities;
 using System;
@@ -219,6 +220,32 @@ namespace PatternsPractise.DAO.DAOSystemReq
                 cmd.Parameters.AddWithValue("@sr_space", systemReq.Sr_space);
                 return " Изменено " + cmd.ExecuteNonQuery() + " запись ";
             }
+
+        }
+
+        public List<BsonDocument> Agr_query_1()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<BsonDocument> Agr_query_2()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<BsonDocument> Agr_query_3()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<BsonDocument> Agr_query_4()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<BsonDocument> Agr_query_5()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -23,8 +23,8 @@ namespace PatternsPractise.Connection
         {
             if (_mongoDataBase == null)
             {
-                //return _mongoDataBase = new MongoClient("mongodb://localhost:27017").GetDatabase("gamelibrarydb");
-                return _mongoDataBase = new MongoClient("mongodb://localhost:27001,localhost:27002,localhost:27003?connect=replicaSet").GetDatabase("gamelibrarydb") ;
+                return _mongoDataBase = new MongoClient("mongodb://localhost:27017").GetDatabase("gamelibrarydb");
+                //return _mongoDataBase = new MongoClient("mongodb://localhost:27001,localhost:27002,localhost:27003?connect=replicaSet").GetDatabase("gamelibrarydb") ;
             }
             else
             {

@@ -57,5 +57,10 @@ namespace PatternsPractise.Forms
         {
             new ReplicationTestForm().Show();
         }
+
+        private void aggregationButton_Click(object sender, EventArgs e)
+        {
+            new AggregationForm().Show();
+        }
     }
 }
