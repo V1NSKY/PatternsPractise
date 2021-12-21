@@ -57,7 +57,7 @@ namespace PatternsPractise.Forms
             this.fillButton.FlatAppearance.BorderSize = 0;
             this.fillButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.fillButton.ForeColor = System.Drawing.Color.White;
-            this.fillButton.Location = new System.Drawing.Point(12, 36);
+            this.fillButton.Location = new System.Drawing.Point(12, 41);
             this.fillButton.Name = "fillButton";
             this.fillButton.Size = new System.Drawing.Size(85, 23);
             this.fillButton.TabIndex = 30;
@@ -72,7 +72,7 @@ namespace PatternsPractise.Forms
             this.clearButton.FlatAppearance.BorderSize = 0;
             this.clearButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.clearButton.ForeColor = System.Drawing.Color.White;
-            this.clearButton.Location = new System.Drawing.Point(103, 36);
+            this.clearButton.Location = new System.Drawing.Point(103, 41);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(85, 23);
             this.clearButton.TabIndex = 31;
@@ -82,7 +82,7 @@ namespace PatternsPractise.Forms
             // 
             // fillTextBox
             // 
-            this.fillTextBox.Location = new System.Drawing.Point(12, 7);
+            this.fillTextBox.Location = new System.Drawing.Point(12, 12);
             this.fillTextBox.Name = "fillTextBox";
             this.fillTextBox.Size = new System.Drawing.Size(176, 23);
             this.fillTextBox.TabIndex = 32;
